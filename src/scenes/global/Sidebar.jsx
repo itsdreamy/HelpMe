@@ -14,7 +14,7 @@ import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import LogoutIcon from '@mui/icons-material/LogoutOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -203,12 +203,17 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-          </Box>
-          <Box sx={{ m: "6px 0 15px 20px"}}>
-          <Item
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Logout
+            </Typography>
+            <Item
               title="Logout"
-              to="/bar"
-              icon={<LogoutIcon />}
+              to="/form"
+              icon={<LogoutOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
