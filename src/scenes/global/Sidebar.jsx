@@ -60,8 +60,8 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username); // Set username dari data user
         setRole(data.user.role); // Set role dari data user
-        console.log(data.user.image_profile)
-        setProfile('http://192.168.1.32:8888/' + data.user.image_profile); // Set profile dari data user
+        // console.log(data.user.image_profile)
+        setProfile('http://localhost:8888/' + data.user.image_profile); // Set profile dari data user
       }
     };
 

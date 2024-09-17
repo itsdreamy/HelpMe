@@ -1,4 +1,26 @@
 import { tokens } from "../theme";
+import axios from "axios";
+
+const API_URL = 'http://localhost:8888/api';
+export const mockDataMitra = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(API_URL + "/mitra/all", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
 
 export const mockDataTeam = [
   {
