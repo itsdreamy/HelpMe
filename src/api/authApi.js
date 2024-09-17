@@ -61,6 +61,7 @@ export const logout = async () => {
       // Jika logout berhasil, hapus token dari localStorage
       localStorage.removeItem("token");
       console.log('Logout successful', response.data);
+      return response.data;
 
     } catch (error) {
       console.error('Error during logout:', error);

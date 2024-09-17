@@ -1,19 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 
 const Login = () => {
+    const [ username, setUsername ]  = useState(''); 
+    const [ password, setPassword ]  = useState('');
+    const [ message, setMessage ] = useState(''); 
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const data = await login(username, password);
+
+        if (data && data.token) {
+            // Jika login berhasil
+            navigate('/'); // Redirect ke halaman utama
+        } else {
+            // Jika login gagal
+            setMessage('Login gagal! Username atau password salah.');
+        }
+    };
+
     return (
         <div className="wrapper">
             <div className="form-box login">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <h1>Login</h1>
                     <div className="input-box">
-                        <input type="text" placeholder="Username" required />
+                        <input type="text" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
                         <PersonIcon className='icon'/>
                     </div>
                     <div className="input-box">
-                        <input type="password" placeholder="Password" required />
+                        <input type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <LockIcon className='icon'/>
                     </div>
                     <div className="remember-forgot">
