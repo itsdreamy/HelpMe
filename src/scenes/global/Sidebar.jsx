@@ -46,6 +46,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
+  const [profile, setProfile] = useState("");
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -59,6 +60,8 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username); // Set username dari data user
         setRole(data.user.role); // Set role dari data user
+        console.log(data.user.image_profile)
+        setProfile('http://192.168.1.32:8888/' + data.user.image_profile); // Set profile dari data user
       }
     };
 
@@ -124,7 +127,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/rar.jpeg`}
+                  src={profile}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -162,7 +165,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Kelola Mitra"
-              to="/team"
+              to="/mitra"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -184,28 +187,28 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Bantuan Serabutan"
-              to="/form"
+              to="/serabutan"
               icon={<PrivacyTipIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Kendaraan"
-              to="/calendar"
+              to="/kendaraan"
               icon={<CarCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Elektronik"
-              to="/faq"
+              to="/elektronik"
               icon={<ElectricalServicesIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Rumah"
-              to="/faq"
+              to="/rumah"
               icon={<DoorbellIcon />}
               selected={selected}
               setSelected={setSelected}

@@ -2,8 +2,8 @@
 
 import axios from "axios";
 
-const API_URL =
-  "http://192.168.1.32:8080/api/auth"; // Ganti dengan API login kamu
+export const API_URL =
+  "http://192.168.1.32:8888/api/auth"; // Ganti dengan API login kamu
   // "https://99d6-2001-448a-302e-332d-4894-d527-fb87-3db4.ngrok-free.app/api/auth"; // Ganti dengan API login kamu
 
 export const login = async (username, password) => {
