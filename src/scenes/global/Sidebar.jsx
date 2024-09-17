@@ -1,24 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import DoorbellIcon from '@mui/icons-material/Doorbell';
+import DoorbellIcon from "@mui/icons-material/Doorbell";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import PrivacyTipIcon from '@mui/icons-material/PrivacyTipOutlined';
-import CarCrashIcon from '@mui/icons-material/CarCrashOutlined';
-import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
+import CarCrashIcon from "@mui/icons-material/CarCrashOutlined";
+import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { aboutMe, logout } from "../../api/authApi";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <MenuItem
       active={selected === title}
@@ -34,11 +36,34 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
+
+
+
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout(); // Panggil fungsi logout dari API
+    navigate("/login"); // Setelah logout, redirect ke halaman login
+  };
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await aboutMe(); // Panggil API untuk dapatkan data user
+      if (data && data.user) {
+        setUsername(data.user.username); // Set username dari data user
+        setRole(data.user.role); // Set role dari data user
+      }
+    };
+
+    fetchUserData(); // Panggil fungsi fetchUserData setelah komponen mount
+  }, []); // Dependency array kosong untuk memastikan ini hanya dijalankan sekali
 
   return (
     <Box
@@ -78,7 +103,11 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" sx={{ fontWeight: "bold" }} color={colors.grey[100]}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: "bold" }}
+                  color={colors.grey[100]}
+                >
                   HelpMe !
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -106,10 +135,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Fadil
+                  {username}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Administrator
+                  {role}
                 </Typography>
               </Box>
             </Box>
@@ -203,6 +232,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            {/* LOGOUT ITEM */}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -210,13 +240,14 @@ const Sidebar = () => {
             >
               Logout
             </Typography>
-            <Item
+            <MenuItem
               title="Logout"
-              to="/form"
               icon={<LogoutOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              onClick={handleLogout} // Panggil fungsi logout saat klik
+              style={{ color: colors.grey[100] }}
+            >
+              <Typography>Logout</Typography>
+            </MenuItem>
           </Box>
         </Menu>
       </ProSidebar>
