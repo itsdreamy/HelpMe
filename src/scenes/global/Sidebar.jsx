@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import DoorbellIcon from "@mui/icons-material/Doorbell";
+import DoorbellIcon from '@mui/icons-material/Doorbell';
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
-import CarCrashIcon from "@mui/icons-material/CarCrashOutlined";
-import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices";
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTipOutlined';
+import CarCrashIcon from '@mui/icons-material/CarCrashOutlined';
+import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { aboutMe, logout } from "../../api/authApi";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   return (
     <MenuItem
       active={selected === title}
@@ -35,9 +33,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     </MenuItem>
   );
 };
-
-
-
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -106,11 +101,7 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography
-                  variant="h3"
-                  sx={{ fontWeight: "bold" }}
-                  color={colors.grey[100]}
-                >
+                <Typography variant="h3" sx={{ fontWeight: "bold" }} color={colors.grey[100]}>
                   HelpMe !
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -127,7 +118,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={profile}
+                  src={`../../assets/rar.jpeg`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -138,10 +129,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {username}
+                  Fadil
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  {role}
+                  Administrator
                 </Typography>
               </Box>
             </Box>
@@ -172,7 +163,7 @@ const Sidebar = () => {
             />
             <Item
               title="Kelola Pengguna"
-              to="/contacts"
+              to="/pengguna"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -187,28 +178,28 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Bantuan Serabutan"
-              to="/serabutan"
+              to="/form"
               icon={<PrivacyTipIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Kendaraan"
-              to="/kendaraan"
+              to="/calendar"
               icon={<CarCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Elektronik"
-              to="/elektronik"
+              to="/faq"
               icon={<ElectricalServicesIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Rumah"
-              to="/rumah"
+              to="/faq"
               icon={<DoorbellIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -235,7 +226,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            {/* LOGOUT ITEM */}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -243,14 +233,13 @@ const Sidebar = () => {
             >
               Logout
             </Typography>
-            <MenuItem
+            <Item
               title="Logout"
+              to="/form"
               icon={<LogoutOutlinedIcon />}
-              onClick={handleLogout} // Panggil fungsi logout saat klik
-              style={{ color: colors.grey[100] }}
-            >
-              <Typography>Logout</Typography>
-            </MenuItem>
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>
