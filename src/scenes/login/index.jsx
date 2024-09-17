@@ -17,7 +17,7 @@ const Login = () => {
                         <LockIcon className='icon'/>
                     </div>
                     <div className="remember-forgot">
-                        <a href="">Forgot Password</a>
+                        <a href="/forgotpassword">Forgot Password</a>
                     </div>
                     <button type="submit" className="btn">Login</button>
                 </form>

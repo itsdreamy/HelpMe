@@ -6,6 +6,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
+import Forgotpass from "./scenes/forgotpass";
+import Mitra from "./scenes/users/mitra";
+import Pengguna from "./scenes/users/customers";
 // import Team from "./scenes/team";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
@@ -16,7 +19,11 @@ import Dashboard from "./scenes/dashboard";
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation(); // Get current route location
-  const showSidebarAndTopbar = location.pathname !== '/login'; // Only show sidebar/topbar when not on login page
+  const hiddenPaths = ['/login', '/forgotpassword'];
+
+  // Check if the current pathname is one of the hidden paths
+  const showSidebarAndTopbar = !hiddenPaths.includes(location.pathname);
+
   return (
   <ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={theme}>
@@ -28,6 +35,10 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/forgotpassword" element={ <Forgotpass /> } />
+                  <Route path="/mitra" element={ <Mitra /> } />
+                  <Route path="/pengguna" element={ <Pengguna /> } />
+                  
                   {/* <Route path="/team" element={<Team />} />
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/contacts" element={<Contacts />} />
