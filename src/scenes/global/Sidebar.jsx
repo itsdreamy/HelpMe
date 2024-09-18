@@ -171,7 +171,7 @@ const Sidebar = () => {
             />
             <Item
               title="Kelola Pengguna"
-              to="/pengguna"
+              to="/users"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

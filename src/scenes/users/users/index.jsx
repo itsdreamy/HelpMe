@@ -1,11 +1,11 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataTeam, mockDataUsers } from "../../../data/mockData";
+import { mockDataUsers } from "../../../api/mockData";
 import Header from "../../../components/Header";
 import { useEffect, useState } from "react";
 
-const Mitra = () => {
+const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -96,4 +96,4 @@ const Mitra = () => {
   );
 };
 
-export default Mitra;
+export default Users;
