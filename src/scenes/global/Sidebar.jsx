@@ -60,7 +60,7 @@ const Sidebar = () => {
         setUsername(data.user.username); // Set username dari data user
         setRole(data.user.role); // Set role dari data user
         // console.log(data.user.image_profile)
-        setProfile("https://11eb-2001-448a-302e-332d-b989-cdbb-e1f8-7e30.ngrok-free.app/" + data.user.image_profile); // Set profile dari data user
+        setProfile("https://976d18b22d4ee5631e744dfa3030115a.serveo.net/" + data.user.image_profile); // Set profile dari data user
       }
     };
 
@@ -186,7 +186,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Bantuan Serabutan"
-              to="/form"
+              to="/serabutan"
               icon={<PrivacyTipIcon />}
               selected={selected}
               setSelected={setSelected}

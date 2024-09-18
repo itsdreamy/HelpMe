@@ -9,6 +9,7 @@ import Dashboard from "./scenes/dashboard";
 import Forgotpass from "./scenes/forgotpass";
 import Mitra from "./scenes/users/mitra";
 import Users from "./scenes/users/users";
+import Serabutan from "./scenes/kategori bantuan/serabutan";
 // import Team from "./scenes/team";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
@@ -38,6 +39,7 @@ function App() {
                   <Route path="/forgotpassword" element={ <Forgotpass /> } />
                   <Route path="/mitra" element={ <Mitra /> } />
                   <Route path="/users" element={ <Users /> } />
+                  <Route path="/serabutan" element={ <Serabutan /> } />
                   {/* <Route path="/team" element={<Team />} />
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/contacts" element={<Contacts />} />

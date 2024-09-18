@@ -43,6 +43,86 @@ export const mockDataUsers = async () => {
   }
 }
 
+export const mockDataSerabutan = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(API_URL + "/category/sub/1", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
+
+export const mockDataKendaraan = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(API_URL + "/category/sub/2", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
+
+export const mockDataRumah = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(API_URL + "/category/sub/3", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
+
+export const mockDataElektrik = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(API_URL + "/category/sub/4", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
+
 export const mockDataTeam = [
   {
     id: 1,
