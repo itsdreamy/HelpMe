@@ -103,7 +103,7 @@ export const mockDataRumah = async () => {
   }
 }
 
-export const mockDataElektrik = async () => {
+export const mockDataElektronik = async () => {
   const token = localStorage.getItem('token');
   if (!token) {
     console.error("No token found");

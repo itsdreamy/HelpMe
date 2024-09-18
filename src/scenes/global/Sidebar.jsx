@@ -193,21 +193,21 @@ const Sidebar = () => {
             />
             <Item
               title="Bantuan Kendaraan"
-              to="/calendar"
+              to="/kendaraan"
               icon={<CarCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Elektronik"
-              to="/faq"
+              to="/elektronik"
               icon={<ElectricalServicesIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Bantuan Rumah"
-              to="/faq"
+              to="/rumah"
               icon={<DoorbellIcon />}
               selected={selected}
               setSelected={setSelected}

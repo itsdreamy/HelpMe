@@ -10,6 +10,9 @@ import Forgotpass from "./scenes/forgotpass";
 import Mitra from "./scenes/users/mitra";
 import Users from "./scenes/users/users";
 import Serabutan from "./scenes/kategori bantuan/serabutan";
+import Elektronik from "./scenes/kategori bantuan/elektronik";
+import Rumah from "./scenes/kategori bantuan/rumah";
+import Kendaraan from "./scenes/kategori bantuan/kendaraan";
 // import Team from "./scenes/team";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
@@ -40,6 +43,9 @@ function App() {
                   <Route path="/mitra" element={ <Mitra /> } />
                   <Route path="/users" element={ <Users /> } />
                   <Route path="/serabutan" element={ <Serabutan /> } />
+                  <Route path="/elektronik" element={ <Elektronik /> } />
+                  <Route path="/rumah" element={ <Rumah /> } />
+                  <Route path="/kendaraan" element={ <Kendaraan /> } />
                   {/* <Route path="/team" element={<Team />} />
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/contacts" element={<Contacts />} />
