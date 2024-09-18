@@ -17,7 +17,7 @@ const Login = () => {
 
         if (data && data.token) {
             // Jika login berhasil
-            navigate('/'); // Redirect ke halaman utama
+            navigate('/dashboard'); // Redirect ke halaman utama
         } else {
             // Jika login gagal
             setMessage('Login gagal! Username atau password salah.');
@@ -41,7 +41,7 @@ const Login = () => {
                         <a href="/forgotpassword">Forgot Password</a>
                     </div>
                     <button type="submit" className="btn">Login</button>
-                    <p>{message}</p>
+                    <p className='text-center'>{message}</p>
                 </form>
             </div>
         </div>

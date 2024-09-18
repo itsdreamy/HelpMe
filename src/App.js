@@ -1,6 +1,6 @@
 import { ColorModeContext } from "./theme";
 import {useMode} from "./theme";
-import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import Login from "./scenes/login"
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
@@ -13,6 +13,7 @@ import Serabutan from "./scenes/kategori bantuan/serabutan";
 import Elektronik from "./scenes/kategori bantuan/elektronik";
 import Rumah from "./scenes/kategori bantuan/rumah";
 import Kendaraan from "./scenes/kategori bantuan/kendaraan";
+import LoginRedirect from "./components/loginredirect";
 // import Team from "./scenes/team";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
@@ -37,7 +38,7 @@ function App() {
               <main className="content">
               {showSidebarAndTopbar && <Topbar />}
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/" element={<LoginRedirect />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/forgotpassword" element={ <Forgotpass /> } />
                   <Route path="/mitra" element={ <Mitra /> } />
