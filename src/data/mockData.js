@@ -15,8 +15,8 @@ export const mockDataMitra = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
-    return response.data;
+    // console.log(response);
+    return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);
     return [];

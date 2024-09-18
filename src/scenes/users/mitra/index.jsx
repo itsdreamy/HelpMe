@@ -13,7 +13,7 @@ const Mitra = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await mockDataMitra(); // Panggil fungsi mockDataMitra
-      if (response && response.data) {
+      if (response) {
         console.log("Mitra data:", response.data);
         setData(response.data); // Simpan data ke state
       } else {
