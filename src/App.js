@@ -41,6 +41,7 @@ function App() {
                   <Route path="/" element={<LoginRedirect />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/forgotpassword" element={ <Forgotpass /> } />
+                  <Route path="/dashboard" element={ <Dashboard /> } />
                   <Route path="/mitra" element={ <Mitra /> } />
                   <Route path="/users" element={ <Users /> } />
                   <Route path="/serabutan" element={ <Serabutan /> } />

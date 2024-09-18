@@ -70,7 +70,7 @@ const Serabutan = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={data} columns={columns} />
+        <DataGrid rows={data} columns={columns} />
       </Box>
     </Box>
   );
