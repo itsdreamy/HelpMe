@@ -3,7 +3,7 @@
 import axios from "axios";
 
 export const API_URL =
-  "http://localhost:8888/api/auth"; // Ganti dengan API login kamu
+  "https://976d18b22d4ee5631e744dfa3030115a.serveo.net/api/auth"; // Ganti dengan API login kamu
 
 export const login = async (username, password) => {
   try {
@@ -70,3 +70,7 @@ export const logout = async () => {
     console.log('No token found'); // Jika token tidak ditemukan
   }
 };
+
+export const changePassword = async () => {
+
+}

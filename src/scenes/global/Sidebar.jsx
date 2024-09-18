@@ -60,7 +60,7 @@ const Sidebar = () => {
         setUsername(data.user.username); // Set username dari data user
         setRole(data.user.role); // Set role dari data user
         // console.log(data.user.image_profile)
-        setProfile("http://localhost:8888/" + data.user.image_profile); // Set profile dari data user
+        setProfile("https://11eb-2001-448a-302e-332d-b989-cdbb-e1f8-7e30.ngrok-free.app/" + data.user.image_profile); // Set profile dari data user
       }
     };
 
