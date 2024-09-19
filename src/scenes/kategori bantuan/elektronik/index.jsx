@@ -37,6 +37,7 @@ const Elektronik = () => {
   return (
     <Box m="20px">
       <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
+      <a href="/elektronik/create">Create New Problem</a>
       <Box
         m="40px 0 0 0"
         height="75vh"

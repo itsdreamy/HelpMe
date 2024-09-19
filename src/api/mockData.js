@@ -51,7 +51,7 @@ export const mockDataSerabutan = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/sub/1", {
+    const response = await axios.get(API_URL + "/category/problem/1", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -71,7 +71,7 @@ export const mockDataKendaraan = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/sub/2", {
+    const response = await axios.get(API_URL + "/category/problem/2", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -91,7 +91,7 @@ export const mockDataRumah = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/sub/3", {
+    const response = await axios.get(API_URL + "/category/problem/3", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -111,7 +111,7 @@ export const mockDataElektronik = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/sub/4", {
+    const response = await axios.get(API_URL + "/category/problem/4", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
