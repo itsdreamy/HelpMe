@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EmailIcon from '@mui/icons-material/Email';
+import { resetPassword } from '../../api/authApi';
 
-const forgotpass = () => {
+const ForgotPass = () => {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     const data = await login(username, password);
+    //     setLoading(false);
+
+    //     if (data && data.token) {
+    //         // Jika login berhasil
+    //         navigate('/dashboard'); // Redirect ke halaman utama
+    //     } else {
+    //         // Jika login gagal
+    //         setMessage('Login gagal! Username atau password salah.');
+    //     }
+    // };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await resetPassword(email);
+        setMessage('Reset password link telah dikirim ke email anda.');
+    } 
+
     return (
         <div className="wrapper">
             <div className="form-box login">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <h1>Reset Password</h1>
                     <div className="input-box">
-                        <input type="email" placeholder="Email" required />
+                        <input type="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <EmailIcon className='icon'/>
                     </div>
                     <button type="submit" className="btn">Submit</button>
+                    <p>{message}</p>
                 </form>
             </div>
         </div>
     )
 }
 
-export default forgotpass;
+export default ForgotPass;

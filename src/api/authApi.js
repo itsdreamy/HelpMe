@@ -71,6 +71,17 @@ export const logout = async () => {
   }
 };
 
-export const changePassword = async () => {
+// export const changePassword = async () => {
 
+// }
+
+export const resetPassword = async (email) => {
+  try {
+    const response = await axios.post(API_URL + '/reset-password', {
+      email: email,
+    });
+    console.log('Reset password response:', response);
+  } catch (err) {
+    console.error('Error during reset password:', err);
+  }
 }
