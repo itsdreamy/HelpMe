@@ -29,8 +29,8 @@ const Login = () => {
 
     return (
         <div className="wrapper">
-            <div className="form-box login">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
+            <div className="form-box login">
                 <form onSubmit={handleSubmit}>
                     <h1>Login</h1>
                     <div className="input-box">
