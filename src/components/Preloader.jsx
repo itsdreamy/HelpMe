@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { BounceLoader } from 'react-spinners';
-import ClipLoader from 'react-spinners/ClipLoader';
+import HashLoader from 'react-spinners/HashLoader';
 
 const Preloader = ({ loading }) => {
   return (
     <div className="preloader">
-      <BounceLoader color={"#3498db"} loading={loading} size={50} />
+      <HashLoader color={"#e0e0e0"} loading={loading} size={50} />
     </div>
   );
 };
