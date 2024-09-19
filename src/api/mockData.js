@@ -1,7 +1,7 @@
 import { tokens } from "../theme";
 import axios from "axios";
 
-const API_URL = 'https://976d18b22d4ee5631e744dfa3030115a.serveo.net/api';
+const API_URL = 'https://513fe3622e5bbb9c86802e3fa0bc403a.serveo.net/api';
 
 export const mockDataMitra = async () => {
   const token = localStorage.getItem('token');
@@ -9,13 +9,14 @@ export const mockDataMitra = async () => {
     console.error("No token found");
     return [];
   }
+  
   try {
     const response = await axios.get(API_URL + "/mitra/all", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);

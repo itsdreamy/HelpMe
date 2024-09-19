@@ -2,12 +2,12 @@
 
 import axios from "axios";
 
-export const API_URL =
-  "https://976d18b22d4ee5631e744dfa3030115a.serveo.net/api/auth"; // Ganti dengan API login kamu
+const API_URL =
+  "https://513fe3622e5bbb9c86802e3fa0bc403a.serveo.net/api/auth"; // Ganti dengan API login kamu
 
 export const login = async (username, password) => {
   try {
-    const response = await axios.post(API_URL + "/login", {
+    const response = await axios.post(API_URL + "/login?app_type=admin", {
       username: username,
       password: password,
     });
@@ -21,7 +21,7 @@ export const login = async (username, password) => {
 
     return null; // Jika tidak ada token, login gagal
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error("Login failed:", error.response.data);
     return null;
   }
 };
@@ -35,7 +35,7 @@ export const aboutMe = async () => {
           Authorization: `Bearer ${token}`,
        },
       });
-      // console.log(response);
+      console.log(response);
       return response.data;
     }
 
