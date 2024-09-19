@@ -3,8 +3,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/authApi';
+import Preloader from '../../components/Preloader';
 
 const Login = () => {
+    const [ loading, setLoading ] = useState(false);
     const [ username, setUsername ]  = useState(''); 
     const [ password, setPassword ]  = useState('');
     const [ message, setMessage ] = useState(''); 
@@ -12,8 +14,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         const data = await login(username, password);
+        setLoading(false);
 
         if (data && data.token) {
             // Jika login berhasil
@@ -27,6 +30,7 @@ const Login = () => {
     return (
         <div className="wrapper">
             <div className="form-box login">
+            {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
                 <form onSubmit={handleSubmit}>
                     <h1>Login</h1>
                     <div className="input-box">
