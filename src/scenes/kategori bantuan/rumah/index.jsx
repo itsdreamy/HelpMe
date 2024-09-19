@@ -37,6 +37,7 @@ const Rumah = () => {
   return (
     <Box m="20px">
       <Header title="Rumah" subtitle="Sub Category dari Rumah" />
+      <a href="/rumah/create">Create New Problem</a>
       <Box
         m="40px 0 0 0"
         height="75vh"

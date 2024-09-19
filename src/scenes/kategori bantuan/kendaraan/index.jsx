@@ -37,6 +37,7 @@ const Kendaraan = () => {
   return (
     <Box m="20px">
       <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
+      <a href="/kendaraan/create">Create New Problem</a>
       <Box
         m="40px 0 0 0"
         height="75vh"

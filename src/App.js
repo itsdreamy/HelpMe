@@ -14,6 +14,10 @@ import Elektronik from "./scenes/kategori bantuan/elektronik";
 import Rumah from "./scenes/kategori bantuan/rumah";
 import Kendaraan from "./scenes/kategori bantuan/kendaraan";
 import LoginRedirect from "./components/loginredirect";
+import NewKendaraan from "./scenes/form/kendaraan";
+import NewElektronik from "./scenes/form/elektronik";
+import NewSerabutan from "./scenes/form/serabutan";
+import NewRumah from "./scenes/form/rumah";
 // import Team from "./scenes/team";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
@@ -48,6 +52,10 @@ function App() {
                   <Route path="/elektronik" element={ <Elektronik /> } />
                   <Route path="/rumah" element={ <Rumah /> } />
                   <Route path="/kendaraan" element={ <Kendaraan /> } />
+                  <Route path="/kendaraan/create" element={ <NewKendaraan /> } />
+                  <Route path="/elektronik/create" element={ <NewElektronik /> } />
+                  <Route path="/serabutan/create" element={ <NewSerabutan /> } />
+                  <Route path="/rumah/create" element={ <NewRumah /> } />
                   {/* <Route path="/team" element={<Team />} />
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/contacts" element={<Contacts />} />
