@@ -1,23 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import DoorbellIcon from "@mui/icons-material/Doorbell";
+import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined"; // Ikon default untuk kategori
+import { logout, aboutMe } from "../../api/authApi";
+import { listCategory } from "../../api/mockData";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
-import CarCrashIcon from "@mui/icons-material/CarCrashOutlined";
-import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useEffect } from "react";
-import { logout, aboutMe } from "../../api/authApi";
 
+// Component untuk item sidebar
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -44,28 +40,37 @@ const Sidebar = () => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
   const [profile, setProfile] = useState("");
+  const [categories, setCategories] = useState([]); // Tambahkan state untuk menyimpan data kategori
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const data = await logout(); // Panggil fungsi logout dari API
+    const data = await logout();
     if (data) {
-      navigate("/login"); // Setelah logout, redirect ke halaman login
+      navigate("/login");
     }
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const data = await aboutMe(); // Panggil API untuk dapatkan data user
+      const data = await aboutMe();
       if (data && data.user) {
-        setUsername(data.user.username); // Set username dari data user
-        setRole(data.user.role); // Set role dari data user
-        // console.log(data.user.image_profile)
-        setProfile("https://513fe3622e5bbb9c86802e3fa0bc403a.serveo.net/" + data.user.image_profile); // Set profile dari data user
+        setUsername(data.user.username);
+        setRole(data.user.role);
+        setProfile("https://6cc390e50272f9739be466219fe4343c.serveo.net/" + data.user.image_profile);
       }
     };
 
-    fetchUserData(); // Panggil fungsi fetchUserData setelah komponen mount
-  }, []); // Dependency array kosong untuk memastikan ini hanya dijalankan sekali
+    // Fetch daftar kategori dari API
+    const fetchCategoryList = async () => {
+      const data = await listCategory();
+      if (data && data.data) {
+        setCategories(data.data); // Simpan daftar kategori ke state
+      }
+    };
+
+    fetchUserData();
+    fetchCategoryList();
+  }, []);
 
   return (
     <Box
@@ -155,6 +160,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
+            {/* Bagian Users */}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -177,6 +183,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
+            {/* Bagian Dinamis Kategori Bantuan */}
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -184,56 +191,19 @@ const Sidebar = () => {
             >
               Kategori Bantuan
             </Typography>
-            <Item
-              title="Bantuan Serabutan"
-              to="/serabutan"
-              icon={<PrivacyTipIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Bantuan Kendaraan"
-              to="/kendaraan"
-              icon={<CarCrashIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Bantuan Elektronik"
-              to="/elektronik"
-              icon={<ElectricalServicesIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Bantuan Rumah"
-              to="/rumah"
-              icon={<DoorbellIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {/* Map categories */}
+            {categories.map((category) => (
+              <Item
+                key={category.id}
+                title={"Bantuan " + category.name}
+                to={`/${category.name.toLowerCase()}`}
+                icon={<PrivacyTipIcon />} // Gunakan icon yang sesuai
+                selected={selected}
+                setSelected={setSelected}
+              />
+            ))}
+
             {/* LOGOUT ITEM */}
             <Typography
               variant="h6"
@@ -245,7 +215,7 @@ const Sidebar = () => {
             <MenuItem
               title="Logout"
               icon={<LogoutOutlinedIcon />}
-              onClick={handleLogout} // Panggil fungsi logout saat klik
+              onClick={handleLogout}
               style={{ color: colors.grey[100] }}
             >
               <Typography>Logout</Typography>

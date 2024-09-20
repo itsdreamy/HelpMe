@@ -1,7 +1,8 @@
 import { tokens } from "../theme";
 import axios from "axios";
 
-const API_URL = 'https://513fe3622e5bbb9c86802e3fa0bc403a.serveo.net/api';
+// const API_URL = 'https://0111821d67c3504b03e8211a7966becd.serveo.net/api';
+const API_URL = 'http://127.0.0.1:8000/api';
 
 export const mockDataMitra = async () => {
   const token = localStorage.getItem('token');
@@ -117,6 +118,17 @@ export const mockDataElektronik = async () => {
       },
     });
     // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return [];
+  }
+}
+
+export const listCategory = async () => {
+  try {
+    const response = await axios.get(API_URL + "/category/all");
+    console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
