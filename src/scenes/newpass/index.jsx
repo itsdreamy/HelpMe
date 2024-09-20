@@ -1,43 +1,42 @@
 import React, { useState } from 'react'
-import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../api/authApi';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Preloader from '../../components/Preloader';
+import { resetPassword } from '../../api/authApi';
 
 const Newpass = () => {
     const [ loading, setLoading ] = useState(false);
-    const [ username, setUsername ]  = useState(''); 
     const [ password, setPassword ]  = useState('');
+    const [ confirmPassword, setConfirmPassword ]  = useState(''); 
     const [ message, setMessage ] = useState(''); 
-    const navigate = useNavigate();
+    const { token } = useParams();
+    const query = new URLSearchParams(useLocation().search);
+    const email = query.get('email');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const data = await login(username, password);
+        
+        const data = await resetPassword(token, email, password, confirmPassword);
+        
         setLoading(false);
 
-        if (data && data.token) {
-            // Jika login berhasil
-            navigate('/dashboard'); // Redirect ke halaman utama
-        } else {
-            // Jika login gagal
-            setMessage('Login gagal! Username atau password salah.');
+        if (data && data.status === 200) {  // Jika response berhasil (200)
+            setMessage('Password berhasil di reset, silahkan login');
+        } else if (data && data.status === 422) {  // Jika API gagal
+            const messages = data.response.data.errors.password
+            setMessage('Error: ' + messages[0]);
+        } else {  // Jika password confirmation tidak cocok atau masalah lain
+            setMessage('Password dan Confirmation Password Tidak Cocok');
         }
     };
 
     return (
         <div className="container">
-        {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
+        {loading && <Preloader loading={loading} />} {/* Show preloader if loading */ }
         <div className="wrapper">
             <div className="form-box login">
                 <form onSubmit={handleSubmit}>
-                    <h2 className='title-1'>Insert Old Password</h2>
-                    <div className="input-box">
-                        <input type="text" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
-                        <PersonIcon className='icon'/>
-                    </div>
                     <h2 className='title'>Insert New Password</h2>
                     <div className="input-box">
                         <input type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -45,14 +44,12 @@ const Newpass = () => {
                     </div>
                     <h2 className='title'>Confirm New Password</h2>
                     <div className="input-box">
-                        <input type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <input type="password" placeholder="Password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
                         <LockIcon className='icon'/>
                     </div>
-                    <div className="remember-forgot">
-                        <a href="/forgotpassword">Forgot Password</a>
-                    </div>
-                    <button type="submit" className="btn">Login</button>
-                    <p className='text-center'>{message}</p>
+                    <button type="submit" className="btn">Change</button>
+                    <a href="/login">Login</a>
+                    <p>{message}</p>
                 </form>
             </div>
         </div>
