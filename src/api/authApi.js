@@ -2,9 +2,7 @@
 
 import axios from "axios";
 
-const API_URL =
-  // "https://0111821d67c3504b03e8211a7966becd.serveo.net/api/auth";
-  "https://6cc390e50272f9739be466219fe4343c.serveo.net/api/auth";
+const API_URL = "https://024240ea974e34267725f5761285885f.serveo.net/api/auth";
 
 export const login = async (username, password) => {
   try {
@@ -76,13 +74,31 @@ export const logout = async () => {
 
 // }
 
-export const resetPassword = async (email) => {
+export const forgotPassword = async (email) => {
   try {
-    const response = await axios.post(API_URL + '/reset-password', {
+    const response = await axios.post(API_URL + '/forgot-password', {
       email: email,
     });
     console.log('Reset password response:', response);
+    return response;
   } catch (err) {
     console.error('Error during reset password:', err);
+    return null;
+  }
+}
+
+export const resetPassword = async (token, email, password, confirmPassword) => {
+  try {
+    const response = await axios.post(API_URL + '/reset-password', {
+      token: token,
+      email: email,
+      password: password,
+      password_confirmation: confirmPassword,
+    });
+    console.log('Reset password response:', response);
+    return response;
+  } catch (err) {
+    // console.error('Error during reset password:', err.response.data.errors);
+    return err; 
   }
 }

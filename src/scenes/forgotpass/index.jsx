@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import EmailIcon from '@mui/icons-material/Email';
-import { resetPassword } from '../../api/authApi';
+import { forgotPassword } from '../../api/authApi';
 
 const ForgotPass = () => {
     const [email, setEmail] = useState('');
@@ -21,8 +21,12 @@ const ForgotPass = () => {
     // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await resetPassword(email);
-        setMessage('Reset password link telah dikirim ke email anda.');
+        const data = await forgotPassword(email);
+        if (data) {
+            setMessage('Reset password link telah dikirim ke email anda.');
+        } else {
+            setMessage('Email yang anda masukkan belum terdaftar.');
+        }
     } 
 
     return (

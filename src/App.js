@@ -40,7 +40,7 @@ function App() {
               <Route path="/" element={<LoginRedirect />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={ <Forgotpass />} />
-              <Route path="/newpassword" element={ <Newpass /> } />
+              <Route path="/password-reset/:token" element={ <Newpass /> } />
               {/* <Route element={<PrivateRoute />}> */}
               <Route path="/dashboard" element={ <Dashboard /> } />
               <Route path="/mitra" element={ <Mitra /> } />

@@ -1,8 +1,7 @@
 import { tokens } from "../theme";
 import axios from "axios";
 
-// const API_URL = 'https://0111821d67c3504b03e8211a7966becd.serveo.net/api';
-const API_URL = 'https://6cc390e50272f9739be466219fe4343c.serveo.net/api';
+const API_URL = 'https://024240ea974e34267725f5761285885f.serveo.net/api';
 
 export const mockDataMitra = async () => {
   const token = localStorage.getItem('token');
