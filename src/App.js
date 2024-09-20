@@ -39,21 +39,54 @@ function App() {
             <Routes>
               <Route path="/" element={<LoginRedirect />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/forgotpassword" element={ <Forgotpass />} />
-              <Route path="/newpassword" element={ <Newpass /> } />
-              {/* <Route element={<PrivateRoute />}> */}
-              <Route path="/dashboard" element={ <Dashboard /> } />
-              <Route path="/mitra" element={ <Mitra /> } />
-              <Route path="/users" element={ <Users /> } />
-              <Route path="/serabutan" element={ <Serabutan /> } />
-              <Route path="/elektronik" element={ <Elektronik /> } />
-              <Route path="/rumah" element={ <Rumah /> } />
-              <Route path="/kendaraan" element={ <Kendaraan /> } />
-              <Route path="/kendaraan/create" element={ <NewKendaraan /> } />
-              <Route path="/elektronik/create" element={ <NewElektronik /> } />
-              <Route path="/serabutan/create" element={ <NewSerabutan /> } />
-              <Route path="/rumah/create" element={ <NewRumah /> } />
-              {/* </Route> */}
+              <Route path="/forgotpassword" element={<Forgotpass />} />
+              <Route path="/newpassword" element={<Newpass />} />
+
+              {/* Protect the routes that require authentication */}
+              <Route
+                path="/dashboard"
+                element={<PrivateRoute element={<Dashboard />} />}
+              />
+              <Route
+                path="/mitra"
+                element={<PrivateRoute element={<Mitra />} />}
+              />
+              <Route
+                path="/users"
+                element={<PrivateRoute element={<Users />} />}
+              />
+              <Route
+                path="/serabutan"
+                element={<PrivateRoute element={<Serabutan />} />}
+              />
+              <Route
+                path="/elektronik"
+                element={<PrivateRoute element={<Elektronik />} />}
+              />
+              <Route
+                path="/rumah"
+                element={<PrivateRoute element={<Rumah />} />}
+              />
+              <Route
+                path="/kendaraan"
+                element={<PrivateRoute element={<Kendaraan />} />}
+              />
+              <Route
+                path="/kendaraan/create"
+                element={<PrivateRoute element={<NewKendaraan />} />}
+              />
+              <Route
+                path="/elektronik/create"
+                element={<PrivateRoute element={<NewElektronik />} />}
+              />
+              <Route
+                path="/serabutan/create"
+                element={<PrivateRoute element={<NewSerabutan />} />}
+              />
+              <Route
+                path="/rumah/create"
+                element={<PrivateRoute element={<NewRumah />} />}
+              />
             </Routes>
           </main>   
         </div>
