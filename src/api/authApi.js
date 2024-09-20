@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const API_URL =
-  "https://513fe3622e5bbb9c86802e3fa0bc403a.serveo.net/api/auth"; // Ganti dengan API login kamu
+  "https://0111821d67c3504b03e8211a7966becd.serveo.net/api/auth"; // Ganti dengan API login kamu
 
 export const login = async (username, password) => {
   try {

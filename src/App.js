@@ -1,6 +1,6 @@
 import { ColorModeContext } from "./theme";
 import {useMode} from "./theme";
-import {BrowserRouter, Routes, Route, useLocation, useNavigate} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
 import Login from "./scenes/login"
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
@@ -18,13 +18,7 @@ import NewKendaraan from "./scenes/form/kendaraan";
 import NewElektronik from "./scenes/form/elektronik";
 import NewSerabutan from "./scenes/form/serabutan";
 import NewRumah from "./scenes/form/rumah";
-// import Team from "./scenes/team";
-// import Invoices from "./scenes/invoices";
-// import Contacts from "./scenes/contacts";
-// import Form from "./scenes/dashboard";
-// import Bar from "./scenes/dashboard";
-// import Pie from "./scenes/dashboard";
-// import FAQ from "./scenes/dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation(); // Get current route location
@@ -45,6 +39,7 @@ function App() {
                   <Route path="/" element={<LoginRedirect />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/forgotpassword" element={ <Forgotpass /> } />
+                  <Route element={<PrivateRoute />}>
                   <Route path="/dashboard" element={ <Dashboard /> } />
                   <Route path="/mitra" element={ <Mitra /> } />
                   <Route path="/users" element={ <Users /> } />
@@ -56,12 +51,7 @@ function App() {
                   <Route path="/elektronik/create" element={ <NewElektronik /> } />
                   <Route path="/serabutan/create" element={ <NewSerabutan /> } />
                   <Route path="/rumah/create" element={ <NewRumah /> } />
-                  {/* <Route path="/team" element={<Team />} />
-                  <Route path="/invoices" element={<Invoices />} />
-                  <Route path="/contacts" element={<Contacts />} />
-                  <Route path="/form" element={<Form />} />
-                  <Route path="/pie" element={<Pie />} />
-                  <Route path="/faq" element={<FAQ />} /> */}
+                  </Route>
                 </Routes>
               </main>   
         </div>

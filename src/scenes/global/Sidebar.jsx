@@ -11,8 +11,6 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CarCrashIcon from "@mui/icons-material/CarCrashOutlined";
 import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useEffect } from "react";
@@ -149,7 +147,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/dashboard"
               icon={<DashboardOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -213,27 +211,6 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
             {/* LOGOUT ITEM */}
             <Typography
               variant="h6"
