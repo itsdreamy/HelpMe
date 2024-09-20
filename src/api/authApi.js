@@ -4,7 +4,7 @@ import axios from "axios";
 
 const API_URL =
   // "https://0111821d67c3504b03e8211a7966becd.serveo.net/api/auth";
-  "https://6cc390e50272f9739be466219fe4343c.serveo.net/api/auth";
+  "https://a3ffc2345a58c05ade5458c64a73d622.serveo.net/api/auth";
 
 export const login = async (username, password) => {
   try {

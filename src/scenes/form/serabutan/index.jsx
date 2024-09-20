@@ -27,11 +27,11 @@ const NewSerabutan = () => {
     };
 
     return (
-        // <div className="wrapper">
+         <div className="problems">
             <div className="form-box login">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
                 <form onSubmit={handleSubmit}>
-                    <h1>New Problem Serabutan</h1>
+                    <h1 className='problem-title'>New Problem Serabutan</h1>
                     <div className="input-box">
                         <input type="text" placeholder="Name" required value={name} onChange={(e) => setName(e.target.value)}/>
                         <PersonIcon className='icon'/>
@@ -40,7 +40,7 @@ const NewSerabutan = () => {
                     <p className='text-center'>{message}</p>
                 </form>
             </div>
-        // </div>
+         </div>
     )
 }
 

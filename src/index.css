@@ -159,3 +159,17 @@ form .remember-forgot{
   align-items: center;
   z-index: 1;
 }
+
+.problems{
+  width: 30%;
+  margin: auto;
+}
+
+.problem-title{
+  text-align: left;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: -0.4rem;
+  margin-top: -1.1rem;
+}
