@@ -28,8 +28,9 @@ const Login = () => {
     };
 
     return (
+        <div className="container">
+        {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
         <div className="wrapper">
-            {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
             <div className="form-box login">
                 <form onSubmit={handleSubmit}>
                     <h1>Login</h1>
@@ -48,6 +49,7 @@ const Login = () => {
                     <p className='text-center'>{message}</p>
                 </form>
             </div>
+        </div>
         </div>
     )
 }
