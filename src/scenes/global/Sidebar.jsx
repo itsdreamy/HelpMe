@@ -4,19 +4,23 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined"; // Ikon default untuk kategori
 import { logout, aboutMe } from "../../api/authApi";
 import { listCategory } from "../../api/mockData";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import CarCrashIcon from '@mui/icons-material/CarCrash';
+import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
 
 // Component untuk item sidebar
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  
   return (
     <MenuItem
       active={selected === title}
@@ -40,7 +44,7 @@ const Sidebar = () => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
   const [profile, setProfile] = useState("");
-  const [categories, setCategories] = useState([]); // Tambahkan state untuk menyimpan data kategori
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -60,17 +64,23 @@ const Sidebar = () => {
       }
     };
 
-    // Fetch daftar kategori dari API
     const fetchCategoryList = async () => {
       const data = await listCategory();
       if (data && data.data) {
-        setCategories(data.data); // Simpan daftar kategori ke state
+        setCategories(data.data);
       }
     };
 
     fetchUserData();
     fetchCategoryList();
   }, []);
+
+  const categoryIcons = [
+    <PrivacyTipIcon />,
+    <CarCrashIcon />,
+    <HomeOutlinedIcon />,
+    <ElectricBoltIcon />,
+  ];
 
   return (
     <Box
@@ -193,12 +203,12 @@ const Sidebar = () => {
             </Typography>
 
             {/* Map categories */}
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <Item
                 key={category.id}
                 title={"Bantuan " + category.name}
                 to={`/${category.name.toLowerCase()}`}
-                icon={<PrivacyTipIcon />} // Gunakan icon yang sesuai
+                icon={categoryIcons[index % categoryIcons.length]} // Use icons dynamically
                 selected={selected}
                 setSelected={setSelected}
               />

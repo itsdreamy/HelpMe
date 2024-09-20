@@ -1,7 +1,7 @@
 import { ColorModeContext } from "./theme";
 import {useMode} from "./theme";
-import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
-import Login from "./scenes/login"
+import {Route, Routes, useLocation} from "react-router-dom"; // Removed BrowserRouter here
+import Login from "./scenes/login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -19,43 +19,45 @@ import NewElektronik from "./scenes/form/elektronik";
 import NewSerabutan from "./scenes/form/serabutan";
 import NewRumah from "./scenes/form/rumah";
 import PrivateRoute from "./components/PrivateRoute";
+import Newpass from "./scenes/newpass";
+
 function App() {
   const [theme, colorMode] = useMode();
-  const location = useLocation(); // Get current route location
-  const hiddenPaths = ['/login', '/forgotpassword'];
+  const location = useLocation();
+  const hiddenPaths = ['/login', '/forgotpassword', '/newpassword'];
 
-  // Check if the current pathname is one of the hidden paths
   const showSidebarAndTopbar = !hiddenPaths.includes(location.pathname);
 
   return (
-  <ColorModeContext.Provider value={colorMode}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <div className="app">
           {showSidebarAndTopbar && <Sidebar />}
-              <main className="content">
-              {showSidebarAndTopbar && <Topbar />}
-                <Routes>
-                  <Route path="/" element={<LoginRedirect />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/forgotpassword" element={ <Forgotpass /> } />
-                  <Route element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={ <Dashboard /> } />
-                  <Route path="/mitra" element={ <Mitra /> } />
-                  <Route path="/users" element={ <Users /> } />
-                  <Route path="/serabutan" element={ <Serabutan /> } />
-                  <Route path="/elektronik" element={ <Elektronik /> } />
-                  <Route path="/rumah" element={ <Rumah /> } />
-                  <Route path="/kendaraan" element={ <Kendaraan /> } />
-                  <Route path="/kendaraan/create" element={ <NewKendaraan /> } />
-                  <Route path="/elektronik/create" element={ <NewElektronik /> } />
-                  <Route path="/serabutan/create" element={ <NewSerabutan /> } />
-                  <Route path="/rumah/create" element={ <NewRumah /> } />
-                  </Route>
-                </Routes>
-              </main>   
+          <main className="content">
+            {showSidebarAndTopbar && <Topbar />}
+            <Routes>
+              <Route path="/" element={<LoginRedirect />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgotpassword" element={ <Forgotpass />} />
+              <Route path="/newpassword" element={ <Newpass /> } />
+              {/* <Route element={<PrivateRoute />}> */}
+              <Route path="/dashboard" element={ <Dashboard /> } />
+              <Route path="/mitra" element={ <Mitra /> } />
+              <Route path="/users" element={ <Users /> } />
+              <Route path="/serabutan" element={ <Serabutan /> } />
+              <Route path="/elektronik" element={ <Elektronik /> } />
+              <Route path="/rumah" element={ <Rumah /> } />
+              <Route path="/kendaraan" element={ <Kendaraan /> } />
+              <Route path="/kendaraan/create" element={ <NewKendaraan /> } />
+              <Route path="/elektronik/create" element={ <NewElektronik /> } />
+              <Route path="/serabutan/create" element={ <NewSerabutan /> } />
+              <Route path="/rumah/create" element={ <NewRumah /> } />
+              {/* </Route> */}
+            </Routes>
+          </main>   
         </div>
-    </ThemeProvider>
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 }
