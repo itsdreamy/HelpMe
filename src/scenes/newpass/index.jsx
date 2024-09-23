@@ -12,6 +12,7 @@ const Newpass = () => {
     const { token } = useParams();
     const query = new URLSearchParams(useLocation().search);
     const email = query.get('email');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +24,7 @@ const Newpass = () => {
 
         if (data && data.status === 200) {  // Jika response berhasil (200)
             setMessage('Password berhasil di reset, silahkan login');
+            navigate('/login');
         } else if (data && data.status === 422) {  // Jika API gagal
             const messages = data.response.data.errors.password
             setMessage('Error: ' + messages[0]);

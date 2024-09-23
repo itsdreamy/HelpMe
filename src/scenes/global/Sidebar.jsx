@@ -60,7 +60,7 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username);
         setRole(data.user.role);
-        setProfile("https://024240ea974e34267725f5761285885f.serveo.net/" + data.user.image_profile);
+        setProfile("https://56171de00aa9ba740c79889e8ab170b4.serveo.net/" + data.user.image_profile);
       }
     };
 
