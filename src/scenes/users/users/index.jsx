@@ -4,23 +4,31 @@ import { tokens } from "../../../theme";
 import { mockDataUsers } from "../../../api/mockData";
 import Header from "../../../components/Header";
 import { useEffect, useState } from "react";
+import Preloader from "../../../components/Preloader"; // Import Preloader
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // State for loading
+  const [error, setError] = useState(null); // State for error handling
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await mockDataUsers(); // Panggil fungsi mockDataMitra
-      if (response) {
-        console.log("Users data:", response.data);
-        setData(response.data); // Simpan data ke state
-      } else {
-        console.log("No data found");
+      try {
+        const response = await mockDataUsers();
+        if (response) {
+          setData(response.data);
+        } else {
+          setError("No data found");
+        }
+      } catch (err) {
+        setError("Failed to fetch users data");
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
-    fetchData(); // Jalankan fungsi fetch data
+    fetchData();
   }, []);
 
   const columns = [
@@ -55,8 +63,23 @@ const Users = () => {
       field: "is_active",
       headerName: "Is Active",
       flex: 1,
-    }
+    },
   ];
+
+  if (loading) {
+    return <Preloader loading={loading} />; // Show Preloader when loading
+  }
+
+  if (error) {
+    return (
+      <Box m="20px">
+        <Header title="Error" subtitle="Failed to load user data" />
+        <Typography variant="h5" color="error">
+          {error}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box m="20px">

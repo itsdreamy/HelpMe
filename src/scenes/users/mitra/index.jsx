@@ -2,25 +2,29 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { mockDataMitra } from '../../../api/mockData'
+import { mockDataMitra } from '../../../api/mockData';
 import { useEffect, useState } from "react";
+import Preloader from '../../../components/Preloader'; // Import your Preloader component
 
 const Mitra = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [data, setData] = useState([]); // Menggunakan state untuk menyimpan data
+  const [data, setData] = useState([]);  // State for storing data
+  const [loading, setLoading] = useState(true);  // State for loading status
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await mockDataMitra(); // Panggil fungsi mockDataMitra
+      setLoading(true);  // Start loading
+      const response = await mockDataMitra();  // Fetch data
       if (response) {
         console.log("Mitra data:", response.data);
-        setData(response.data); // Simpan data ke state
+        setData(response.data);  // Set the fetched data
       } else {
         console.log("No data found");
       }
+      setLoading(false);  // Stop loading after data is fetched
     };
-    fetchData(); // Jalankan fungsi fetch data
+    fetchData();  // Fetch the data
   }, []);
 
   const columns = [
@@ -57,6 +61,8 @@ const Mitra = () => {
 
   return (
     <Box m="20px">
+      {loading && <Preloader loading={loading} />} {/* Show Preloader if loading */}
+
       <Header title="Mitra" subtitle="Managing the Team Members" />
       <Box
         m="40px 0 0 0"
@@ -87,7 +93,7 @@ const Mitra = () => {
           },
         }}
       >
-        <DataGrid rows={data} columns={columns} />
+        {!loading && <DataGrid rows={data} columns={columns} />} {/* Show DataGrid if not loading */}
       </Box>
     </Box>
   );

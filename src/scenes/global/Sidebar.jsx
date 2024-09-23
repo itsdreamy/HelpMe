@@ -15,18 +15,17 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CarCrashIcon from '@mui/icons-material/CarCrash';
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
+import Preloader from '../../components/Preloader'; // Import your Preloader component
 
-// Component untuk item sidebar
+// Component for sidebar items
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  
+
   return (
     <MenuItem
       active={selected === title}
-      style={{
-        color: colors.grey[100],
-      }}
+      style={{ color: colors.grey[100] }}
       onClick={() => setSelected(title)}
       icon={icon}
     >
@@ -45,10 +44,14 @@ const Sidebar = () => {
   const [role, setRole] = useState("");
   const [profile, setProfile] = useState("");
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [logoutLoading, setLogoutLoading] = useState(false); // State for logout loading
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    setLogoutLoading(true); // Start loading
     const data = await logout();
+    setLogoutLoading(false); // Stop loading
     if (data) {
       navigate("/login");
     }
@@ -71,8 +74,13 @@ const Sidebar = () => {
       }
     };
 
-    fetchUserData();
-    fetchCategoryList();
+    const loadData = async () => {
+      await fetchUserData();
+      await fetchCategoryList();
+      setLoading(false); // Stop loading when data is fetched
+    };
+
+    loadData();
   }, []);
 
   const categoryIcons = [
@@ -102,137 +110,141 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
-            }}
-          >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Typography
-                  variant="h3"
-                  sx={{ fontWeight: "bold" }}
-                  color={colors.grey[100]}
+      {loading ? (
+        <Preloader loading={loading} /> // Show Preloader if loading
+      ) : logoutLoading ? ( // Show Preloader if logging out
+        <Preloader loading={logoutLoading} />
+      ) : (
+        <ProSidebar collapsed={isCollapsed}>
+          <Menu iconShape="square">
+            {/* LOGO AND MENU ICON */}
+            <MenuItem
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+              style={{
+                margin: "10px 0 20px 0",
+                color: colors.grey[100],
+              }}
+            >
+              {!isCollapsed && (
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  ml="15px"
                 >
-                  HelpMe !
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
-                </IconButton>
+                  <Typography
+                    variant="h3"
+                    sx={{ fontWeight: "bold" }}
+                    color={colors.grey[100]}
+                  >
+                    HelpMe !
+                  </Typography>
+                  <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                    <MenuOutlinedIcon />
+                  </IconButton>
+                </Box>
+              )}
+            </MenuItem>
+
+            {!isCollapsed && (
+              <Box mb="25px">
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <img
+                    alt="profile-user"
+                    width="100px"
+                    height="100px"
+                    src={profile}
+                    style={{ cursor: "pointer", borderRadius: "50%" }}
+                  />
+                </Box>
+                <Box textAlign="center">
+                  <Typography
+                    variant="h2"
+                    color={colors.grey[100]}
+                    fontWeight="bold"
+                    sx={{ m: "10px 0 0 0" }}
+                  >
+                    {username}
+                  </Typography>
+                  <Typography variant="h5" color={colors.greenAccent[500]}>
+                    {role}
+                  </Typography>
+                </Box>
               </Box>
             )}
-          </MenuItem>
 
-          {!isCollapsed && (
-            <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={profile}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
-              </Box>
-              <Box textAlign="center">
-                <Typography
-                  variant="h2"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
-                >
-                  {username}
-                </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  {role}
-                </Typography>
-              </Box>
-            </Box>
-          )}
-
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to="/dashboard"
-              icon={<DashboardOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            {/* Bagian Users */}
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Users
-            </Typography>
-            <Item
-              title="Kelola Mitra"
-              to="/mitra"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Kelola Pengguna"
-              to="/users"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            {/* Bagian Dinamis Kategori Bantuan */}
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Kategori Bantuan
-            </Typography>
-
-            {/* Map categories */}
-            {categories.map((category, index) => (
+            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
               <Item
-                key={category.id}
-                title={"Bantuan " + category.name}
-                to={`/${category.name.toLowerCase()}`}
-                icon={categoryIcons[index % categoryIcons.length]} // Use icons dynamically
+                title="Dashboard"
+                to="/dashboard"
+                icon={<DashboardOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
-            ))}
 
-            {/* LOGOUT ITEM */}
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Logout
-            </Typography>
-            <MenuItem
-              title="Logout"
-              icon={<LogoutOutlinedIcon />}
-              onClick={handleLogout}
-              style={{ color: colors.grey[100] }}
-            >
-              <Typography>Logout</Typography>
-            </MenuItem>
-          </Box>
-        </Menu>
-      </ProSidebar>
+              {/* Users Section */}
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Users
+              </Typography>
+              <Item
+                title="Kelola Mitra"
+                to="/mitra"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Kelola Pengguna"
+                to="/users"
+                icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+
+              {/* Dynamic Category Section */}
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Kategori Bantuan
+              </Typography>
+              {categories.map((category, index) => (
+                <Item
+                  key={category.id}
+                  title={"Bantuan " + category.name}
+                  to={`/${category.name.toLowerCase()}`}
+                  icon={categoryIcons[index % categoryIcons.length]} // Dynamic icons
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              ))}
+
+              {/* Logout Section */}
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Logout
+              </Typography>
+              <MenuItem
+                title="Logout"
+                icon={<LogoutOutlinedIcon />}
+                onClick={handleLogout}
+                style={{ color: colors.grey[100] }}
+              >
+                <Typography>Logout</Typography>
+              </MenuItem>
+            </Box>
+          </Menu>
+        </ProSidebar>
+      )}
     </Box>
   );
 };
