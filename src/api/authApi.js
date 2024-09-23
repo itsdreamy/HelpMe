@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API_URL = "https://56171de00aa9ba740c79889e8ab170b4.serveo.net/api/auth";
+const API_URL = "https://639e871d50a7d3078f413ad7a9e899e6.serveo.net/api/auth";
 
 export const login = async (username, password) => {
   try {
@@ -87,11 +87,11 @@ export const forgotPassword = async (email) => {
   }
 }
 
-export const resetPassword = async (token, email, password, confirmPassword) => {
+export const resetPassword = async (token, phone_number, password, confirmPassword) => {
   try {
     const response = await axios.post(API_URL + '/reset-password', {
       token: token,
-      email: email,
+      phone_number: phone_number,
       password: password,
       password_confirmation: confirmPassword,
     });
