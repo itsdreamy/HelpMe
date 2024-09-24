@@ -15,7 +15,8 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CarCrashIcon from '@mui/icons-material/CarCrash';
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
-import Preloader from '../../components/Preloader'; // Import your Preloader component
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
+import Preloader from '../../components/Preloader'; 
 
 // Component for sidebar items
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -88,6 +89,7 @@ const Sidebar = () => {
     <CarCrashIcon />,
     <HomeOutlinedIcon />,
     <ElectricBoltIcon />,
+    <SettingsAccessibilityIcon />,
   ];
 
   return (

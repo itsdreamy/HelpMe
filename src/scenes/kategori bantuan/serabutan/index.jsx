@@ -1,35 +1,38 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataTeam } from "../../../api/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import Header from "../../../components/Header";
 import { mockDataSerabutan } from "../../../api/mockData";
+import Header from "../../../components/Header";
 import { useEffect, useState } from "react";
+import Preloader from "../../../components/Preloader"; // Import your Preloader component
 
 const Serabutan = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
     const fetchApi = async () => {
-      const response = await mockDataSerabutan();
-      if (response) {
-        // console.log(response);
-        setData(response.data);
+      try {
+        const response = await mockDataSerabutan();
+        if (response && response.data) {
+          setData(response.data);
+        } else {
+          throw new Error("No data found");
+        }
+      } catch (err) {
+        setError(err.message); // Set error message
+      } finally {
+        setLoading(false); // Stop loading
       }
-      else  {
-        console.log('no data found');
-      }
-    } 
+    };
     fetchApi();
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
@@ -39,7 +42,7 @@ const Serabutan = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box mt="4px" ml="20px">
       <Header title="Serabutan" subtitle="Sub Category dari Serabutan" />
       {/* <a href="/serabutan/create">Create New Problem</a> */}
       <Box
