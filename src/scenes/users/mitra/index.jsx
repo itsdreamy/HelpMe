@@ -66,7 +66,7 @@ const Mitra = () => {
       <Header title="Mitra" subtitle="Managing the Team Members" />
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="77vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",

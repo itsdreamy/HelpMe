@@ -15,7 +15,8 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CarCrashIcon from '@mui/icons-material/CarCrash';
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
-import Preloader from '../../components/Preloader'; // Import your Preloader component
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
+import Preloader from '../../components/Preloader'; 
 
 // Component for sidebar items
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -63,11 +64,9 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username);
         setRole(data.user.role);
-<<<<<<< HEAD
-        setProfile("https://a3ffc2345a58c05ade5458c64a73d622.serveo.net/" + data.user.image_profile);
-=======
-        setProfile("https://024240ea974e34267725f5761285885f.serveo.net/" + data.user.image_profile);
->>>>>>> 5ef88a0bfb8d72887b8af18fa8666fca32926de3
+        
+        setProfile("https://506324d9a4e1b4322c74e9b8b81236d2.serveo.net" + data.user.image_profile);
+
       }
     };
 
@@ -92,6 +91,7 @@ const Sidebar = () => {
     <CarCrashIcon />,
     <HomeOutlinedIcon />,
     <ElectricBoltIcon />,
+    <SettingsAccessibilityIcon />,
   ];
 
   return (

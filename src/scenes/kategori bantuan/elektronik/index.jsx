@@ -43,12 +43,12 @@ const Elektronik = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box mt="4px" ml="20px">
       <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
-      <Box mb="20px">
-        <Link to="/elektronik/create" className="btn-create">
+      <Box className="btn-create">
+        <a href="/elektronik/create" className="create-problem">
           Create New Problem
-        </Link>
+        </a>
       </Box>
 
       {loading ? (
@@ -57,8 +57,8 @@ const Elektronik = () => {
         <Typography color="error">{error}</Typography> // Display error message
       ) : (
         <Box
-          m="40px 0 0 0"
-          height="75vh"
+          m="24px 0 0 0"
+          height="73vh"
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
