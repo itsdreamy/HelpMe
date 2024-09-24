@@ -82,16 +82,16 @@ export const forgotPassword = async (email) => {
     console.log('Reset password response:', response);
     return response;
   } catch (err) {
-    console.error('Error during reset password:', err);
+    // console.error('Error during reset password:', err);
     return null;
   }
 }
 
-export const resetPassword = async (token, email, password, confirmPassword) => {
+export const resetPassword = async (token, phone_number, password, confirmPassword) => {
   try {
     const response = await axios.post(API_URL + '/reset-password', {
       token: token,
-      email: email,
+      phone_number: phone_number,
       password: password,
       password_confirmation: confirmPassword,
     });

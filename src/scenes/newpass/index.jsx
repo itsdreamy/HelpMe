@@ -11,23 +11,26 @@ const Newpass = () => {
     const [ message, setMessage ] = useState(''); 
     const { token } = useParams();
     const query = new URLSearchParams(useLocation().search);
-    const email = query.get('email');
+    const phone_number = query.get('phone_number');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         
-        const data = await resetPassword(token, email, password, confirmPassword);
+        const data = await resetPassword(token, phone_number, password, confirmPassword);
         
         setLoading(false);
 
         if (data && data.status === 200) {  // Jika response berhasil (200)
             setMessage('Password berhasil di reset, silahkan login');
+            navigate('/login');
         } else if (data && data.status === 422) {  // Jika API gagal
             const messages = data.response.data.errors.password
             setMessage('Error: ' + messages[0]);
         } else {  // Jika password confirmation tidak cocok atau masalah lain
-            setMessage('Password dan Confirmation Password Tidak Cocok');
+            console.log(data);
+            setMessage('Link kaldaluarsa, silahkan minta link kembali');
         }
     };
 
