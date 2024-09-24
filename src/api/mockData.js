@@ -1,7 +1,6 @@
 import { tokens } from "../theme";
 import axios from "axios";
-
-const API_URL = 'https://56171de00aa9ba740c79889e8ab170b4.serveo.net/api';
+import { API_URL } from "./api";
 
 export const mockDataMitra = async () => {
   const token = localStorage.getItem('token');
@@ -134,6 +133,51 @@ export const listCategory = async () => {
     return [];
   }
 }
+
+export const fetchClientAndMitraStats = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
+
+  try {
+    const response = await axios.get(API_URL + '/user/mitra-client-stats', {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching client and mitra stats:", error);
+    return null;
+  }
+};
+
+export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
+
+  try {
+    const response = await axios.post(API_URL + '/user/user-stats', {
+        granularity: granularity,
+        start_date: startDate,
+        end_date: endDate,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user stats:", error);
+    return null;
+  }
+};
 
 export const mockDataTeam = [
   {

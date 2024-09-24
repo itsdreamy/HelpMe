@@ -17,7 +17,7 @@ const Login = () => {
         setLoading(true);
         const data = await login(username, password);
         setLoading(false);
-
+        
         if (data && data.token) {
             // Jika login berhasil
             navigate('/dashboard'); // Redirect ke halaman utama

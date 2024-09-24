@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import EmailIcon from '@mui/icons-material/Email';
 import { forgotPassword } from '../../api/authApi';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPass = () => {
-    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
     //     setLoading(true);
@@ -21,11 +23,13 @@ const ForgotPass = () => {
     // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await forgotPassword(email);
+        const data = await forgotPassword(phoneNumber);
         if (data) {
             setMessage('Reset password link telah dikirim ke email anda.');
+            navigate('/login')
+            
         } else {
-            setMessage('Email yang anda masukkan belum terdaftar.');
+            setMessage('Phone Number yang anda masukkan belum terdaftar.');
         }
     } 
 
@@ -35,7 +39,7 @@ const ForgotPass = () => {
                 <form onSubmit={handleSubmit}>
                     <h1>Reset Password</h1>
                     <div className="input-box">
-                        <input type="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="text" placeholder="Phone Number" required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
                         <EmailIcon className='icon'/>
                     </div>
                     <button type="submit" className="btn">Submit</button>

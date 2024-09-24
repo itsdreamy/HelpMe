@@ -6,12 +6,28 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
-import BarChart from "../../components/BarChart";
+import BarChart from '../../components/BarChart';
 import PieChart from "../../components/PieChart";
+import { fetchClientAndMitraStats } from "../../api/mockData";
+import { useState } from "react";
 
 const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [data, setData] = useState('');
+
+    useState(() => {
+      const fetchApi = async () => {
+        try {
+          const data = await fetchClientAndMitraStats();
+          // console.log('Data: ', data.all);
+          setData(data.all);
+        } catch (error) {
+          console.error("Failed to fetch data", error);
+        }
+      }
+      fetchApi();
+    }, []) 
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -158,14 +174,14 @@ const Dashboard = () => {
             fontWeight="600"
             color={colors.grey[100]}
             >
-            Revenue Generated
+            Client VS Mitra
             </Typography>
             <Typography
             variant="h3"
             fontWeight="bold"
             color={colors.greenAccent[500]}
             >
-            $59,342.32
+            Total: {data}
             </Typography>
         </Box>
         </Box>

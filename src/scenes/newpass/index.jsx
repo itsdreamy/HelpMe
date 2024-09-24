@@ -24,7 +24,7 @@ const Newpass = () => {
 
         if (data && data.status === 200) {  // Jika response berhasil (200)
             setMessage('Password berhasil di reset, silahkan login');
-            navigate('/login');
+            navigate('/success');
         } else if (data && data.status === 422) {  // Jika API gagal
             const messages = data.response.data.errors.password
             setMessage('Error: ' + messages[0]);
@@ -51,7 +51,6 @@ const Newpass = () => {
                         <LockIcon className='icon'/>
                     </div>
                     <button type="submit" className="btn">Change</button>
-                    <a href="/login">Login</a>
                     <p>{message}</p>
                 </form>
             </div>

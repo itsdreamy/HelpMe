@@ -3,27 +3,26 @@ import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from 'react-router-dom';
 import Preloader from '../../../components/Preloader';
+import { storeProblem } from '../../../api/problemApi';
 
 const NewSerabutan = () => {
     const [ loading, setLoading ] = useState(false);
     const [ name, setName ]  = useState(''); 
-    const [ category, setCategory ]  = useState('');
     const [ message, setMessage ] = useState(''); 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = await storeProblem(name, 1);
         setLoading(true);
-        // const data = await login(username, password);
-        // setLoading(false);
 
-        // if (data && data.token) {
-            // Jika login berhasil
-            // navigate('/kendaraan'); // Redirect ke halaman utama
-        // } else {
-            // Jika login gagal
-            // setMessage('Login gagal! Username atau password salah.');
-        // }
+        if (data) {
+            navigate('/serabutan'); // Redirect ke halaman utama
+            setLoading(false);
+        } else {
+            setMessage('Gagal');
+            setLoading(false);
+        }
     };
 
     return (

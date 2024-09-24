@@ -20,6 +20,7 @@ import NewSerabutan from "./scenes/form/serabutan";
 import NewRumah from "./scenes/form/rumah";
 import PrivateRoute from "./components/PrivateRoute";
 import Newpass from "./scenes/newpass";
+import Success from "./components/200";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -41,6 +42,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<Forgotpass />} />
               <Route path="/password-reset/:token" element={<Newpass />} />
+              <Route path="/success" element={<Success />} />
 
               {/* Protect the routes that require authentication */}
               <Route

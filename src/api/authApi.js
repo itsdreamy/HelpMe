@@ -1,12 +1,13 @@
 // src/controllers/LoginController.js
 
 import axios from "axios";
+import { API_URL } from "./api";
 
-const API_URL = "https://639e871d50a7d3078f413ad7a9e899e6.serveo.net/api/auth";
+const AUTH_API = API_URL + '/auth'
 
 export const login = async (username, password) => {
   try {
-    const response = await axios.post(API_URL + "/login?app_type=admin", {
+    const response = await axios.post(AUTH_API + "/login?app_type=admin", {
       username: username,
       password: password,
     });
@@ -29,7 +30,7 @@ export const aboutMe = async () => {
   try {
     const token = localStorage.getItem("token");
     if (token) {
-      const response = await axios.get(API_URL + "/me", {
+      const response = await axios.get(AUTH_API + "/me", {
         headers: {
           Authorization: `Bearer ${token}`,
        },
@@ -51,7 +52,7 @@ export const logout = async () => {
 
   if (token) {
     try {
-      const response = await axios.post(API_URL + '/logout', {}, {
+      const response = await axios.post(AUTH_API + '/logout', {}, {
         headers: {
           Authorization: `Bearer ${token}`, // Kirim token di header Authorization
         },
@@ -74,12 +75,12 @@ export const logout = async () => {
 
 // }
 
-export const forgotPassword = async (email) => {
+export const forgotPassword = async (phone_number) => {
   try {
-    const response = await axios.post(API_URL + '/forgot-password', {
-      email: email,
+    const response = await axios.post(AUTH_API + '/forgot-password', {
+      phone_number: phone_number,
     });
-    console.log('Reset password response:', response);
+    // console.log('Reset password response:', response);
     return response;
   } catch (err) {
     // console.error('Error during reset password:', err);
@@ -89,7 +90,7 @@ export const forgotPassword = async (email) => {
 
 export const resetPassword = async (token, phone_number, password, confirmPassword) => {
   try {
-    const response = await axios.post(API_URL + '/reset-password', {
+    const response = await axios.post(AUTH_API + '/reset-password', {
       token: token,
       phone_number: phone_number,
       password: password,
