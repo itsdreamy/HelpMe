@@ -64,7 +64,7 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username);
         setRole(data.user.role);
-        setProfile("https://506324d9a4e1b4322c74e9b8b81236d2.serveo.net/" + data.user.image_profile);
+        setProfile("https://5c44-2001-448a-3023-31f5-606b-7325-6458-8731.ngrok-free.app/" + data.user.image_profile);
       }
     };
 
