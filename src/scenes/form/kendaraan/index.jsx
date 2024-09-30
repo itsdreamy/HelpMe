@@ -14,7 +14,7 @@ const NewKendaraan = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const data = await storeProblem(name, 2);
+        const data = await storeProblem(name, 'kendaraan');
         setLoading(false);
 
         if (data) {

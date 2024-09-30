@@ -2,14 +2,13 @@ import { tokens } from "../theme";
 import axios from "axios";
 import { API_URL } from "./api";
 
-
 export const mockDataMitra = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
   }
-  
+
   try {
     const response = await axios.get(API_URL + "/mitras", {
       headers: {
@@ -22,10 +21,10 @@ export const mockDataMitra = async () => {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const mockDataUsers = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
@@ -42,87 +41,99 @@ export const mockDataUsers = async () => {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const mockDataSerabutan = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/categories/problems?category=serabutan", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      API_URL + "/categories/problems?category=serabutan",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const mockDataKendaraan = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/categories/problems?category=kendaraan", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      API_URL + "/categories/problems?category=kendaraan",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const mockDataRumah = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/categories/problems?category=rumah", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      API_URL + "/categories/problems?category=rumah",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const mockDataElektronik = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/categories/problems?category=elektronik", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      API_URL + "/categories/problems?category=elektronik",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const listCategory = async () => {
   const token = localStorage.getItem("token");
@@ -144,21 +155,23 @@ export const listCategory = async () => {
     console.error("Error fetching data from API:", err);
     return [];
   }
-}
+};
 
 export const fetchClientAndMitraStats = async () => {
   const token = localStorage.getItem("token");
+
   if (!token) {
     console.error("No token found");
     return null;
   }
 
   try {
-    const response = await axios.get(API_URL + '/users', {
+    const response = await axios.post(API_URL + "/users?stats=client-mitra", {}, {
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: `Bearer ${token}`,
       },
     });
+    console.log('USER' + response);
     return response.data;
   } catch (error) {
     console.error("Error fetching client and mitra stats:", error);
@@ -166,7 +179,11 @@ export const fetchClientAndMitraStats = async () => {
   }
 };
 
-export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
+export const fetchUserStatsByGranularity = async (
+  granularity,
+  startDate,
+  endDate
+) => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
@@ -174,22 +191,71 @@ export const fetchUserStatsByGranularity = async (granularity, startDate, endDat
   }
 
   try {
-    const response = await axios.post(API_URL + '/user/user-stats', {
+    const response = await axios.post(
+      API_URL + "/user?stats=granularity",
+      {
         granularity: granularity,
         start_date: startDate,
         end_date: endDate,
       },
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: "Bearer " + token,
         },
-      });
+      }
+    );
+    console.log('USER' + response);
     return response;
   } catch (error) {
     console.error("Error fetching user stats:", error);
     return null;
   }
 };
+
+// export const fetchClientAndMitraStats = async () => {
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     console.error("No token found");
+//     return null;
+//   }
+
+//   try {
+//     const response = await axios.get(API_URL + '/users', {
+//       headers: {
+//         Authorization: 'Bearer ' + token,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching client and mitra stats:", error);
+//     return null;
+//   }
+// };
+
+// export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     console.error("No token found");
+//     return null;
+//   }
+
+//   try {
+//     const response = await axios.post(API_URL + '/user/user-stats', {
+//         granularity: granularity,
+//         start_date: startDate,
+//         end_date: endDate,
+//       },
+//       {
+//         headers: {
+//           Authorization: 'Bearer ' + token,
+//         },
+//       });
+//     return response;
+//   } catch (error) {
+//     console.error("Error fetching user stats:", error);
+//     return null;
+//   }
+// };
 
 export const mockDataTeam = [
   {

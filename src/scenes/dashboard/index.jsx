@@ -20,14 +20,15 @@ const Dashboard = () => {
       const fetchApi = async () => {
         try {
           const data = await fetchClientAndMitraStats();
-          // console.log('Data: ', data.all);
+          console.log('Data: ', data);
           setData(data.all);
         } catch (error) {
           console.error("Failed to fetch data", error);
         }
       }
       fetchApi();
-    }, []) 
+    }, [])
+    
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
