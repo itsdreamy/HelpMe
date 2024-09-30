@@ -13,6 +13,7 @@ import Serabutan from "./scenes/kategori bantuan/serabutan";
 import Elektronik from "./scenes/kategori bantuan/elektronik";
 import Rumah from "./scenes/kategori bantuan/rumah";
 import Kendaraan from "./scenes/kategori bantuan/kendaraan";
+import Personal from "./scenes/kategori bantuan/personal";
 import LoginRedirect from "./components/loginredirect";
 import NewKendaraan from "./scenes/form/kendaraan";
 import NewElektronik from "./scenes/form/elektronik";
@@ -25,7 +26,7 @@ import Success from "./components/200";
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation();
-  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create'];
+  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create', '/personal/create'];
 
   const showSidebarAndTopbar = !hiddenPaths.includes(location.pathname);
 
@@ -72,6 +73,10 @@ function App() {
               <Route
                 path="/kendaraan"
                 element={<PrivateRoute element={<Kendaraan />} />}
+              />
+              <Route
+                path="/personal"
+                element={<PrivateRoute element={<Personal />} />}
               />
               <Route
                 path="/kendaraan/create"

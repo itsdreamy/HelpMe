@@ -86,7 +86,7 @@ const Sidebar = () => {
   }, []);
 
   const categoryIcons = [
-    <PrivacyTipIcon />,
+    // <PrivacyTipIcon />,
     <CarCrashIcon />,
     <HomeOutlinedIcon />,
     <ElectricBoltIcon />,
@@ -217,16 +217,20 @@ const Sidebar = () => {
               >
                 Kategori Bantuan
               </Typography>
-              {categories.map((category, index) => (
-                <Item
-                  key={category.id}
-                  title={"Bantuan " + category.name}
-                  to={`/${category.name.toLowerCase()}`}
-                  icon={categoryIcons[index % categoryIcons.length]} // Dynamic icons
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              ))}
+
+              {categories
+                .filter(category => category.id >= 2 && category.id <= 5) // Filter for id between 2 and 5
+                .map((category, index) => (
+                  <Item
+                    key={category.id}
+                    title={"Bantuan " + category.name}
+                    to={`/${category.name.toLowerCase()}`}
+                    icon={categoryIcons[index % categoryIcons.length]} // Dynamic icons
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                ))}
+
 
               {/* Logout Section */}
               <Typography

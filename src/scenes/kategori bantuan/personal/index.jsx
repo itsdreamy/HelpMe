@@ -2,12 +2,11 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { mockDataKendaraan } from "../../../api/mockData";
+import { mockDataPersonal } from "../../../api/mockData";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Use Link for navigation
-import Preloader from "../../../components/Preloader"; // Import a Preloader if available
+import Preloader from "../../../components/Preloader"; // If you have a preloader component
 
-const Kendaraan = () => {
+const Personal = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -17,18 +16,17 @@ const Kendaraan = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        const response = await mockDataKendaraan();
-        console.log(response.data)
+        const response = await mockDataPersonal();
         if (response) {
+            console.log("Data :", response.data)
           setData(response);
         } else {
-          console.error("No data found");
+          throw new Error('No data found');
         }
       } catch (err) {
         setError(err.message);
-        console.error(err);
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after fetch
       }
     };
     fetchApi();
@@ -46,17 +44,17 @@ const Kendaraan = () => {
 
   return (
     <Box mt="4px" ml="20px">
-      <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
+      <Header title="Personal" subtitle="Sub Category dari Personal" />
       <Box className="btn-create">
-        <a href="/kendaraan/create" className="create-problem">
+        <a href="/personal/create" className="create-problem">
           Create New Problem
         </a>
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} /> // Preloader during loading
+        <Preloader loading={loading} /> // Display a preloader if loading
       ) : error ? (
-        <Typography color="error">{error}</Typography> // Display error message if any
+        <Typography color="error">{error}</Typography> // Display error message
       ) : (
         <Box
           m="24px 0 0 0"
@@ -94,4 +92,4 @@ const Kendaraan = () => {
   );
 };
 
-export default Kendaraan;
+export default Personal;

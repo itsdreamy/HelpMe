@@ -18,6 +18,7 @@ const Users = () => {
       try {
         const response = await mockDataUsers();
         if (response) {
+          console.log("Data Users :", response.data)
           setData(response.data);
         } else {
           setError("No data found");
@@ -50,8 +51,8 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "identifier",
+      headerName: "Identifier",
       flex: 1,
     },
     {
