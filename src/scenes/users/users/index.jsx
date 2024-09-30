@@ -50,7 +50,7 @@ const Users = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1, type: "number" },
+    // { field: "id", headerName: "ID", flex: 1, type: "number" },
     {
       field: "identifier",
       headerName: "Identifier",
@@ -95,6 +95,7 @@ const Users = () => {
       headerName: "Ban",
       flex: 1,
       renderCell: (params) => {
+        // console.log('params: ' + params.row.id);
         return (
           <button
             onClick={() => handleSubmit(params.row.id)} // Memanggil handleSubmit dengan id pengguna

@@ -35,7 +35,7 @@ const Kendaraan = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
+    // { field: "id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
