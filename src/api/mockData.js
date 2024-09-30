@@ -30,12 +30,12 @@ export const mockDataUsers = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/users", {
+    const response = await axios.post(API_URL + "/users", {}, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);
@@ -236,47 +236,26 @@ export const fetchUserStatsByGranularity = async (
   }
 };
 
-// export const fetchClientAndMitraStats = async () => {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     console.error("No token found");
-//     return null;
-//   }
+export const orderStats = async () => {
+  const token = localStorage.getItem("token");
+  
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
 
-//   try {
-//     const response = await axios.get(API_URL + '/users', {
-//       headers: {
-//         Authorization: 'Bearer ' + token,
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching client and mitra stats:", error);
-//     return null;
-//   }
-// };
-
-// export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     console.error("No token found");
-//     return null;
-//   }
-
-//   try {
-//     const response = await axios.post(API_URL + '/user/user-stats', {
-//         granularity: granularity,
-//         start_date: startDate,
-//         end_date: endDate,
-//       },
-//       {
-//         headers: {
-//           Authorization: 'Bearer ' + token,
-//         },
-//       });
-//     return response;
-//   } catch (error) {
-//     console.error("Error fetching user stats:", error);
-//     return null;
-//   }
-// };
+  try {
+    const response = await axios.get(API_URL + "/orders", {
+    // const response = await axios.get(API_URL + "/orders?status=complete", {
+    // const response = await axios.get(API_URL + "/orders?status=pending", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    console.log('ORDER' + response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order stats:", error);
+    return null;
+  }
+}

@@ -5,6 +5,7 @@ import { mockDataUsers } from "../../../api/mockData";
 import Header from "../../../components/Header";
 import { useEffect, useState } from "react";
 import Preloader from "../../../components/Preloader"; // Import Preloader
+import { toggleStatusUser } from "../../../api/adminApi";
 
 const Users = () => {
   const theme = useTheme();
@@ -32,8 +33,29 @@ const Users = () => {
     fetchData();
   }, []);
 
+  const handleSubmit = async (id) => {
+    try {
+      const response = await toggleStatusUser(id);
+      if (response && response.status === 200) {
+        // Update status in UI after success
+        setData(
+          data.map((user) =>
+            user.id === id ? { ...user, is_active: !user.is_active } : user
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Failed to toggle user status:", err);
+    }
+  };
+
   const columns = [
     { field: "id", headerName: "ID", flex: 1, type: "number" },
+    {
+      field: "identifier",
+      headerName: "Identifier",
+      flex: 1,
+    },
     {
       field: "full_name",
       headerName: "Name",
@@ -64,6 +86,31 @@ const Users = () => {
       field: "is_active",
       headerName: "Is Active",
       flex: 1,
+      valueFormatter: (params) => {
+        return params === 1 ? "Active" : "Inactive";
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Ban",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <button
+            onClick={() => handleSubmit(params.row.id)} // Memanggil handleSubmit dengan id pengguna
+            style={{
+              backgroundColor: params.row.is_active ? "red" : "green",
+              color: "white",
+              border: "none",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            {params.row.is_active ? "Ban" : "Unban"}
+          </button>
+        );
+      },
     },
   ];
 
