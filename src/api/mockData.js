@@ -212,6 +212,30 @@ export const fetchUserStatsByGranularity = async (
   }
 };
 
+export const orderStats = async () => {
+  const token = localStorage.getItem("token");
+  
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
+
+  try {
+    const response = await axios.get(API_URL + "/orders", {
+    // const response = await axios.get(API_URL + "/orders?status=complete", {
+    // const response = await axios.get(API_URL + "/orders?status=pending", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    console.log('ORDER' + response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching order stats:", error);
+    return null;
+  }
+}
+
 // export const fetchClientAndMitraStats = async () => {
 //   const token = localStorage.getItem("token");
 //   if (!token) {
