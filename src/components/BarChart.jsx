@@ -58,41 +58,6 @@ const BarChart = ({ isDashboard = false }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        {/* Dropdown for Granularity */}
-        <label htmlFor="granularity">Granularity: </label>
-        <select
-          id="granularity"
-          value={granularity}
-          onChange={(e) => setGranularity(e.target.value)}
-        >
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
-        </select>
-
-        {/* Date Input for Start Date */}
-        <label htmlFor="start-date">Start Date: </label>
-        <input
-          type="date"
-          id="start-date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-
-        {/* Date Input for End Date */}
-        <label htmlFor="end-date">End Date: </label>
-        <input
-          type="date"
-          id="end-date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-
-        {/* Submit Button */}
-        <button type="submit">Fetch Data</button>
-      </form>
-      {data.length > 0 ? (
         <ResponsiveBar
           data={data}
           keys={["count"]} // 'count' sesuai dengan hasil API
@@ -160,9 +125,6 @@ const BarChart = ({ isDashboard = false }) => {
             return e.id + ": " + e.formattedValue + " in period: " + e.indexValue;
           }}
         />
-      ) : (
-        <p>No data available. Please select a date range and granularity.</p>
-      )}
     </>
   );
 };
