@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./api";
 
-export const storeProblem = async (name, category_id) => {
+export const storeProblem = async (name, category_name) => {
     const token = localStorage.getItem('token');
     
     if (!token) {
@@ -10,10 +10,9 @@ export const storeProblem = async (name, category_id) => {
     }
 
     try {
-        const fetchApi = await axios.post(API_URL + '/category/store/problem',
+        const fetchApi = await axios.post(API_URL + '/categories/problems?category=' + category_name,
             {
                 'name': name,
-                'category_id': category_id
             },
             {
                 headers: {

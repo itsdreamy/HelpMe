@@ -11,7 +11,7 @@ export const mockDataMitra = async () => {
   }
   
   try {
-    const response = await axios.get(API_URL + "/mitra/all", {
+    const response = await axios.get(API_URL + "/mitras", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -31,7 +31,7 @@ export const mockDataUsers = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/user/all", {
+    const response = await axios.get(API_URL + "/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -51,7 +51,7 @@ export const mockDataSerabutan = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/problem/1", {
+    const response = await axios.get(API_URL + "/categories/problems?category=serabutan", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -71,7 +71,7 @@ export const mockDataKendaraan = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/problem/2", {
+    const response = await axios.get(API_URL + "/categories/problems?category=kendaraan", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -91,7 +91,7 @@ export const mockDataRumah = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/problem/3", {
+    const response = await axios.get(API_URL + "/categories/problems?category=rumah", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -111,7 +111,7 @@ export const mockDataElektronik = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/category/problem/4", {
+    const response = await axios.get(API_URL + "/categories/problems?category=elektronik", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -125,8 +125,19 @@ export const mockDataElektronik = async () => {
 }
 
 export const listCategory = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("No token found");
+    return [];
+  }
+
   try {
-    const response = await axios.get(API_URL + "/category/all");
+    const response = await axios.get(API_URL + "/categories", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(response);
     return response.data;
   } catch (err) {
@@ -143,7 +154,7 @@ export const fetchClientAndMitraStats = async () => {
   }
 
   try {
-    const response = await axios.get(API_URL + '/user/mitra-client-stats', {
+    const response = await axios.get(API_URL + '/users', {
       headers: {
         Authorization: 'Bearer ' + token,
       },

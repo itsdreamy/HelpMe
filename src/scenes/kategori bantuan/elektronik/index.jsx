@@ -24,7 +24,7 @@ const Elektronik = () => {
           throw new Error('No data found');
         }
       } catch (err) {
-        setError(err.message);
+        setError('er' + err.message);
       } finally {
         setLoading(false); // Set loading to false after fetch
       }

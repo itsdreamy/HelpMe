@@ -17,6 +17,7 @@ import CarCrashIcon from '@mui/icons-material/CarCrash';
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import Preloader from '../../components/Preloader'; 
+import { BASE_URL } from "../../api/api";
 
 // Component for sidebar items
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -64,7 +65,7 @@ const Sidebar = () => {
       if (data && data.user) {
         setUsername(data.user.username);
         setRole(data.user.role);
-        setProfile("https://5c44-2001-448a-3023-31f5-606b-7325-6458-8731.ngrok-free.app/" + data.user.image_profile);
+        setProfile(BASE_URL + "/" + data.user.image_profile);
       }
     };
 
