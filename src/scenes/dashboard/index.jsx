@@ -1,22 +1,18 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
-import StatBox from "../../components/StatBox";
-import BarChart from '../../components/BarChart';
-import PieChart from "../../components/PieChart";
-import { fetchClientAndMitraStats } from "../../api/mockData";
-import { useState, useEffect } from "react";
-import Preloader from "../../components/Preloader"; // Import Preloader component
+import BarChart from '../../components/BarChart'; 
+import PieChart from "../../components/PieChart";  
+import { fetchClientAndMitraStats } from "../../api/mockData";  
+import { useState, useEffect } from "react";  
+import Preloader from "../../components/Preloader"; 
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [data, setData] = useState('');
-  const [loading, setLoading] = useState(true); // Loading state
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true); // State for data loading
+  const [chartLoading, setChartLoading] = useState(true); // State for chart loading
   const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
@@ -24,20 +20,22 @@ const Dashboard = () => {
       try {
         const response = await fetchClientAndMitraStats();
         console.log('Data: ', response);
-        setData(response.all); // Assuming `response.all` contains the necessary data
+        setData(response.all); // Adjust according to your data structure
       } catch (err) {
         setError("Failed to fetch data");
         console.error("Error:", err);
       } finally {
-        setLoading(false); // Set loading to false after data is fetched or in case of error
+        setLoading(false); // Finish loading data regardless of success or failure
       }
     };
 
     fetchApi();
   }, []);
 
-  // Log the data to check its structure
-  console.log("Dashboard Data:", data);
+  // Function to handle when the pie chart has fully rendered
+  const handleChartRendered = () => {
+    setChartLoading(false); // Set chart loading to false once the chart is rendered
+  };
 
   return (
     <Box m="20px">
@@ -45,21 +43,19 @@ const Dashboard = () => {
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Box>
 
-      {/* Display Preloader during loading */}
-      {loading ? (
-        <Preloader loading={loading} />
+      {/* Show Preloader while loading data or charts */}
+      {loading || chartLoading ? (
+        <Preloader loading={loading || chartLoading} />
       ) : error ? (
-        <Typography color="error">{error}</Typography> // Show error message if any
+        <Typography color="error">{error}</Typography>
       ) : (
-        // Display the content once data is loaded
         <Box
           display="grid"
           gridTemplateColumns="repeat(12, 1fr)"
           gridAutoRows="140px"
           gap="20px"
         >
-          {/* ROW 1: Uncomment and use as needed */}
-          {/* ROW 2 */}
+          {/* ROW 1 */}
           <Box gridColumn="span 7" gridRow="span 2" backgroundColor={colors.primary[400]}>
             <Box mt="25px" p="0 30px" display="flex" justifyContent="space-between" alignItems="center">
               <Box>
@@ -76,6 +72,7 @@ const Dashboard = () => {
             </Box>
           </Box>
 
+          {/* ROW 2 */}
           <Box gridColumn="span 5" gridRow="span 2" backgroundColor={colors.primary[400]}>
             <Box mt="25px" p="0 30px" display="flex" justifyContent="space-between" alignItems="center">
               <Box>
@@ -88,8 +85,8 @@ const Dashboard = () => {
               </Box>
             </Box>
             <Box height="250px" m="-20px 0 0 0">
-              {/* Pass the data to PieChart explicitly */}
-              <PieChart isDashboard={true} data={data} />
+              {/* Pass the data to PieChart and handle chart loading completion */}
+              <PieChart isDashboard={true} data={data} onRendered={handleChartRendered} />
             </Box>
           </Box>
         </Box>
