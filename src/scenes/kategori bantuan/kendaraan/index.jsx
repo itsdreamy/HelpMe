@@ -18,13 +18,15 @@ const Kendaraan = () => {
     const fetchApi = async () => {
       try {
         const response = await mockDataKendaraan();
+        console.log(response)
         if (response) {
-          setData(response.data);
+          setData(response);
         } else {
-          throw new Error("No data found");
+          console.error("No data found");
         }
       } catch (err) {
         setError(err.message);
+        console.error(err);
       } finally {
         setLoading(false);
       }

@@ -19,7 +19,7 @@ const Rumah = () => {
       try {
         const response = await mockDataRumah();
         if (response) {
-          setData(response.data);
+          setData(response);
         } else {
           throw new Error("No data found");
         }

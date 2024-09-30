@@ -19,7 +19,7 @@ const Elektronik = () => {
       try {
         const response = await mockDataElektronik();
         if (response) {
-          setData(response.data);
+          setData(response);
         } else {
           throw new Error('No data found');
         }
