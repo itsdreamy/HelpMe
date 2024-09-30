@@ -43,7 +43,7 @@ const Dashboard = () => {
                 gap="20px"
                 >
             {/* ROW 1 */}
-            <Box
+            {/* <Box
             gridColumn="span 3"
             display="flex"
             justifyContent="center"
@@ -61,9 +61,9 @@ const Dashboard = () => {
                     />
                 }
                     />                    
-            </Box>
+            </Box> */}
             {/* ROW 1 */}
-            <Box
+            {/* <Box
             gridColumn="span 3"
             display="flex"
             justifyContent="center"
@@ -81,9 +81,9 @@ const Dashboard = () => {
                     />
                 }
                 />                    
-            </Box>
+            </Box> */}
             {/* ROW 1 */}
-            <Box
+            {/* <Box
             gridColumn="span 3"
             display="flex"
             justifyContent="center"
@@ -101,9 +101,9 @@ const Dashboard = () => {
                     />
                 }
                 />                    
-            </Box>
+            </Box> */}
             {/* ROW 1 */}
-            <Box
+            {/* <Box
             gridColumn="span 3"
             display="flex"
             justifyContent="center"
@@ -121,7 +121,7 @@ const Dashboard = () => {
                     />
                 }
                 />                    
-            </Box>
+            </Box> */}
 
             {/* ROW 2 */}
             <Box
