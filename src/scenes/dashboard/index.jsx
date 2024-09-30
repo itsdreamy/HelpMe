@@ -142,14 +142,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                AHAY DEDEUH
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                AHAY DEDEUH
               </Typography>
             </Box>
           </Box>
