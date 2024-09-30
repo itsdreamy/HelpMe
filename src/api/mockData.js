@@ -30,12 +30,12 @@ export const mockDataUsers = async () => {
     return [];
   }
   try {
-    const response = await axios.get(API_URL + "/users", {
+    const response = await axios.post(API_URL + "/users", {}, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);

@@ -34,6 +34,11 @@ const Users = () => {
   const columns = [
     { field: "id", headerName: "ID", flex: 1, type: "number" },
     {
+      field: "identifier",
+      headerName: "Identifier",
+      flex: 1,
+    },
+    {
       field: "full_name",
       headerName: "Name",
       flex: 1,
@@ -50,11 +55,6 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
       field: "role",
       headerName: "Role",
       flex: 1,
@@ -63,6 +63,9 @@ const Users = () => {
       field: "is_active",
       headerName: "Is Active",
       flex: 1,
+      valueFormatter: (params) => {
+        return params === 1 ? "Active" : "Inactive";
+      }
     },
   ];
 
