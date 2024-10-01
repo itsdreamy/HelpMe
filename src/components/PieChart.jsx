@@ -8,13 +8,14 @@ const PieChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       const stats = await fetchClientAndMitraStats();
+      // eslint-disable-next-line no-sequences
       if ('start', stats) {
         setData([
           {
             id: stats.client_count,
             label: "Client",
             value: stats.client_count,
-            color: "hsl(104, 70%, 50%)",
+            color: "white",
           },
           {
             id: stats.mitra_count,
@@ -42,7 +43,7 @@ const PieChart = () => {
         modifiers: [["darker", 0.2]],
       }}
       arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsTextColor="#fff"
       arcLinkLabelsThickness={2}
       arcLinkLabelsColor={{ from: "color" }}
       enableArcLabels={false}
@@ -62,7 +63,7 @@ const PieChart = () => {
           itemsSpacing: 0,
           itemWidth: 100,
           itemHeight: 18,
-          itemTextColor: "#999",
+          itemTextColor: "#fff",
           itemDirection: "left-to-right",
           itemOpacity: 1,
           symbolSize: 18,
@@ -71,7 +72,7 @@ const PieChart = () => {
             {
               on: "hover",
               style: {
-                itemTextColor: "#000",
+                itemTextColor: "000",
               },
             },
           ],

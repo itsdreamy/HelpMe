@@ -3,7 +3,7 @@ import DialpadIcon from '@mui/icons-material/Dialpad'; // Correct Icon import
 import { forgotPassword } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import Preloader from '../../components/Preloader'; // Import Preloader component
-import { Alert } from '@mui/material'; // Import MUI Alert for showing success/failure messages
+import { Alert, Button } from '@mui/material'; // Import MUI Alert and Button for showing success/failure messages
 
 const ForgotPass = () => {
     const [loading, setLoading] = useState(false); // State to track loading status
@@ -21,9 +21,8 @@ const ForgotPass = () => {
         try {
             const data = await forgotPassword(phoneNumber);
             if (data) {
-                setMessage('Reset password link telah dikirim ke email anda.');
+                setMessage('Reset password link telah dikirim ke email anda. Klik OK untuk kembali login');
                 setSuccess(true); // Set success to true
-                // navigate('/login'); // You can navigate after some time if you still need it
             } else {
                 setMessage('Phone Number yang anda masukkan belum terdaftar.');
             }
@@ -34,10 +33,32 @@ const ForgotPass = () => {
         }
     };
 
+    const handleOkClick = () => {
+        navigate('/login'); // Navigate to login page when OK button is clicked
+    };
+
     return (
         <div className="container">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
             <div className="wrapper">
+                {success && ( // Display success alert if the reset was successful
+                    <Alert 
+                        severity="success" 
+                        action={
+                            <Button color="white" onClick={handleOkClick}>
+                                OK
+                            </Button>
+                        }
+                        style={{ marginBottom: '20px' }}
+                    >
+                        {message}
+                    </Alert>
+                )}
+                {!success && message && ( // Display error message alert if not successful
+                    <Alert severity="error" onClose={() => setMessage('')} style={{ marginBottom: '20px' }}>
+                        {message}
+                    </Alert>
+                )}
                 <div className="form-box login">
                     <form onSubmit={handleSubmit}>
                         <h1>Reset Password</h1>
@@ -52,12 +73,6 @@ const ForgotPass = () => {
                             <DialpadIcon className='icon' />
                         </div>
                         <button type="submit" className="btn">Submit</button>
-                        {success && ( // Display success alert if the reset was successful
-                            <Alert severity="success" onClose={() => setSuccess(false)}>
-                                {message}
-                            </Alert>
-                        )}
-                        <p className='text-center'>{!success && message}</p> {/* Show error message */}
                     </form>
                 </div>
             </div>
