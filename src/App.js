@@ -7,7 +7,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Forgotpass from "./scenes/forgotpass";
-import Mitra from "./scenes/users/mitra";
+import Mitra from "./scenes/mitra";
 import Users from "./scenes/users/users";
 import Serabutan from "./scenes/kategori bantuan/serabutan";
 import Elektronik from "./scenes/kategori bantuan/elektronik";

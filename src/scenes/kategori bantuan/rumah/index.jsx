@@ -4,7 +4,7 @@ import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { mockDataRumah } from "../../../api/mockData";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom"; // Use Link for navigation
 import Preloader from "../../../components/Preloader"; // Import a Preloader if available
 
 const Rumah = () => {
@@ -18,13 +18,20 @@ const Rumah = () => {
     const fetchApi = async () => {
       try {
         const response = await mockDataRumah();
+        console.log(response.data);
         if (response) {
-          setData(response);
+          // Tambahkan properti `no` untuk nomor urut
+          const numberedData = response.map((item, index) => ({
+            ...item,
+            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+          }));
+          setData(numberedData);
         } else {
-          throw new Error("No data found");
+          console.error("No data found");
         }
       } catch (err) {
         setError(err.message);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -33,7 +40,8 @@ const Rumah = () => {
   }, []);
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 1 },
+    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
+    { field: "id", headerName: "Problem ID", flex: 1 }, // Kolom ID kategori
     {
       field: "name",
       headerName: "Name",
@@ -52,7 +60,7 @@ const Rumah = () => {
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} /> // Show preloader while loading
+        <Preloader loading={loading} /> // Preloader during loading
       ) : error ? (
         <Typography color="error">{error}</Typography> // Display error message if any
       ) : (

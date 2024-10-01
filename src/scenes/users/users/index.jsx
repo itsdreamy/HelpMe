@@ -19,8 +19,13 @@ const Users = () => {
       try {
         const response = await mockDataUsers();
         if (response) {
-          console.log("Data Users :", response.data)
-          setData(response.data);
+          // Tambahkan properti `no` untuk nomor urut
+          const numberedData = response.data.map((item, index) => ({
+            ...item,
+            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+          }));
+          console.log("Data Users :", numberedData); // Update log untuk melihat data yang sudah bernomor urut
+          setData(numberedData);
         } else {
           setError("No data found");
         }
@@ -50,7 +55,8 @@ const Users = () => {
   };
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 1, type: "number" },
+    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
+    { field: "id", headerName: "User ID", flex: 1, type: "number" },
     {
       field: "identifier",
       headerName: "Identifier",

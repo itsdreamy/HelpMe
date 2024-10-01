@@ -4,8 +4,8 @@ import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { mockDataElektronik } from "../../../api/mockData";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Use Link for internal routing
-import Preloader from "../../../components/Preloader"; // If you have a preloader component
+import { Link } from "react-router-dom"; // Use Link for navigation
+import Preloader from "../../../components/Preloader"; // Import a Preloader if available
 
 const Elektronik = () => {
   const theme = useTheme();
@@ -18,22 +18,30 @@ const Elektronik = () => {
     const fetchApi = async () => {
       try {
         const response = await mockDataElektronik();
+        console.log(response.data);
         if (response) {
-          setData(response);
+          // Tambahkan properti `no` untuk nomor urut
+          const numberedData = response.map((item, index) => ({
+            ...item,
+            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+          }));
+          setData(numberedData);
         } else {
-          throw new Error('No data found');
+          console.error("No data found");
         }
       } catch (err) {
-        setError('er' + err.message);
+        setError(err.message);
+        console.error(err);
       } finally {
-        setLoading(false); // Set loading to false after fetch
+        setLoading(false);
       }
     };
     fetchApi();
   }, []);
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 1 },
+    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
+    { field: "id", headerName: "Problem ID", flex: 1 }, // Kolom ID kategori
     {
       field: "name",
       headerName: "Name",
@@ -44,7 +52,7 @@ const Elektronik = () => {
 
   return (
     <Box mt="4px" ml="20px">
-      <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
+      <Header title="Elektronik" subtitle="Sub Category dari ELektronik" />
       <Box className="btn-create">
         <a href="/elektronik/create" className="create-problem">
           Create New Problem
@@ -52,9 +60,9 @@ const Elektronik = () => {
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} /> // Display a preloader if loading
+        <Preloader loading={loading} /> // Preloader during loading
       ) : error ? (
-        <Typography color="error">{error}</Typography> // Display error message
+        <Typography color="error">{error}</Typography> // Display error message if any
       ) : (
         <Box
           m="24px 0 0 0"

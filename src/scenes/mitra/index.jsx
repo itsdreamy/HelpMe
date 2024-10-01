@@ -1,38 +1,44 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../../theme";
-import Header from "../../../components/Header";
-import { mockDataMitra } from '../../../api/mockData';
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import { mockDataMitra } from "../../api/mockData";
 import { useEffect, useState } from "react";
-import Preloader from '../../../components/Preloader'; // Import your Preloader component
+import Preloader from "../../components/Preloader"; // Import your Preloader component
 
 const Mitra = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [data, setData] = useState([]);  // State for storing data
-  const [loading, setLoading] = useState(true);  // State for loading status
+  const [data, setData] = useState([]); // State for storing data
+  const [loading, setLoading] = useState(true); // State for loading status
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);  // Start loading
-      const response = await mockDataMitra();  // Fetch data
+      setLoading(true); // Start loading
+      const response = await mockDataMitra(); // Fetch data
       if (response) {
-        console.log("Mitra data:", response.data);
-        setData(response.data);  // Set the fetched data
+        // Tambahkan properti `no` untuk nomor urut
+        const numberedData = response.data.map((item, index) => ({
+          ...item,
+          no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+        }));
+        console.log("Data Users :", numberedData); // Update log untuk melihat data yang sudah bernomor urut
+        setData(numberedData);
       } else {
         console.log("No data found");
       }
-      setLoading(false);  // Stop loading after data is fetched
+      setLoading(false); // Stop loading after data is fetched
     };
-    fetchData();  // Fetch the data
+    fetchData(); // Fetch the data
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1, type: "number" },
+    { field: "no", headerName: "No", flex: 0.5 }, // Kolom nomor urut
+    { field: "id", headerName: "Mitra ID", flex: 1, type: "number" },
     {
       field: "owner_identifier",
       headerName: "Owner Identifier",
-      flex: 1
+      flex: 1,
     },
     {
       field: "name",
@@ -65,8 +71,8 @@ const Mitra = () => {
 
   return (
     <Box m="20px">
-      {loading && <Preloader loading={loading} />} {/* Show Preloader if loading */}
-
+      {loading && <Preloader loading={loading} />}{" "}
+      {/* Show Preloader if loading */}
       <Header title="Mitra" subtitle="Managing the Team Members" />
       <Box
         m="40px 0 0 0"
@@ -97,7 +103,8 @@ const Mitra = () => {
           },
         }}
       >
-        {!loading && <DataGrid rows={data} columns={columns} />} {/* Show DataGrid if not loading */}
+        {!loading && <DataGrid rows={data} columns={columns} />}{" "}
+        {/* Show DataGrid if not loading */}
       </Box>
     </Box>
   );
