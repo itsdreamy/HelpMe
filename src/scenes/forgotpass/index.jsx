@@ -3,23 +3,27 @@ import DialpadIcon from '@mui/icons-material/Dialpad'; // Correct Icon import
 import { forgotPassword } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import Preloader from '../../components/Preloader'; // Import Preloader component
+import { Alert } from '@mui/material'; // Import MUI Alert for showing success/failure messages
 
 const ForgotPass = () => {
     const [loading, setLoading] = useState(false); // State to track loading status
     const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false); // State to track success
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // Show preloader
         setMessage(''); // Reset message
+        setSuccess(false); // Reset success
 
         try {
             const data = await forgotPassword(phoneNumber);
             if (data) {
                 setMessage('Reset password link telah dikirim ke email anda.');
-                navigate('/login');
+                setSuccess(true); // Set success to true
+                // navigate('/login'); // You can navigate after some time if you still need it
             } else {
                 setMessage('Phone Number yang anda masukkan belum terdaftar.');
             }
@@ -48,7 +52,12 @@ const ForgotPass = () => {
                             <DialpadIcon className='icon' />
                         </div>
                         <button type="submit" className="btn">Submit</button>
-                        <p className='text-center'>{message}</p>
+                        {success && ( // Display success alert if the reset was successful
+                            <Alert severity="success" onClose={() => setSuccess(false)}>
+                                {message}
+                            </Alert>
+                        )}
+                        <p className='text-center'>{!success && message}</p> {/* Show error message */}
                     </form>
                 </div>
             </div>
