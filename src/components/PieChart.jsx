@@ -11,13 +11,13 @@ const PieChart = () => {
       if ('start', stats) {
         setData([
           {
-            id: "client",
+            id: stats.client_count,
             label: "Client",
             value: stats.client_count,
             color: "hsl(104, 70%, 50%)",
           },
           {
-            id: "mitra",
+            id: stats.mitra_count,
             label: "Mitra",
             value: stats.mitra_count,
             color: "hsl(162, 70%, 50%)",
