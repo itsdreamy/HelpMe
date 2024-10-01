@@ -187,6 +187,7 @@ const Sidebar = () => {
               />
 
               {/* Users Section */}
+              {!isCollapsed && (
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -194,6 +195,7 @@ const Sidebar = () => {
               >
                 Users
               </Typography>
+              )}
               <Item
                 title="Kelola Mitra"
                 to="/mitra"
@@ -210,6 +212,7 @@ const Sidebar = () => {
               />
 
               {/* Dynamic Category Section */}
+              {!isCollapsed && (
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -217,7 +220,7 @@ const Sidebar = () => {
               >
                 Kategori Bantuan
               </Typography>
-
+              )}
               {categories
                 .filter(category => category.id >= 2 && category.id <= 5) // Filter for id between 2 and 5
                 .map((category, index) => (
@@ -233,6 +236,7 @@ const Sidebar = () => {
 
 
               {/* Logout Section */}
+              {!isCollapsed && (
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -240,6 +244,7 @@ const Sidebar = () => {
               >
                 Logout
               </Typography>
+              )}
               <MenuItem
                 title="Logout"
                 icon={<LogoutOutlinedIcon />}
