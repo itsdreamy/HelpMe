@@ -18,9 +18,14 @@ const Kendaraan = () => {
     const fetchApi = async () => {
       try {
         const response = await mockDataKendaraan();
-        console.log(response.data)
+        console.log(response.data);
         if (response) {
-          setData(response);
+          // Tambahkan properti `no` untuk nomor urut
+          const numberedData = response.map((item, index) => ({
+            ...item,
+            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+          }));
+          setData(numberedData);
         } else {
           console.error("No data found");
         }
@@ -35,7 +40,8 @@ const Kendaraan = () => {
   }, []);
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 1 },
+    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
+    { field: "id", headerName: "Problem ID", flex: 1 }, // Kolom ID kategori
     {
       field: "name",
       headerName: "Name",

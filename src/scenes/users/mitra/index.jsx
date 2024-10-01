@@ -29,7 +29,11 @@ const Mitra = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1, type: "number" },
-    { field: "owner_id", headerName: "Owner ID", flex: 1, type: "number" },
+    {
+      field: "owner_identifier",
+      headerName: "Owner Identifier",
+      flex: 1
+    },
     {
       field: "name",
       headerName: "Name",
