@@ -73,11 +73,6 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "identifier",
-      headerName: "Identifier",
-      flex: 1,
-    },
-    {
       field: "role",
       headerName: "Role",
       flex: 1,
