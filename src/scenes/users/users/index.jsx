@@ -11,7 +11,8 @@ const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading
+  const [loading, setLoading] = useState(true); // State for initial data loading
+  const [actionLoading, setActionLoading] = useState(false); // State for ban/unban action
   const [error, setError] = useState(null); // State for error handling
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const Users = () => {
       try {
         const response = await mockDataUsers();
         if (response) {
-          console.log("Data Users :", response.data)
+          console.log("Data Users:", response.data);
           setData(response.data);
         } else {
           setError("No data found");
@@ -27,13 +28,14 @@ const Users = () => {
       } catch (err) {
         setError("Failed to fetch users data");
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false); // Stop initial loading
       }
     };
     fetchData();
   }, []);
 
   const handleSubmit = async (id) => {
+    setActionLoading(true); // Start action loading
     try {
       const response = await toggleStatusUser(id);
       if (response && response.status === 200) {
@@ -46,11 +48,12 @@ const Users = () => {
       }
     } catch (err) {
       console.error("Failed to toggle user status:", err);
+    } finally {
+      setActionLoading(false); // Stop action loading
     }
   };
 
   const columns = [
-    // { field: "id", headerName: "ID", flex: 1, type: "number" },
     {
       field: "identifier",
       headerName: "Identifier",
@@ -73,11 +76,6 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "identifier",
-      headerName: "Identifier",
-      flex: 1,
-    },
-    {
       field: "role",
       headerName: "Role",
       flex: 1,
@@ -95,10 +93,9 @@ const Users = () => {
       headerName: "Ban",
       flex: 1,
       renderCell: (params) => {
-        // console.log('params: ' + params.row.id);
         return (
           <button
-            onClick={() => handleSubmit(params.row.id)} // Memanggil handleSubmit dengan id pengguna
+            onClick={() => handleSubmit(params.row.id)} // Call handleSubmit with user id
             style={{
               backgroundColor: params.row.is_active ? "red" : "green",
               color: "white",
@@ -115,8 +112,8 @@ const Users = () => {
     },
   ];
 
-  if (loading) {
-    return <Preloader loading={loading} />; // Show Preloader when loading
+  if (loading || actionLoading) {
+    return <Preloader loading={loading || actionLoading} />; // Show Preloader if loading data or during action
   }
 
   if (error) {
