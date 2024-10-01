@@ -5,7 +5,7 @@ import { API_URL } from "./api";
 export const mockDataMitra = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
 
@@ -15,7 +15,7 @@ export const mockDataMitra = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);
@@ -26,7 +26,7 @@ export const mockDataMitra = async () => {
 export const mockDataUsers = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -35,7 +35,7 @@ export const mockDataUsers = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err) {
     console.error("Error fetching data from API:", err);
@@ -46,7 +46,7 @@ export const mockDataUsers = async () => {
 export const mockDataSerabutan = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -62,14 +62,14 @@ export const mockDataSerabutan = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
 export const mockDataKendaraan = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -85,14 +85,14 @@ export const mockDataKendaraan = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
 export const mockDataRumah = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -108,14 +108,14 @@ export const mockDataRumah = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
 export const mockDataElektronik = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -131,14 +131,14 @@ export const mockDataElektronik = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
 export const mockDataPersonal = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
   try {
@@ -154,7 +154,7 @@ export const mockDataPersonal = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
@@ -163,7 +163,7 @@ export const listCategory = async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return [];
   }
 
@@ -173,11 +173,11 @@ export const listCategory = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (err) {
     console.error("Error fetching data from API:", err);
-    return [];
+    return err;
   }
 };
 
@@ -185,7 +185,7 @@ export const fetchClientAndMitraStats = async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return null;
   }
 
@@ -195,11 +195,11 @@ export const fetchClientAndMitraStats = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('USER' + response);
+    // console.log('USER' + response);
     return response.data;
   } catch (error) {
     console.error("Error fetching client and mitra stats:", error);
-    return null;
+    return error;
   }
 };
 
@@ -210,7 +210,7 @@ export const fetchUserStatsByGranularity = async (
 ) => {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return null;
   }
 
@@ -228,11 +228,11 @@ export const fetchUserStatsByGranularity = async (
         },
       }
     );
-    console.log('USER' + response);
+    // console.log('USER' + response);
     return response;
   } catch (error) {
     console.error("Error fetching user stats:", error);
-    return null;
+    return error;
   }
 };
 
@@ -240,7 +240,7 @@ export const orderStats = async () => {
   const token = localStorage.getItem("token");
   
   if (!token) {
-    console.error("No token found");
+    // console.error("No token found");
     return null;
   }
 
@@ -252,10 +252,10 @@ export const orderStats = async () => {
         Authorization: "Bearer " + token,
       },
     });
-    console.log('ORDER' + response);
+    // console.log('ORDER' + response);
     return response.data;
   } catch (error) {
     console.error("Error fetching order stats:", error);
-    return null;
+    return error;
   }
 }
