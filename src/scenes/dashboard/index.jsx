@@ -18,6 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
+        setLoading(true);
         const response = await fetchClientAndMitraStats();
         console.log('Data: ', response);
         setData(response.all); // Adjust according to your data structure
@@ -32,23 +33,11 @@ const Dashboard = () => {
     fetchApi();
   }, []);
 
-  // Function to handle when the pie chart has fully rendered
-  const handleChartRendered = () => {
-    setChartLoading(false); // Set chart loading to false once the chart is rendered
-  };
-
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Box>
-
-      {/* Show Preloader while loading data or charts */}
-      {loading || chartLoading ? (
-        <Preloader loading={loading || chartLoading} />
-      ) : error ? (
-        <Typography color="error">{error}</Typography>
-      ) : (
         <Box
           display="grid"
           gridTemplateColumns="repeat(12, 1fr)"
@@ -86,11 +75,10 @@ const Dashboard = () => {
             </Box>
             <Box height="250px" m="-20px 0 0 0">
               {/* Pass the data to PieChart and handle chart loading completion */}
-              <PieChart isDashboard={true} data={data} onRendered={handleChartRendered} />
+              <PieChart isDashboard={true} data={data} />
             </Box>
           </Box>
         </Box>
-      )}
     </Box>
   );
 };
