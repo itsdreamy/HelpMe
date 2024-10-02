@@ -1,29 +1,33 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
+import { useStoreProblem } from '../../../api/problemApi';
+
+
 import { mockDataKendaraan } from "../../../api/mockData";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Preloader from "../../../components/Preloader"; // Import a Preloader if available
 
 const Kendaraan = () => {
+  const { deleteProblem } = useStoreProblem(); // This will give you access to deleteProblem
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const fetchApi = async () => {
       try {
         const response = await mockDataKendaraan();
-        console.log(response.data);
         if (response) {
-          // Tambahkan properti `no` untuk nomor urut
           const numberedData = response.map((item, index) => ({
             ...item,
-            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+            no: index + 1,
           }));
           setData(numberedData);
         } else {
@@ -39,14 +43,39 @@ const Kendaraan = () => {
     fetchApi();
   }, []);
 
+  const handleDeleteClick = (id) => {
+    setSelectedId(id);
+    setOpenDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    // Simulate deletion API call
+    setData(data.filter((item) => item.id !== selectedId));
+    setOpenDialog(false);
+  };
+
   const columns = [
-    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
-    { field: "id", headerName: "Problem ID", flex: 1 }, // Kolom ID kategori
+    { field: 'no', headerName: 'No', flex: 0.5 },
+    { field: "id", headerName: "Problem ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => deleteProblem(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
@@ -54,15 +83,15 @@ const Kendaraan = () => {
     <Box mt="4px" ml="20px">
       <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
       <Box className="btn-create">
-        <a href="/kendaraan/create" className="create-problem">
+        <Link to="/kendaraan/create" className="create-problem">
           Create New Problem
-        </a>
+        </Link>
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} /> // Preloader during loading
+        <Preloader loading={loading} />
       ) : error ? (
-        <Typography color="error">{error}</Typography> // Display error message if any
+        <Typography color="error">{error}</Typography>
       ) : (
         <Box
           m="24px 0 0 0"
@@ -96,6 +125,30 @@ const Kendaraan = () => {
           <DataGrid rows={data} columns={columns} />
         </Box>
       )}
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+      >
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this problem?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+        <Button
+          onClick={() => setOpenDialog(false)}
+          sx={{ color: "white", backgroundColor: "transparent" }} // White text with transparent background
+        >
+          Cancel
+        </Button>
+        <Button onClick={deleteProblem} color="error">
+          Delete
+        </Button>
+      </DialogActions>
+      </Dialog>
     </Box>
   );
 };
