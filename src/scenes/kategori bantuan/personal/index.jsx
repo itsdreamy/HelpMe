@@ -51,7 +51,7 @@ const Personal = () => {
   ];
 
   return (
-    <Box mt="4px" ml="20px">
+    <Box mt="3px" ml="20px">
       <Header title="Personal" subtitle="Sub Category dari Personal" />
       <Box className="btn-create">
         <a href="/personal/create" className="create-problem">

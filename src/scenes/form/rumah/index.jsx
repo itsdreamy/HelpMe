@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import PersonIcon from '@mui/icons-material/Person';
-import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from 'react-router-dom';
 import Preloader from '../../../components/Preloader';
 import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
@@ -21,7 +19,9 @@ const NewRumah = () => {
         setLoading(false);
 
         if (data) {
-            navigate('/rumah');
+            setTimeout(() => {
+                navigate('/rumah');
+            }, 1500);
         }
     };
 
@@ -43,7 +43,12 @@ const NewRumah = () => {
             </form>
 
             {/* Snackbar for alerts */}
-            <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleCloseAlert}>
+            <Snackbar
+                open={alert.open}
+                autoHideDuration={6000}
+                onClose={handleCloseAlert}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Position the Snackbar
+            >
                 <Alert onClose={handleCloseAlert} severity={alert.severity}>
                     {alert.message}
                 </Alert>

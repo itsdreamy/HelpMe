@@ -77,7 +77,7 @@ const Kendaraan = () => {
   ];
 
   return (
-    <Box mt="4px" ml="20px">
+    <Box mt="2px" ml="20px">
       <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
       <Box className="btn-create">
         <Link to="/kendaraan/create" className="create-problem">

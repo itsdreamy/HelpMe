@@ -94,6 +94,10 @@ function App() {
                 path="/rumah/create"
                 element={<PrivateRoute element={<NewRumah />} />}
               />
+              <Route
+                path="/personal/create"
+                element={<PrivateRoute element={<NewRumah />} />}
+              />
             </Routes>
           </main>   
         </div>
