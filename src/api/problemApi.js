@@ -1,30 +1,62 @@
 import axios from "axios";
 import { API_URL } from "./api";
+import { useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
 
-export const storeProblem = async (name, category_name) => {
-    const token = localStorage.getItem('token');
-    
-    if (!token) {
-        console.log("No token found");
-        return null;
-    }
+// Custom hook for storing and deleting a problem
+export const useStoreProblem = () => {
+    const [alert, setAlert] = useState({ open: false, message: '', severity: 'success' });
 
-    try {
-        const fetchApi = await axios.post(API_URL + '/categories/problems?category=' + category_name,
-            {
-                'name': name,
-            },
-            {
+    // Store a problem
+    const storeProblem = async (name, category_name) => {
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            console.log("No token found");
+            return null;
+        }
+
+        try {
+            const fetchApi = await axios.post(`${API_URL}/categories/problems?category=${category_name}`,
+                { name },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setAlert({ open: true, message: 'Problem stored successfully!', severity: 'success' });
+            return fetchApi.data;
+        } catch (error) {
+            setAlert({ open: true, message: 'Error storing problem!', severity: 'error' });
+            return null;
+        }
+    };
+
+    // Delete a problem
+    const deleteProblem = async (problem_id) => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            console.log("No token found");
+            return null;
+        }
+
+        try {
+            await axios.delete(`${API_URL}/categories/problems/${problem_id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        )
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        console.log("Problem stored successfully", fetchApi.data);
-        return fetchApi.data;
-    } catch (error) {
-        console.error('Error Fetching: ', error);
-        return null;
-    }
-}
+            setAlert({ open: true, message: 'Problem deleted successfully!', severity: 'success' });
+            return true;
+        } catch (error) {
+            setAlert({ open: true, message: 'Error deleting problem!', severity: 'error' });
+            return false;
+        }
+    };
+
+    const handleCloseAlert = () => {
+        setAlert({ ...alert, open: false });
+    };
+
+    return { storeProblem, deleteProblem, alert, handleCloseAlert };
+};
