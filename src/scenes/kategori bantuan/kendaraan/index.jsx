@@ -2,16 +2,13 @@ import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { useStoreProblem } from '../../../api/problemApi';
-
-
+import { deleteProblem } from '../../../api/problemApi';
 import { mockDataKendaraan } from "../../../api/mockData";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Preloader from "../../../components/Preloader"; // Import a Preloader if available
 
 const Kendaraan = () => {
-  const { deleteProblem } = useStoreProblem(); // This will give you access to deleteProblem
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -71,7 +68,7 @@ const Kendaraan = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => deleteProblem(params.row.id)}
+          onClick={() => handleDeleteClick(params.row.id)}
         >
           Delete
         </Button>
@@ -144,7 +141,7 @@ const Kendaraan = () => {
         >
           Cancel
         </Button>
-        <Button onClick={deleteProblem} color="error">
+        <Button onClick={handleConfirmDelete} color="error">
           Delete
         </Button>
       </DialogActions>
