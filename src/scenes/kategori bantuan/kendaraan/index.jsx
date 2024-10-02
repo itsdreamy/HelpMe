@@ -2,7 +2,7 @@ import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { deleteProblem } from '../../../api/problemApi';
+import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
 import { mockDataKendaraan } from "../../../api/mockData";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Use Link for navigation
@@ -16,6 +16,7 @@ const Kendaraan = () => {
   const [error, setError] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const { deleteProblem } = useStoreProblem();
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -41,15 +42,16 @@ const Kendaraan = () => {
   }, []);
 
   const handleDeleteClick = (id) => {
-    setSelectedId(id);
-    setOpenDialog(true);
+    setSelectedId(id); // Simpan ID yang ingin dihapus
+    setOpenDialog(true); // Tampilkan dialog konfirmasi
   };
-
+  
   const handleConfirmDelete = async () => {
-    // Simulate deletion API call
-    setData(data.filter((item) => item.id !== selectedId));
-    setOpenDialog(false);
+    await deleteProblem(selectedId); // Gunakan selectedId untuk menghapus
+    setData(data.filter((item) => item.id !== selectedId)); // Hapus item dari state
+    setOpenDialog(false); // Tutup dialog
   };
+  
 
   const columns = [
     { field: 'no', headerName: 'No', flex: 0.5 },
