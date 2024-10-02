@@ -50,28 +50,29 @@ export const aboutMe = async () => {
 export const logout = async () => {
   const token = localStorage.getItem("token"); // Ambil token dari localStorage
 
-  if (token) {
-    try {
-      const response = await axios.post(
-        AUTH_API + "/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Kirim token di header Authorization
-          },
-        }
-      );
-
-      // Jika logout berhasil, hapus token dari localStorage
-      localStorage.removeItem("token");
-      console.log("Logout successful", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error during logout:", error);
-    }
-  } else {
-    console.log("No token found");
+  if (!token) {
+    // console.error("No token found");
     return null;
+  }
+
+  try {
+    const response = await axios.post(
+      AUTH_API + "/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Kirim token di header Authorization
+        },
+      }
+    );
+
+    // Jika logout berhasil, hapus token dari localStorage
+    localStorage.removeItem("token");
+    // console.log("Logout successful", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return error;
   }
 };
 
@@ -105,7 +106,7 @@ export const resetPassword = async (
       password: password,
       password_confirmation: confirmPassword,
     });
-    console.log("Reset password response:", response);
+    // console.log("Reset password response:", response);
     return response;
   } catch (err) {
     // console.error('Error during reset password:', err.response.data.errors);
