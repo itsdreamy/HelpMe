@@ -49,10 +49,7 @@ const Dashboard = () => {
             <Box mt="25px" p="0 30px" display="flex" justifyContent="space-between" alignItems="center">
               <Box>
                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                  Revenue Generated
-                </Typography>
-                <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
-                  $59,342.32
+                  Users
                 </Typography>
               </Box>
             </Box>

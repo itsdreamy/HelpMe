@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { useStoreProblem } from '../../../api/problemApi'; 
 import Header from "../../../components/Header";
+import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
 import { mockDataElektronik } from "../../../api/mockData";
-import Preloader from "../../../components/Preloader";
-import { Link } from "react-router-dom"; // Use Link for navigation
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Preloader from "../../../components/Preloader"; // Import Preloader component
 
 const Elektronik = () => {
   const theme = useTheme();
@@ -25,7 +26,7 @@ const Elektronik = () => {
         if (response) {
           const numberedData = response.map((item, index) => ({
             ...item,
-            no: index + 1, // Add sequential number
+            no: index + 1,
           }));
           setData(numberedData);
         } else {
@@ -42,7 +43,7 @@ const Elektronik = () => {
   }, []);
 
   const handleDeleteClick = (id) => {
-    setSelectedId(id); // Store ID of the item to delete
+    setSelectedId(id); // Save the ID to delete
     setOpenDialog(true); // Show confirmation dialog
   };
 
@@ -76,7 +77,7 @@ const Elektronik = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDeleteClick(params.row.id)}
+          onClick={() => handleDeleteClick(params.row.id)} // Trigger delete confirmation
         >
           Delete
         </Button>
@@ -85,7 +86,7 @@ const Elektronik = () => {
   ];
 
   return (
-    <Box mt="3px" ml="20px">
+    <Box mt="2px" ml="20px">
       <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
       <Box className="btn-create">
         <Link to="/elektronik/create" className="create-problem">
@@ -94,7 +95,7 @@ const Elektronik = () => {
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} />
+        <Preloader loading={loading} /> // Show preloader while loading or deleting
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : (

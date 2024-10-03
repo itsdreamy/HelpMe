@@ -4,13 +4,13 @@ import Preloader from '../../../components/Preloader';
 import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
 import { Snackbar, Alert } from '@mui/material';
 
-const NewKendaraan = () => {
+const NewPersonal = () => {
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const navigate = useNavigate();
 
     // Using the custom hook
-    const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
+        const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +30,7 @@ const NewKendaraan = () => {
         <div className="problems">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
             <form onSubmit={handleSubmit}>
-                <h1 className='problem-title'>Add New Problem for Kendaraan</h1>
+                <h1 className='problem-title'>Add New Problem for Personal</h1>
                 <div className="input-box">
                     <input
                         type="text"
@@ -58,4 +58,4 @@ const NewKendaraan = () => {
     );
 };
 
-export default NewKendaraan;
+export default NewPersonal;

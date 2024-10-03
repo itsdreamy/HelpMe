@@ -10,7 +10,7 @@ const NewKendaraan = () => {
     const navigate = useNavigate();
 
     // Using the custom hook
-    const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
+        const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

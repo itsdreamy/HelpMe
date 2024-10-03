@@ -203,7 +203,7 @@ export const fetchClientAndMitraStats = async () => {
   }
 };
 
-export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
+export const fetchUserStatsByGranularity = async (granularity, year = null, startYear = null, endYear = null) => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.error("No token found");
@@ -211,13 +211,19 @@ export const fetchUserStatsByGranularity = async (granularity, startDate, endDat
   }
 
   try {
+    const body = { granularity };
+    
+    // Append appropriate data based on granularity
+    if (granularity === "monthly" && year) {
+      body.year = year;
+    } else if (granularity === "yearly" && startYear && endYear) {
+      body.start_year = startYear;
+      body.end_year = endYear;
+    }
+
     const response = await axios.post(
       API_URL + "/users?stats=granularity",
-      {
-        granularity: granularity,
-        start_date: startDate,
-        end_date: endDate,
-      },
+      body,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -231,6 +237,7 @@ export const fetchUserStatsByGranularity = async (granularity, startDate, endDat
     return null;
   }
 };
+
 
 export const orderStats = async () => {
   const token = localStorage.getItem("token");
