@@ -1,12 +1,13 @@
+import React, { useState } from 'react';
 import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { deleteProblem } from '../../../api/problemApi';
+import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
 import { mockDataKendaraan } from "../../../api/mockData";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Use Link for navigation
-import Preloader from "../../../components/Preloader"; // Import a Preloader if available
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Preloader from "../../../components/Preloader"; // Import Preloader component
 
 const Kendaraan = () => {
   const theme = useTheme();
@@ -16,6 +17,7 @@ const Kendaraan = () => {
   const [error, setError] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const { deleteProblem } = useStoreProblem();
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -41,14 +43,21 @@ const Kendaraan = () => {
   }, []);
 
   const handleDeleteClick = (id) => {
-    setSelectedId(id);
-    setOpenDialog(true);
+    setSelectedId(id); // Save the ID to delete
+    setOpenDialog(true); // Show confirmation dialog
   };
 
   const handleConfirmDelete = async () => {
-    // Simulate deletion API call
-    setData(data.filter((item) => item.id !== selectedId));
-    setOpenDialog(false);
+    setOpenDialog(false); // Close the dialog immediately after clicking delete
+    setLoading(true); // Show the preloader while deleting
+    try {
+      await deleteProblem(selectedId); // Delete the problem
+      setData(data.filter((item) => item.id !== selectedId)); // Remove the item from state
+    } catch (err) {
+      console.error("Failed to delete problem:", err);
+    } finally {
+      setLoading(false); // Hide the preloader after deletion
+    }
   };
 
   const columns = [
@@ -68,7 +77,7 @@ const Kendaraan = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={() => handleDeleteClick(params.row.id)}
+          onClick={() => handleDeleteClick(params.row.id)} // Trigger delete confirmation
         >
           Delete
         </Button>
@@ -86,7 +95,7 @@ const Kendaraan = () => {
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} />
+        <Preloader loading={loading} /> // Show preloader while loading or deleting
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : (
@@ -135,16 +144,16 @@ const Kendaraan = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Button
-          onClick={() => setOpenDialog(false)}
-          sx={{ color: "white", backgroundColor: "transparent" }} // White text with transparent background
-        >
-          Cancel
-        </Button>
-        <Button onClick={handleConfirmDelete} color="error">
-          Delete
-        </Button>
-      </DialogActions>
+          <Button
+            onClick={() => setOpenDialog(false)}
+            sx={{ color: "white", backgroundColor: "transparent" }} // White text with transparent background
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Delete
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
