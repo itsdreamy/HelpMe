@@ -7,7 +7,7 @@ import { mockDataRumah } from "../../../api/mockData";
 import Preloader from "../../../components/Preloader";
 import { Link } from "react-router-dom"; // Use Link for navigation
 
-const Rumah = () => {
+const Rumah = ({ isCollapsed }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -19,6 +19,7 @@ const Rumah = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
+        setLoading(true);
         const response = await mockDataRumah();
         if (response) {
           const numberedData = response.map((item, index) => ({
@@ -83,10 +84,19 @@ const Rumah = () => {
     },
   ];
 
+  const rumahStyle = {
+    width: isCollapsed ? "calc(100% - 50px)" : "calc(100% - 77px)", // Adjust based on sidebar size
+    marginLeft: isCollapsed ? "50px" : "50px", // Adjust based on sidebar size
+    transition: "width 2s ease", // Smooth transition when the sidebar is toggled
+  }
+
   return (
-    <Box mt="3px" ml="20px">
-      <Header title="Rumah" subtitle="Sub Category dari Rumah" />
-      <Box className="btn-create">
+    <Box style={rumahStyle} m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Rumah" subtitle="Sub Category dari Rumah" />
+      </Box>
+
+      <Box className="btn-create" mb="20px">
         <Link to="/rumah/create" className="create-problem">
           Create New Problem
         </Link>
@@ -98,11 +108,13 @@ const Rumah = () => {
         <Typography color="error">{error}</Typography>
       ) : (
         <Box
-          m="24px 0 0 0"
+          marginTop="24px"
           height="73vh"
+          width={isCollapsed ? "calc(100% - 70px)" : "calc(100% - 0px)"} // Adjust DataGrid width
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
+              width: "100%", // Ensure DataGrid takes up full width
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none",

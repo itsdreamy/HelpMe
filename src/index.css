@@ -194,3 +194,12 @@ form .remember-forgot{
   padding: 2px;
 }
 
+.label-filter{
+  margin-left: 2rem;
+  padding: 0.5rem;
+}
+
+.filter-form{
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+}
