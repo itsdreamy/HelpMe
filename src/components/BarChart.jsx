@@ -8,14 +8,14 @@ const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
-  const [granularity, setGranularity] = useState("monthly");
-  const [year, setYear] = useState("2024");
-  const [startYear, setStartYear] = useState("");
-  const [endYear, setEndYear] = useState("");
-  // const [granularity, setGranularity] = useState("yearly");
-  // const [year, setYear] = useState("");
-  // const [startYear, setStartYear] = useState("2011");
-  // const [endYear, setEndYear] = useState("2024");
+  // const [granularity, setGranularity] = useState("monthly");
+  // const [year, setYear] = useState("2024");
+  // const [startYear, setStartYear] = useState("");
+  // const [endYear, setEndYear] = useState("");
+  const [granularity, setGranularity] = useState("yearly");
+  const [year, setYear] = useState("");
+  const [startYear, setStartYear] = useState("2011");
+  const [endYear, setEndYear] = useState("2024");
 
   useEffect(() => {
     const loadData = async () => {
