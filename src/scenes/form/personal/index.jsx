@@ -4,7 +4,7 @@ import Preloader from '../../../components/Preloader';
 import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
 import { Snackbar, Alert } from '@mui/material';
 
-const NewRumah = () => {
+const NewKendaraan = () => {
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const navigate = useNavigate();
@@ -15,12 +15,13 @@ const NewRumah = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const data = await storeProblem(name, 'rumah'); // Update the category name as needed
+        const data = await storeProblem(name, 'personal');
         setLoading(false);
 
         if (data) {
+            // Show the alert and then navigate after 3 seconds
             setTimeout(() => {
-                navigate('/elektronik');
+                navigate('/personal');
             }, 1500);
         }
     };
@@ -29,7 +30,7 @@ const NewRumah = () => {
         <div className="problems">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
             <form onSubmit={handleSubmit}>
-                <h1 className='problem-title'>Add New Problem for Rumah</h1>
+                <h1 className='problem-title'>Add New Problem for Kendaraan</h1>
                 <div className="input-box">
                     <input
                         type="text"
@@ -42,7 +43,7 @@ const NewRumah = () => {
                 <button type="submit" className="btn">Create</button>
             </form>
 
-            {/* Snackbar for alerts */}
+            {/* Snackbar for alerts positioned at the top right */}
             <Snackbar
                 open={alert.open}
                 autoHideDuration={6000}
@@ -57,4 +58,4 @@ const NewRumah = () => {
     );
 };
 
-export default NewRumah;
+export default NewKendaraan;

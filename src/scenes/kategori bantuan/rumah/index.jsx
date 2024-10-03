@@ -1,11 +1,11 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { mockDataRumah } from "../../../api/mockData";
-import { useEffect, useState } from "react";
+import Preloader from "../../../components/Preloader";
 import { Link } from "react-router-dom"; // Use Link for navigation
-import Preloader from "../../../components/Preloader"; // Import a Preloader if available
 
 const Rumah = () => {
   const theme = useTheme();
@@ -13,17 +13,17 @@ const Rumah = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const fetchApi = async () => {
       try {
         const response = await mockDataRumah();
-        console.log(response.data);
         if (response) {
-          // Tambahkan properti `no` untuk nomor urut
           const numberedData = response.map((item, index) => ({
             ...item,
-            no: index + 1, // Menambahkan nomor urut (index dimulai dari 0, jadi +1)
+            no: index + 1, // Add a sequential number
           }));
           setData(numberedData);
         } else {
@@ -39,30 +39,63 @@ const Rumah = () => {
     fetchApi();
   }, []);
 
+  const handleDeleteClick = (id) => {
+    setSelectedId(id); // Store ID of the item to delete
+    setOpenDialog(true); // Show confirmation dialog
+  };
+
+  const handleConfirmDelete = async () => {
+    setOpenDialog(false); // Close the dialog immediately after clicking delete
+    setLoading(true); // Show preloader during the delete operation
+    try {
+      // Simulate delete operation (replace with your delete logic)
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated API call
+      setData(data.filter((item) => item.id !== selectedId)); // Remove deleted item from state
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+    } finally {
+      setLoading(false); // Hide preloader when delete is done
+    }
+  };
+
   const columns = [
-    { field: 'no', headerName: 'No', flex: 0.5 }, // Kolom nomor urut
-    { field: "id", headerName: "Problem ID", flex: 1 }, // Kolom ID kategori
+    { field: 'no', headerName: 'No', flex: 0.5 },
+    { field: "id", headerName: "Problem ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => handleDeleteClick(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ];
 
   return (
-    <Box mt="4px" ml="20px">
+    <Box mt="3px" ml="20px">
       <Header title="Rumah" subtitle="Sub Category dari Rumah" />
       <Box className="btn-create">
-        <a href="/rumah/create" className="create-problem">
+        <Link to="/rumah/create" className="create-problem">
           Create New Problem
-        </a>
+        </Link>
       </Box>
 
       {loading ? (
-        <Preloader loading={loading} /> // Preloader during loading
+        <Preloader loading={loading} />
       ) : error ? (
-        <Typography color="error">{error}</Typography> // Display error message if any
+        <Typography color="error">{error}</Typography>
       ) : (
         <Box
           m="24px 0 0 0"
@@ -96,6 +129,30 @@ const Rumah = () => {
           <DataGrid rows={data} columns={columns} />
         </Box>
       )}
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+      >
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this problem?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenDialog(false)}
+            sx={{ color: "white", backgroundColor: "transparent" }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
