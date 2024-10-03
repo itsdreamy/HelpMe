@@ -51,7 +51,6 @@ const Kendaraan = () => {
     setData(data.filter((item) => item.id !== selectedId)); // Hapus item dari state
     setOpenDialog(false); // Tutup dialog
   };
-  
 
   const columns = [
     { field: 'no', headerName: 'No', flex: 0.5 },

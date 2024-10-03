@@ -9,8 +9,8 @@ const BarChart = ({ isDashboard = false }) => {
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
   const [granularity, setGranularity] = useState("weekly"); // Default value for granularity
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState("2023-11-23");
+  const [endDate, setEndDate] = useState("2024-11-24");
 
   useEffect(() => {
     const loadData = async () => {
@@ -23,6 +23,7 @@ const BarChart = ({ isDashboard = false }) => {
         );
         if (response && response.data) {
           const formattedData = formatDataForChart(response.data, granularity); // Olah data di sini
+          console.log({'FORMAT': formattedData});
           setData(formattedData);
         }
       }

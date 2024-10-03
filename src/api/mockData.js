@@ -203,20 +203,16 @@ export const fetchClientAndMitraStats = async () => {
   }
 };
 
-export const fetchUserStatsByGranularity = async (
-  granularity,
-  startDate,
-  endDate
-) => {
+export const fetchUserStatsByGranularity = async (granularity, startDate, endDate) => {
   const token = localStorage.getItem("token");
   if (!token) {
-    // console.error("No token found");
+    console.error("No token found");
     return null;
   }
 
   try {
     const response = await axios.post(
-      API_URL + "/user?stats=granularity",
+      API_URL + "/users?stats=granularity",
       {
         granularity: granularity,
         start_date: startDate,
@@ -228,11 +224,11 @@ export const fetchUserStatsByGranularity = async (
         },
       }
     );
-    // console.log('USER' + response);
+    console.log({'USER': response.data});
     return response;
   } catch (error) {
     console.error("Error fetching user stats:", error);
-    return error;
+    return null;
   }
 };
 
