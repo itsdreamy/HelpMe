@@ -1,106 +1,115 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-import { fetchUserStatsByGranularity } from "../api/mockData"; // Import API function
+import { fetchUserStatsByGranularity } from "../api/mockData"; 
 import { useEffect, useState } from "react";
 
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  
-  // Default data for the chart
-  const [data, setData] = useState([
-    { period: "Week 1", count: 10 },
-    { period: "Week 2", count: 15 },
-    { period: "Week 3", count: 8 },
-    { period: "Week 4", count: 12 },
-  ]); 
-  
-  const [granularity, setGranularity] = useState("weekly"); // Default value for granularity
-  const [startDate, setStartDate] = useState(""); // Rentang tanggal
-  const [endDate, setEndDate] = useState("");   // Rentang tanggal
+  const [data, setData] = useState([]);
+  // const [granularity, setGranularity] = useState("monthly");
+  // const [year, setYear] = useState("2024");
+  // const [startYear, setStartYear] = useState("");
+  // const [endYear, setEndYear] = useState("");
+  const [granularity, setGranularity] = useState("yearly");
+  const [year, setYear] = useState("");
+  const [startYear, setStartYear] = useState("2011");
+  const [endYear, setEndYear] = useState("2024");
 
-  // useEffect for fetching data from API on component render or when granularity/date changes
   useEffect(() => {
     const loadData = async () => {
-      if (startDate && endDate) {  // If both dates are provided
-        const response = await fetchUserStatsByGranularity(granularity, startDate, endDate); // Fetch API
-        if (response && response.data) {
-          const formattedData = formatDataForChart(response.data, granularity); // Format data for chart
-          setData(formattedData); // Set chart data
-        }
+      let response = null;
+
+      // Fetch data based on granularity
+      if (granularity === "monthly" && year) {
+        response = await fetchUserStatsByGranularity(granularity, year);
+      } else if (granularity === "yearly" && startYear && endYear) {
+        response = await fetchUserStatsByGranularity(granularity, null, startYear, endYear);
+      }
+
+      if (response && response.data) {
+        setData(response.data);
+        console.log(response);
       }
     };
     loadData();
-  }, [granularity, startDate, endDate]); // Re-run when granularity, startDate, or endDate changes
+  }, [granularity, year, startYear, endYear]);
 
-  // Format data from API for the chart
-  const formatDataForChart = (data, granularity) => {
-    if (granularity === "weekly") {
-      return data.map((item) => ({
-        period: `Week ${item.period}`,
-        count: item.count,
-      }));
-    } else if (granularity === "monthly") {
-      return data.map((item) => ({
-        period: `Month ${item.month} - ${item.year}`,
-        count: item.count,
-      }));
-    } else if (granularity === "yearly") {
-      return data.map((item) => ({
-        period: `Year ${item.year}`,
-        count: item.count,
-      }));
-    }
-    return [];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Data fetching is handled by useEffect
   };
 
   return (
     <>
-      {/* Form for selecting startDate, endDate, and granularity */}
-      <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
-        <label className="label-filter">Start Date: </label>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}  // Update startDate
-        />
-        <label className="label-filter">End Date: </label>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}  // Update endDate
-        />
-        <label className="label-filter">Granularity: </label>
-        <select
-          value={granularity}
-          onChange={(e) => setGranularity(e.target.value)}  // Update granularity
-        >
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
-        </select>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Granularity:
+          <select value={granularity} onChange={(e) => setGranularity(e.target.value)}>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </label>
+
+        {granularity === "monthly" && (
+          <label>
+            Year:
+            <input
+              type="number"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              placeholder="Enter year"
+            />
+          </label>
+        )}
+
+        {granularity === "yearly" && (
+          <>
+            <label>
+              Start Year:
+              <input
+                type="number"
+                value={startYear}
+                onChange={(e) => setStartYear(e.target.value)}
+                placeholder="Enter start year"
+              />
+            </label>
+            <label>
+              End Year:
+              <input
+                type="number"
+                value={endYear}
+                onChange={(e) => setEndYear(e.target.value)}
+                placeholder="Enter end year"
+              />
+            </label>
+          </>
+        )}
+
+        <button type="submit">Fetch Data</button>
       </form>
 
-      {/* Bar chart with data */}
       <ResponsiveBar
-        data={data}  // Data for the chart
-        keys={["count"]}  // Display the "count" key
-        indexBy="period"  // Group by period (week, month, year)
+        data={data}
+        keys={["count"]} // 'count' sesuai dengan hasil API
+        indexBy="period" // 'period' sesuai dengan hasil olahan data
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={{ scheme: "nivo" }}  // Color scheme
+        colors={{ scheme: "nivo" }}
         borderColor={{
           from: "color",
           modifiers: [["darker", "1.6"]],
         }}
+        axisTop={null}
+        axisRight={null}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: isDashboard ? undefined : "Period",  // X-axis label
+          legend: isDashboard ? undefined : "Period",
           legendPosition: "middle",
           legendOffset: 32,
         }}
@@ -108,45 +117,24 @@ const BarChart = ({ isDashboard = false }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: isDashboard ? undefined : "Count",  // Y-axis label
+          legend: isDashboard ? undefined : "Count",
           legendPosition: "middle",
           legendOffset: -40,
         }}
-        enableLabel={false}  // Disable labels on the bars
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        labelTextColor={{
-          from: "color",
-          modifiers: [["darker", 1.6]],
-        }}
+        enableLabel={false}
         legends={[
           {
             dataFrom: "keys",
             anchor: "bottom-right",
             direction: "column",
-            justify: false,
-            translateX: 120,
-            translateY: 0,
             itemsSpacing: 2,
             itemWidth: 100,
             itemHeight: 20,
-            itemDirection: "left-to-right",
-            itemOpacity: 0.85,
             symbolSize: 20,
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemOpacity: 1,
-                },
-              },
-            ],
           },
         ]}
         role="application"
-        barAriaLabel={function (e) {
-          return e.id + ": " + e.formattedValue + " in period: " + e.indexValue;
-        }}
+        barAriaLabel={(e) => `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`}
       />
     </>
   );

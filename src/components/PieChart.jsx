@@ -53,18 +53,6 @@ const PieChart = () => {
         from: "color",
         modifiers: [["darker", 2]],
       }}
-      tooltip={({ datum }) => (
-        <div
-          style={{
-            padding: '5px 10px',
-            background: 'rgba(0, 0, 0, 0.7)',
-            color: '#fff',
-            borderRadius: '3px',
-          }}
-        >
-          <strong>{datum.label}</strong>: {datum.value}
-        </div>
-      )}
       legends={[
         {
           anchor: "bottom",

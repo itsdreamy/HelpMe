@@ -14,6 +14,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CarCrashIcon from '@mui/icons-material/CarCrash';
+import StoreOutlinedIcon from '@mui/icons-material/Store';
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import Preloader from '../../components/Preloader'; 
@@ -197,16 +198,23 @@ const Sidebar = () => {
               </Typography>
               )}
               <Item
-                title="Kelola Mitra"
-                to="/mitra"
-                icon={<PeopleOutlinedIcon />}
+                title="Kelola Usaha Mitra"
+                to="/usaha"
+                icon={<StoreOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
               <Item
-                title="Kelola Pengguna"
-                to="/users"
+                title="Kelola Mitra"
+                to="/mitras"
                 icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Kelola Client"
+                to="/client"
+                icon={<PeopleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />

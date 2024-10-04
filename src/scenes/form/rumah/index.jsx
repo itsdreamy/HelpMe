@@ -10,7 +10,7 @@ const NewRumah = () => {
     const navigate = useNavigate();
 
     // Using the custom hook
-    const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
+        const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +19,7 @@ const NewRumah = () => {
         setLoading(false);
 
         if (data) {
+            // Show the alert and then navigate after 3 seconds
             setTimeout(() => {
                 navigate('/rumah');
             }, 1500);
@@ -42,7 +43,7 @@ const NewRumah = () => {
                 <button type="submit" className="btn">Create</button>
             </form>
 
-            {/* Snackbar for alerts */}
+            {/* Snackbar for alerts positioned at the top right */}
             <Snackbar
                 open={alert.open}
                 autoHideDuration={6000}

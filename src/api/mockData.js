@@ -203,38 +203,41 @@ export const fetchClientAndMitraStats = async () => {
   }
 };
 
-export const fetchUserStatsByGranularity = async (
-  granularity,
-  startDate,
-  endDate
-) => {
+export const fetchUserStatsByGranularity = async (granularity, year = null, startYear = null, endYear = null) => {
   const token = localStorage.getItem("token");
   if (!token) {
-    // console.error("No token found");
+    console.error("No token found");
     return null;
   }
 
   try {
+    const body = { granularity };
+    
+    // Append appropriate data based on granularity
+    if (granularity === "monthly" && year) {
+      body.year = year;
+    } else if (granularity === "yearly" && startYear && endYear) {
+      body.start_year = startYear;
+      body.end_year = endYear;
+    }
+
     const response = await axios.post(
-      API_URL + "/user?stats=granularity",
-      {
-        granularity: granularity,
-        start_date: startDate,
-        end_date: endDate,
-      },
+      API_URL + "/users?stats=granularity",
+      body,
       {
         headers: {
           Authorization: "Bearer " + token,
         },
       }
     );
-    // console.log('USER' + response);
+    console.log({'USER': response.data});
     return response;
   } catch (error) {
     console.error("Error fetching user stats:", error);
-    return error;
+    return null;
   }
 };
+
 
 export const orderStats = async () => {
   const token = localStorage.getItem("token");
