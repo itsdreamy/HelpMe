@@ -23,14 +23,14 @@ export const mockDataMitra = async () => {
   }
 };
 
-export const mockDataUsers = async () => {
+export const mockDataUsers = async (role) => {
   const token = localStorage.getItem("token");
   if (!token) {
     // console.error("No token found");
     return [];
   }
   try {
-    const response = await axios.post(API_URL + "/users", {}, {
+    const response = await axios.post(API_URL + "/users?role=" + role, {}, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

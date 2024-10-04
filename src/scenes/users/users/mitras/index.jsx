@@ -18,7 +18,7 @@ const Mitras = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await mockDataUsers();
+        const response = await mockDataUsers('mitra');
         if (response) {
           // Tambahkan properti `no` untuk nomor urut
           const numberedData = response.data.map((item, index) => ({
