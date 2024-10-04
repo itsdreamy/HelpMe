@@ -22,7 +22,7 @@ const Login = () => {
             
             if (data && data.token) {
                 // Jika login berhasil
-                navigate('/dashboard'); // Redirect ke halaman utama
+                navigate('/dashboard');
             } else {
                 // Jika login gagal (invalid credentials)
                 setMessage('Login gagal! Username atau password salah.');
@@ -31,7 +31,7 @@ const Login = () => {
             // Tangani kesalahan jaringan atau respons lainnya
             setMessage('Terjadi kesalahan! Coba lagi nanti.');
         } finally {
-            setLoading(false); // Pastikan preloader berhenti dalam semua kasus
+            setLoading(false);
         }
     };
 

@@ -94,7 +94,7 @@ const BarChart = ({ isDashboard = false }) => {
         data={data}
         keys={["count"]} // 'count' sesuai dengan hasil API
         indexBy="period" // 'period' sesuai dengan hasil olahan data
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        margin={{ top: 53, right: 130, bottom: 67.5, left: 100 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -108,10 +108,11 @@ const BarChart = ({ isDashboard = false }) => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
+          tickRotation: 45,
           legend: isDashboard ? undefined : "Period",
           legendPosition: "middle",
           legendOffset: 32,
+          format: (d) => `${d.substring(0, 3)}`,
         }}
         axisLeft={{
           tickSize: 5,

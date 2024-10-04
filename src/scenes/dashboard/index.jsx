@@ -53,7 +53,7 @@ const Dashboard = () => {
                 </Typography>
               </Box>
             </Box>
-            <Box height="250px" m="-20px 0 0 0">
+            <Box height="260px" m="-20px 0 0 0">
               <BarChart isDashboard={true} />
             </Box>
           </Box>
