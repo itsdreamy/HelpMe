@@ -135,10 +135,10 @@ const Mitras = () => {
   }
 
   return (
-    <Box m="20px">
-      <Header title="Users" subtitle="Users List" />
+    <Box m="17px 0 0 20px">
+      <Header title="Mitra" subtitle="Kelola Mitra" />
       <Box
-        m="40px 0 0 0"
+        m="20px 0 0 0"
         height="77vh"
         sx={{
           "& .MuiDataGrid-root": {

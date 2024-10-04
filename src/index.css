@@ -147,7 +147,7 @@ form .remember-forgot{
     color: red;
 }
 
-.preloader {
+/* .preloader {
   background-color: #141b2d;
   position: fixed;
   top: 0;
@@ -158,7 +158,7 @@ form .remember-forgot{
   justify-content: center;
   align-items: center;
   z-index: 2;
-}
+} */
 
 .problems{
   padding-top: 13rem;

@@ -86,7 +86,7 @@ const Elektronik = () => {
   ];
 
   return (
-    <Box mt="2px" ml="20px">
+    <Box ml="20px">
       <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
       <Box className="btn-create">
         <Link to="/elektronik/create" className="create-problem">
@@ -100,7 +100,7 @@ const Elektronik = () => {
         <Typography color="error">{error}</Typography>
       ) : (
         <Box
-          m="24px 0 0 0"
+          m="9px 0 0 0"
           height="73vh"
           sx={{
             "& .MuiDataGrid-root": {

@@ -191,6 +191,14 @@ export const themeSettings = (mode) => {
         fontSize: 14,
       },
     },
+    preloader: {
+      light: "#fcfcfc",
+      dark: colors.primary[500],
+    },
+    labels: {
+      light: "#e0e0e0",
+      dark: "#e0e0e0",
+    },
   };
 };
 

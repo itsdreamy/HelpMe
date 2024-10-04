@@ -70,12 +70,12 @@ const Usaha = () => {
   ];
 
   return (
-    <Box m="20px">
+    <Box m="16px 0 0 20px">
       {loading && <Preloader loading={loading} />}{" "}
       {/* Show Preloader if loading */}
-      <Header title="Mitra" subtitle="Managing the Team Members" />
+      <Header title="Usaha Mitra" subtitle="List Usaha Mitra" />
       <Box
-        m="40px 0 0 0"
+        m="20px 0 0 0"
         height="77vh"
         sx={{
           "& .MuiDataGrid-root": {

@@ -135,8 +135,8 @@ const Users = () => {
   }
 
   return (
-    <Box m="20px">
-      <Header title="Users" subtitle="Users List" />
+    <Box m="7px 0 0 20px">
+      <Header title="Client" subtitle="Kelola Mitra" />
       <Box
         m="40px 0 0 0"
         height="77vh"

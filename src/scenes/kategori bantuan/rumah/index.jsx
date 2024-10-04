@@ -86,7 +86,7 @@ const Rumah = () => {
   ];
 
   return (
-    <Box mt="2px" ml="20px">
+    <Box ml="20px">
       <Header title="Rumah" subtitle="Sub Category dari Rumah" />
       <Box className="btn-create">
         <Link to="/rumah/create" className="create-problem">
@@ -100,7 +100,7 @@ const Rumah = () => {
         <Typography color="error">{error}</Typography>
       ) : (
         <Box
-          m="24px 0 0 0"
+          m="9px 0 0 0"
           height="73vh"
           sx={{
             "& .MuiDataGrid-root": {
