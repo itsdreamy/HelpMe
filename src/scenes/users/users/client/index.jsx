@@ -18,7 +18,7 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await mockDataUsers();
+        const response = await mockDataUsers('client');
         if (response) {
           // Tambahkan properti `no` untuk nomor urut
           const numberedData = response.data.map((item, index) => ({

@@ -186,6 +186,20 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Mitra
+              </Typography>
+              <Item
+                title="Kelola Usaha Mitra"
+                to="/usaha"
+                icon={<StoreOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
 
               {/* Users Section */}
               {!isCollapsed && (
@@ -197,13 +211,6 @@ const Sidebar = () => {
                 Users
               </Typography>
               )}
-              <Item
-                title="Kelola Usaha Mitra"
-                to="/usaha"
-                icon={<StoreOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
               <Item
                 title="Kelola Mitra"
                 to="/mitras"

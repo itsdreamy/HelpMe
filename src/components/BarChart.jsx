@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-import { fetchUserStatsByGranularity } from "../api/mockData"; 
+import { fetchUserStatsByGranularity } from "../api/mockData";
 import { useEffect, useState } from "react";
 
 const BarChart = ({ isDashboard = false }) => {
@@ -25,7 +25,12 @@ const BarChart = ({ isDashboard = false }) => {
       if (granularity === "monthly" && year) {
         response = await fetchUserStatsByGranularity(granularity, year);
       } else if (granularity === "yearly" && startYear && endYear) {
-        response = await fetchUserStatsByGranularity(granularity, null, startYear, endYear);
+        response = await fetchUserStatsByGranularity(
+          granularity,
+          null,
+          startYear,
+          endYear
+        );
       }
 
       if (response && response.data) {
@@ -46,7 +51,11 @@ const BarChart = ({ isDashboard = false }) => {
       <form onSubmit={handleSubmit} className="form-filter">
         <label className="label-filter">
           Granularity:
-          <select className="input-filter" value={granularity} onChange={(e) => setGranularity(e.target.value)}>
+          <select
+            className="input-filter"
+            value={granularity}
+            onChange={(e) => setGranularity(e.target.value)}
+          >
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>
@@ -55,7 +64,8 @@ const BarChart = ({ isDashboard = false }) => {
         {granularity === "monthly" && (
           <label className="label-filter">
             Year:
-            <input className="input-filter"
+            <input
+              className="input-filter"
               type="number"
               value={year}
               onChange={(e) => setYear(e.target.value)}
@@ -68,7 +78,8 @@ const BarChart = ({ isDashboard = false }) => {
           <>
             <label className="label-filter">
               Start Year:
-              <input className="input-filter"
+              <input
+                className="input-filter"
                 type="number"
                 value={startYear}
                 onChange={(e) => setStartYear(e.target.value)}
@@ -77,7 +88,8 @@ const BarChart = ({ isDashboard = false }) => {
             </label>
             <label className="label-filter">
               End Year:
-              <input className="input-filter"
+              <input
+                className="input-filter"
                 type="number"
                 value={endYear}
                 onChange={(e) => setEndYear(e.target.value)}
@@ -149,7 +161,9 @@ const BarChart = ({ isDashboard = false }) => {
           },
         ]}
         role="application"
-        barAriaLabel={(e) => `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`}
+        barAriaLabel={(e) =>
+          `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`
+        }
         theme={{
           axis: {
             ticks: {

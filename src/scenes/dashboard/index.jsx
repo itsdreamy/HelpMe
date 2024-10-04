@@ -43,6 +43,7 @@ const Dashboard = () => {
           gridTemplateColumns="repeat(12, 1fr)"
           gridAutoRows="140px"
           gap="20px"
+           mt="-19px"
         >
           {/* ROW 1 */}
           <Box gridColumn="span 7" gridRow="span 2" backgroundColor={colors.primary[400]}>
@@ -75,6 +76,16 @@ const Dashboard = () => {
               <PieChart isDashboard={true} data={data} />
             </Box>
           </Box>
+          <Box gridColumn="span 12" gridRow="span 2" backgroundColor={colors.primary[400]} p="20px">
+          <Box mt="10px" p="2px 11px" display="flex">            
+          <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                  Orders
+          </Typography>
+          <Box mt="10px">
+
+          </Box>
+          </Box>
+        </Box>
         </Box>
     </Box>
   );
