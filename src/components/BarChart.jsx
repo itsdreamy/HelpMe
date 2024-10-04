@@ -112,7 +112,14 @@ const BarChart = ({ isDashboard = false }) => {
           legend: isDashboard ? undefined : "Period",
           legendPosition: "middle",
           legendOffset: 32,
-          format: (d) => `${d.substring(0, 3)}`,
+          format: (d) => {
+            if (typeof d === "string") {
+              return d.substring(0, 3);
+            } else {
+              console.error("Unexpected type for period:", d);
+              return d;
+            }
+          },
         }}
         axisLeft={{
           tickSize: 5,
