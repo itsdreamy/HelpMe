@@ -1,13 +1,13 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../../theme";
-import { mockDataUsers } from "../../../api/mockData";
-import Header from "../../../components/Header";
+import { tokens } from "../../../../theme";
+import { mockDataUsers } from "../../../../api/mockData";
+import Header from "../../../../components/Header";
 import { useEffect, useState } from "react";
-import Preloader from "../../../components/Preloader"; // Import Preloader
-import { toggleStatusUser } from "../../../api/adminApi";
+import Preloader from "../../../../components/Preloader"; // Import Preloader
+import { toggleStatusUser } from "../../../../api/adminApi";
 
-const Users = () => {
+const Mitras = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -172,4 +172,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Mitras;

@@ -43,19 +43,19 @@ const BarChart = ({ isDashboard = false }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className="form-filter">
+        <label className="label-filter">
           Granularity:
-          <select value={granularity} onChange={(e) => setGranularity(e.target.value)}>
+          <select className="input-filter" value={granularity} onChange={(e) => setGranularity(e.target.value)}>
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>
         </label>
 
         {granularity === "monthly" && (
-          <label>
+          <label className="label-filter">
             Year:
-            <input
+            <input className="input-filter"
               type="number"
               value={year}
               onChange={(e) => setYear(e.target.value)}
@@ -66,18 +66,18 @@ const BarChart = ({ isDashboard = false }) => {
 
         {granularity === "yearly" && (
           <>
-            <label>
+            <label className="label-filter">
               Start Year:
-              <input
+              <input className="input-filter"
                 type="number"
                 value={startYear}
                 onChange={(e) => setStartYear(e.target.value)}
                 placeholder="Enter start year"
               />
             </label>
-            <label>
+            <label className="label-filter">
               End Year:
-              <input
+              <input className="input-filter"
                 type="number"
                 value={endYear}
                 onChange={(e) => setEndYear(e.target.value)}
@@ -131,10 +131,31 @@ const BarChart = ({ isDashboard = false }) => {
             itemWidth: 100,
             itemHeight: 20,
             symbolSize: 20,
+            justify: false,
+            translateX: 0,
+            translateY: 56,
+            itemTextColor: "#fff",
+            itemDirection: "left-to-right",
+            itemOpacity: 1,
+            symbolShape: "circle",
           },
         ]}
         role="application"
         barAriaLabel={(e) => `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`}
+        theme={{
+          axis: {
+            ticks: {
+              text: {
+                fill: "#ffffff",
+              },
+            },
+          },
+          legends: {
+            text: {
+              fill: "#ffffff",
+            },
+          },
+        }}
       />
     </>
   );

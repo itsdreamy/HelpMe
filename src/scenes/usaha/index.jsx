@@ -6,7 +6,7 @@ import { mockDataMitra } from "../../api/mockData";
 import { useEffect, useState } from "react";
 import Preloader from "../../components/Preloader"; // Import your Preloader component
 
-const Mitra = () => {
+const Usaha = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]); // State for storing data
@@ -110,4 +110,4 @@ const Mitra = () => {
   );
 };
 
-export default Mitra;
+export default Usaha;

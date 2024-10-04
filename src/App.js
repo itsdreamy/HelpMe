@@ -7,8 +7,9 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Forgotpass from "./scenes/forgotpass";
-import Mitra from "./scenes/mitra";
-import Users from "./scenes/users/users";
+import Usaha from "./scenes/usaha";
+import Mitras from "./scenes/users/users/mitras";
+import Users from "./scenes/users/users/client";
 import Serabutan from "./scenes/kategori bantuan/serabutan";
 import Elektronik from "./scenes/kategori bantuan/elektronik";
 import Rumah from "./scenes/kategori bantuan/rumah";
@@ -51,12 +52,16 @@ function App() {
                 element={<PrivateRoute element={<Dashboard />} />}
               />
               <Route
-                path="/mitra"
-                element={<PrivateRoute element={<Mitra />} />}
+                path="/usaha"
+                element={<PrivateRoute element={<Usaha />} />}
               />
               <Route
-                path="/users"
+                path="/client"
                 element={<PrivateRoute element={<Users />} />}
+              />
+              <Route
+                path="/mitras"
+                element={<PrivateRoute element={<Mitras />} />}
               />
               <Route
                 path="/serabutan"

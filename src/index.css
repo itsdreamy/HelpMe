@@ -194,3 +194,19 @@ form .remember-forgot{
   padding: 2px;
 }
 
+.label-filter{
+margin-right: 10px;
+
+}
+
+.form-filter{
+  margin-top: 1rem;
+  padding: 1rem;
+  margin-left: 1rem;
+  margin-bottom: -3rem;
+}
+
+.input-filter{
+  width: 6rem;
+  margin-left: 10px;
+}
