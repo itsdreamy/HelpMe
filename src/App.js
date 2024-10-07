@@ -27,7 +27,7 @@ import Success from "./components/200";
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation();
-  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create', '/personal/create', '/password-reset'];
+  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create', '/personal/create', '/password-reset/:token'];
 
   const showSidebarAndTopbar = !hiddenPaths.includes(location.pathname);
 
