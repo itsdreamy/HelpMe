@@ -147,7 +147,7 @@ form .remember-forgot{
     color: red;
 }
 
-/* .preloader {
+.preloader {
   background-color: #141b2d;
   position: fixed;
   top: 0;
@@ -158,7 +158,7 @@ form .remember-forgot{
   justify-content: center;
   align-items: center;
   z-index: 2;
-} */
+}
 
 .problems{
   padding-top: 13rem;
@@ -202,8 +202,8 @@ margin-right: 10px;
 .form-filter{
   margin-top: 0.5rem;
   padding: 1rem;
-  margin-left: 1rem;
-  margin-bottom: -3.5rem;  
+  margin-left: 0.9rem;
+  margin-bottom: -3.2rem;  
   position: relative; /* Ensure it stays in the flow */
   z-index: 1;
 } 

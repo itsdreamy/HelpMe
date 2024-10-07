@@ -23,6 +23,7 @@ import NewRumah from "./scenes/form/rumah";
 import PrivateRoute from "./components/PrivateRoute";
 import Newpass from "./scenes/newpass";
 import Success from "./components/200";
+import NotFoundPage from "./components/404";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -38,13 +39,13 @@ function App() {
         <div className="app">
           {showSidebarAndTopbar && <Sidebar />}
           <main className="content">
-            {showSidebarAndTopbar && <Topbar />}
             <Routes>
               <Route path="/" element={<LoginRedirect />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<Forgotpass />} />
               <Route path="/password-reset/:token" element={<Newpass />} />
               <Route path="/success" element={<Success />} />
+              <Route path="*" element={<NotFoundPage />} />
 
               {/* Protect the routes that require authentication */}
               <Route
