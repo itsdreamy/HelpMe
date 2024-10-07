@@ -56,13 +56,13 @@ function App() {
                 element={<PrivateRoute element={<Usaha />} />}
               />
               <Route
-                path="/client"
+                path="/client"O
                 element={<PrivateRoute element={<Users />} />}
               />
               <Route
                 path="/mitras"
                 element={<PrivateRoute element={<Mitras />} />}
-              />
+              /> q 
               <Route
                 path="/serabutan"
                 element={<PrivateRoute element={<Serabutan />} />}

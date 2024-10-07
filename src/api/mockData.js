@@ -238,24 +238,38 @@ export const fetchUserStatsByGranularity = async (granularity, year = null, star
   }
 };
 
-
-export const orderStats = async () => {
+export const orderStats = async (status = null, stats, date = null, start_date = null, end_date = null, year = null, start_year = null, end_year = null) => {
   const token = localStorage.getItem("token");
-  
+
   if (!token) {
     // console.error("No token found");
     return null;
   }
 
   try {
-    const response = await axios.get(API_URL + "/orders", {
-    // const response = await axios.get(API_URL + "/orders?status=complete", {
-    // const response = await axios.get(API_URL + "/orders?status=pending", {
+    let query = '';
+
+    if (stats === 'hourly') {
+      query = `?stats=hourly&date=${date}`;
+    } else if (stats === 'daily') {
+      query = `?stats=daily&start_date=${start_date}&end_date=${end_date}`;
+    } else if (stats === 'monthly') {
+      query = `?stats=monthly&year=${year}`;
+    } else if (stats === 'yearly') {
+      query = `?stats=yearly&start_year=${start_year}&end_year=${end_year}`;
+    }
+
+    // Menambahkan status jika ada
+    if (status) {
+      query += `&status=${status}`;
+    }
+
+    const response = await axios.get(API_URL + "/orders" + query, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
-    // console.log('ORDER' + response);
+
     return response.data;
   } catch (error) {
     console.error("Error fetching order stats:", error);

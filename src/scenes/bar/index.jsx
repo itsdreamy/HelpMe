@@ -1,17 +1,13 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../../theme";
-import { fetchUserStatsByGranularity } from "../../api/mockData";
+import { orderStats } from "../../api/mockData";
 import { useEffect, useState } from "react";
 
 const BarChartOrder = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
-  // const [granularity, setGranularity] = useState("monthly");
-  // const [year, setYear] = useState("2024");
-  // const [startYear, setStartYear] = useState("");
-  // const [endYear, setEndYear] = useState("");
   const [granularity, setGranularity] = useState("yearly");
   const [year, setYear] = useState("");
   const [startYear, setStartYear] = useState("2011");
@@ -23,13 +19,12 @@ const BarChartOrder = ({ isDashboard = false }) => {
 
       // Fetch data based on granularity
       if (granularity === "monthly" && year) {
-        response = await fetchUserStatsByGranularity(granularity, year);
+        response = await orderStats(granularity = granularity, year);
       } else if (granularity === "yearly" && startYear && endYear) {
-        response = await fetchUserStatsByGranularity(
-          granularity,
-          null,
-          startYear,
-          endYear
+        response = await orderStats(
+          granularity = granularity,
+          startYear = startYear,
+          endYear = endYear,
         );
       }
 
