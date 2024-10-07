@@ -1,7 +1,6 @@
 
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
-import { ColorizeSharp } from "@mui/icons-material";
 
 // color design tokens export
 export const tokens = (mode) => ({
@@ -197,12 +196,9 @@ export const themeSettings = (mode) => {
       dark: colors.primary[500],
     },
     labels: {
-      light: "#ececec",
-      dark: "#ececec",
+      light: "#e0e0e0",
+      dark: "#e0e0e0",
     },
-    wrapper:{
-      dark: colors.primary[500]
-    }
   };
 };
 

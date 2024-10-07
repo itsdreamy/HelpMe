@@ -2,6 +2,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import BarChart from '../../components/BarChart'; 
+import BarChartOrder from "../bar";
 import PieChart from "../../components/PieChart";  
 import { fetchClientAndMitraStats } from "../../api/mockData";  
 import { useState, useEffect } from "react";  
@@ -34,7 +35,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box m="29px 20px 20px 20px ">
+    <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Box>
@@ -43,7 +44,6 @@ const Dashboard = () => {
           gridTemplateColumns="repeat(12, 1fr)"
           gridAutoRows="140px"
           gap="20px"
-           mt="-19px"
         >
           {/* ROW 1 */}
           <Box gridColumn="span 7" gridRow="span 2" backgroundColor={colors.primary[400]}>
@@ -76,16 +76,26 @@ const Dashboard = () => {
               <PieChart isDashboard={true} data={data} />
             </Box>
           </Box>
-          <Box gridColumn="span 12" gridRow="span 2" backgroundColor={colors.primary[400]} p="20px">
-          <Box mt="10px" p="2px 11px" display="flex">            
-          <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                  Orders
-          </Typography>
-          <Box mt="10px">
-
-          </Box>
-          </Box>
         </Box>
+        <Box
+          display="grid"
+          gridTemplateColumns="repeat(12, 1fr)"
+          gridAutoRows="140px"
+          gap="20px"
+        >
+          {/* ROW 1 */}
+          <Box gridColumn="span 7" gridRow="span 2" backgroundColor={colors.primary[400]}>
+            <Box mt="25px" p="0 30px" display="flex" justifyContent="space-between" alignItems="center">
+              <Box>
+                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                  Users
+                </Typography>
+              </Box>
+            </Box>
+            <Box height="260px" m="-20px 0 0 0">
+              <BarChartOrder isDashboard={true} />
+            </Box>
+          </Box>
         </Box>
     </Box>
   );

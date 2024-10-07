@@ -1,2 +1,2 @@
-export const API_URL = "https://90a0c6d4a6ee4beac6666fcc893de19e.serveo.net/api/v1";
-export const BASE_URL = "https://90a0c6d4a6ee4beac6666fcc893de19e.serveo.net";
+export const API_URL = "http://127.0.0.1:8000/api/v1";
+export const BASE_URL = "http://127.0.0.1:8000";

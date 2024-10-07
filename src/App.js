@@ -23,12 +23,11 @@ import NewRumah from "./scenes/form/rumah";
 import PrivateRoute from "./components/PrivateRoute";
 import Newpass from "./scenes/newpass";
 import Success from "./components/200";
-import NotFoundPage from "./components/404";
 
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation();
-  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create', '/personal/create', '/password-reset'];
+  const hiddenPaths = ['/login', '/forgotpassword', '/success', '/newpassword', '/serabutan/create', '/elektronik/create', '/kendaraan/create', '/rumah/create', '/kendaraan/create', '/elektronik/create', '/personal/create', '/password-reset/:token'];
 
   const showSidebarAndTopbar = !hiddenPaths.includes(location.pathname);
 
@@ -39,13 +38,13 @@ function App() {
         <div className="app">
           {showSidebarAndTopbar && <Sidebar />}
           <main className="content">
+            {showSidebarAndTopbar && <Topbar />}
             <Routes>
               <Route path="/" element={<LoginRedirect />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<Forgotpass />} />
               <Route path="/password-reset/:token" element={<Newpass />} />
               <Route path="/success" element={<Success />} />
-              <Route path="*" element={<NotFoundPage />} />
 
               {/* Protect the routes that require authentication */}
               <Route
@@ -57,13 +56,13 @@ function App() {
                 element={<PrivateRoute element={<Usaha />} />}
               />
               <Route
-                path="/client"
+                path="/client"O
                 element={<PrivateRoute element={<Users />} />}
               />
               <Route
                 path="/mitras"
                 element={<PrivateRoute element={<Mitras />} />}
-              />
+              /> q 
               <Route
                 path="/serabutan"
                 element={<PrivateRoute element={<Serabutan />} />}
