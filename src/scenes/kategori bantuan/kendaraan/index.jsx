@@ -27,6 +27,7 @@ const Kendaraan = () => {
         const numberedData = response.map((item, index) => ({
           ...item,
           no: index + 1,
+          problem_id: item.id, // Sesuaikan dengan struktur data yang ada
         }));
         setData(numberedData);
       } else {
@@ -39,6 +40,7 @@ const Kendaraan = () => {
       setLoading(false);
     }
   }, []);
+  
 
   useEffect(() => {
     fetchData();
