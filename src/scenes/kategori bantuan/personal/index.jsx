@@ -86,7 +86,7 @@ const Personal = () => {
   ];
 
   return (
-    <Box ml="20px">
+    <Box m="27px 20px 20px 20px">
       <Header title="Personal" subtitle="Sub Category dari Personal" />
       <Box className="btn-create">
         <Link to="/personal/create" className="create-problem">

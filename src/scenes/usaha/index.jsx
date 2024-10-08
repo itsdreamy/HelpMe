@@ -70,7 +70,7 @@ const Usaha = () => {
   ];
 
   return (
-    <Box m="16px 0 0 20px">
+    <Box m="27px 0 0 20px">
       {loading && <Preloader loading={loading} />}{" "}
       {/* Show Preloader if loading */}
       <Header title="Usaha Mitra" subtitle="List Usaha Mitra" />

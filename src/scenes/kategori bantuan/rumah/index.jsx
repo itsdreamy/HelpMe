@@ -86,7 +86,7 @@ const Rumah = () => {
   ];
 
   return (
-    <Box ml="20px">
+    <Box m="27px 20px 20px 20px">
       <Header title="Rumah" subtitle="Sub Category dari Rumah" />
       <Box className="btn-create">
         <Link to="/rumah/create" className="create-problem">

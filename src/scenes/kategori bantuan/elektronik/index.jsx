@@ -86,7 +86,7 @@ const Elektronik = () => {
   ];
 
   return (
-    <Box ml="20px">
+    <Box m="27px 20px 20px 20px">
       <Header title="Elektronik" subtitle="Sub Category dari Elektronik" />
       <Box className="btn-create">
         <Link to="/elektronik/create" className="create-problem">

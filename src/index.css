@@ -200,11 +200,11 @@ margin-right: 10px;
 }
 
 .form-filter{
-  margin-top: 0.5rem;
+  margin-top: 0rem;
   padding: 1rem;
   margin-left: 1rem;
   margin-bottom: -3.5rem;  
-  position: relative; /* Ensure it stays in the flow */
+  position: relative;
   z-index: 1;
 } 
 

@@ -135,7 +135,7 @@ const Mitras = () => {
   }
 
   return (
-    <Box m="17px 0 0 20px">
+    <Box m="27px 0 0 20px">
       <Header title="Mitra" subtitle="Kelola Mitra" />
       <Box
         m="20px 0 0 0"

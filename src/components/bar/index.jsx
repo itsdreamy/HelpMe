@@ -1,12 +1,9 @@
-import { useTheme } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
-import { tokens } from "../../theme";
 import { orderStats } from "../../api/mockData";
 import { useEffect, useState } from "react";
 
 const BarChartOrder = ({ isDashboard = false }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
   // const [granularity, setGranularity] = useState("monthly");
   // const [year, setYear] = useState("2024");
@@ -20,9 +17,11 @@ const BarChartOrder = ({ isDashboard = false }) => {
   const [year, setYear] = useState("2024");
   const [startYear, setStartYear] = useState("2011");
   const [endYear, setEndYear] = useState("2024");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
+      setIsLoading(true);
       let response = null;
 
       // Fetch data based on granularity
@@ -49,6 +48,7 @@ const BarChartOrder = ({ isDashboard = false }) => {
         console.log({'ORDER': response});
         setData(response);
       }
+      setIsLoading(false);
     };
     loadData();
   }, [granularity, date, startDate, endDate, year, startYear, endYear]);
@@ -115,14 +115,19 @@ const BarChartOrder = ({ isDashboard = false }) => {
             </label>
           </>
         )}
-
-        <button type="submit">Fetch Data</button>
       </form>
 
-      <ResponsiveBar
+      {isLoading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '120px' }}>
+          <CircularProgress sx={{ 
+            color: "#fff"
+           }} />
+        </div>
+      ) : (
+        <ResponsiveBar
         data={formattedData}
-        keys={["count"]} // 'count' sesuai dengan hasil API
-        indexBy="period" // 'period' sesuai dengan hasil olahan data
+        keys={["count"]} // The count field from the API
+        indexBy="period" // The period field
         margin={{ top: 53, right: 130, bottom: 67.5, left: 100 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
@@ -136,29 +141,33 @@ const BarChartOrder = ({ isDashboard = false }) => {
         axisRight={null}
         axisBottom={{
           tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 45,
+          tickPadding: 10, 
+          tickRotation: 0, 
           legend: isDashboard ? undefined : "Period",
           legendPosition: "middle",
-          legendOffset: 32,
-          format: (d) => {
-            if (typeof d === "string") {
-              return d.substring(0, 3);
-            } else {
-              console.error("Unexpected type for period:", d);
-              return d;
-            }
-          },
-        }}
+          legendOffset: 40,
+          format: (d) => d, 
+        }}        
         axisLeft={{
           tickSize: 5,
-          tickPadding: 5,
+          tickPadding: 6,
           tickRotation: 0,
           legend: isDashboard ? undefined : "Count",
           legendPosition: "middle",
           legendOffset: -40,
         }}
         enableLabel={false}
+        tooltip={({ id, value, indexValue }) => (
+          <div
+            style={{
+              padding: '5px',
+              color: 'white',
+              background: '#333',
+            }}
+          >
+            <strong>{indexValue}</strong>: {value} orders
+          </div>
+        )}
         legends={[
           {
             dataFrom: "keys",
@@ -196,6 +205,8 @@ const BarChartOrder = ({ isDashboard = false }) => {
           },
         }}
       />
+      
+      )}
     </>
   );
 };

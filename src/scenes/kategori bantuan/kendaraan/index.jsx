@@ -86,7 +86,7 @@ const Kendaraan = () => {
   ];
 
   return (
-    <Box ml="20px">
+    <Box m="27px 20px 20px 20px">
       <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
       <Box className="btn-create">
         <Link to="/kendaraan/create" className="create-problem">
@@ -100,7 +100,7 @@ const Kendaraan = () => {
         <Typography color="error">{error}</Typography>
       ) : (
         <Box
-          m="9px 0 0 0"
+          m="9px 0 0 0px"
           height="73vh"
           sx={{
             "& .MuiDataGrid-root": {

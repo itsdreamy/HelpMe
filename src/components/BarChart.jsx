@@ -1,6 +1,6 @@
-import { useTheme } from "@mui/material";
+
 import { ResponsiveBar } from "@nivo/bar";
-import { tokens } from "../theme";
+import { CircularProgress } from "@mui/material";
 import { fetchUserStatsByGranularity } from "../api/mockData";
 import { useEffect, useState } from "react";
 import { useMode } from '../theme';
@@ -18,9 +18,11 @@ const BarChart = ({ isDashboard = false }) => {
   const [year, setYear] = useState("");
   const [startYear, setStartYear] = useState("2011");
   const [endYear, setEndYear] = useState("2024");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
+      setIsLoading(true);
       let response = null;
 
       // Fetch data based on granularity
@@ -39,6 +41,7 @@ const BarChart = ({ isDashboard = false }) => {
         setData(response.data);
         console.log(response);
       }
+      setIsLoading(false);
     };
     loadData();
   }, [granularity, year, startYear, endYear]);
@@ -100,96 +103,106 @@ const BarChart = ({ isDashboard = false }) => {
             </label>
           </>
         )}
-
-        <button type="submit">Fetch Data</button>
       </form>
-
-      <ResponsiveBar
-  data={data}
-  keys={["count"]} // 'count' sesuai dengan hasil API
-  indexBy="period" // 'period' sesuai dengan hasil olahan data
-  margin={{ top: 53, right: 130, bottom: 67.5, left: 100 }}
-  padding={0.3}
-  valueScale={{ type: "linear" }}
-  indexScale={{ type: "band", round: true }}
-  colors={{ scheme: "nivo" }}
-  borderColor={{
-    from: "color",
-    modifiers: [["darker", "1.6"]],
-  }}
-  axisTop={null}
-  axisRight={null}
-  axisBottom={{
-    tickSize: 5,
-    tickPadding: 5,
-    tickRotation: 45,
-    legend: isDashboard ? undefined : "Period",
-    legendPosition: "middle",
-    legendOffset: 32,
-    format: (d) => {
-      if (typeof d === "string") {
-        return d.substring(0, 3); // Shortening the month labels
-      }
-      return d;
-    },
-    // Use both tickColor and tickTextColor to explicitly set the color
-    tickColor: textColor,
-    tickTextColor: textColor, // For the tick text (months)
-  }}
-  axisLeft={{
-    tickSize: 5,
-    tickPadding: 5,
-    tickRotation: 0,
-    legend: isDashboard ? undefined : "Count",
-    legendPosition: "middle",
-    legendOffset: -40,
-    tickColor: textColor,
-    tickTextColor: textColor, // For axisLeft text
-  }}
-  enableLabel={false}
-  legends={[
-    {
-      dataFrom: "keys",
-      anchor: "bottom-right",
-      direction: "column",
-      itemsSpacing: 2,
-      itemWidth: 100,
-      itemHeight: 20,
-      symbolSize: 20,
-      justify: false,
-      translateX: 0,
-      translateY: 56,
-      itemTextColor: textColor, // Explicitly set legend text color
-      itemDirection: "left-to-right",
-      itemOpacity: 1,
-      symbolShape: "circle",
-    },
-  ]}
-  role="application"
-  barAriaLabel={(e) =>
-    `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`
-  }
-  theme={{
-    axis: {
-      ticks: {
-        text: {
-          fill: textColor,
-        },
-      },
-    },
-    legends: {
-      text: {
-        fill: textColor,
-      },
-    },
-    labels: {
-      text: {
-        fill: textColor,
-      },
-    },
-  }}
-/>
-
+      {isLoading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '120px' }}>
+          <CircularProgress sx={{ 
+            color: "#fff"
+           }} />
+        </div>
+      ) : (
+        <ResponsiveBar
+          data={data}
+          keys={["count"]}
+          indexBy="period"
+          margin={{ top: 53, right: 130, bottom: 67.5, left: 100 }}
+          padding={0.3}
+          valueScale={{ type: "linear" }}
+          indexScale={{ type: "band", round: true }}
+          colors={{ scheme: "nivo" }}
+          borderColor={{
+            from: "color",
+            modifiers: [["darker", "1.6"]],
+          }}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 45,
+            legend: isDashboard ? undefined : "Period",
+            legendPosition: "middle",
+            legendOffset: 32,
+            format: (d) => {
+              if (typeof d === "string") {
+                return d.substring(0, 3);
+              }
+              return d;
+            },
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: isDashboard ? undefined : "Count",
+            legendPosition: "middle",
+            legendOffset: -40,
+          }}
+          enableLabel={false}
+          legends={[
+            {
+              dataFrom: "keys",
+              anchor: "bottom-right",
+              direction: "column",
+              itemsSpacing: 2,
+              itemWidth: 100,
+              itemHeight: 20,
+              itemTextColor: "#fff",
+              symbolSize: 20,
+              justify: false,
+              translateX: 0,
+              translateY: 56,
+              itemDirection: "left-to-right",
+              itemOpacity: 1,
+              symbolShape: "circle",
+            },
+          ]}
+          role="application"
+          barAriaLabel={(e) =>
+            `${e.id}: ${e.formattedValue} in period: ${e.indexValue}`
+          }
+          
+          // Add custom tooltip
+          tooltip={({ id, value, indexValue }) => (
+            <div
+              style={{
+                padding: "12px",
+                background: "#333",
+                color: "#fff",
+                borderRadius: "4px",
+              }}
+            >
+              <strong>{indexValue}</strong>: {value} {id}
+            </div>
+          )}
+          
+          theme={{
+            axis: {
+              ticks: {
+                text: {
+                  fill: "#ffffff",
+                },
+              },
+            },
+            legends: {
+              text: {
+                fill: "#ffffff",
+              },
+            },
+          }}
+        />
+        
+      )}
     </>
   );
 };
