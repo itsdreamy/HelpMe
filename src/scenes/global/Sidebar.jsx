@@ -15,7 +15,7 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CarCrashIcon from '@mui/icons-material/CarCrash';
 import StoreOutlinedIcon from '@mui/icons-material/Store';
-import PrivacyTipIcon from "@mui/icons-material/PrivacyTipOutlined";
+import PrivacyTipOutlinedIcon from '@mui/icons-material/PrivacyTipOutlined';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import Preloader from '../../components/Preloader'; 
 import { BASE_URL } from "../../api/api";
@@ -91,8 +91,12 @@ const Sidebar = () => {
     <CarCrashIcon />,
     <HomeOutlinedIcon />,
     <ElectricBoltIcon />,
-    <SettingsAccessibilityIcon />,
+    <SettingsAccessibilityIcon />
   ];
+
+  const icons = [
+    <PrivacyTipOutlinedIcon />
+  ]
 
   return (
     <Box

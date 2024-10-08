@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import $ from 'jquery';
+import 'datatables.net-dt/css/dataTables.dataTables.css'; // DataTables CSS import
+import 'datatables.net'; // DataTables JS import
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, useTheme, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
+import { useStoreProblem } from '../../../api/problemApi';
 import { mockDataKendaraan } from "../../../api/mockData";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Preloader from "../../../components/Preloader"; // Import Preloader component
+import Preloader from "../../../components/Preloader"; 
 
 const Kendaraan = () => {
   const theme = useTheme();
@@ -19,28 +20,65 @@ const Kendaraan = () => {
   const [selectedId, setSelectedId] = useState(null);
   const { deleteProblem } = useStoreProblem();
 
-  useEffect(() => {
-    const fetchApi = async () => {
-      try {
-        const response = await mockDataKendaraan();
-        if (response) {
-          const numberedData = response.map((item, index) => ({
-            ...item,
-            no: index + 1,
-          }));
-          setData(numberedData);
-        } else {
-          console.error("No data found");
-        }
-      } catch (err) {
-        setError(err.message);
-        console.error(err);
-      } finally {
-        setLoading(false);
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await mockDataKendaraan();
+      if (response) {
+        const numberedData = response.map((item, index) => ({
+          ...item,
+          no: index + 1,
+        }));
+        setData(numberedData);
+      } else {
+        console.error("No data found");
       }
-    };
-    fetchApi();
+    } catch (err) {
+      setError(err.message);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (!loading) {
+      // Destroy the previous DataTable instance if it exists
+      if ($.fn.dataTable.isDataTable('#Kendaraan')) {
+        $('#Kendaraan').DataTable().destroy();
+      }
+
+      $('#Kendaraan').DataTable({
+        data: data,
+        columns: [
+          { title: "No", data: "no" },
+          { title: "Problem ID", data: "problem_id" },
+          { title: "Name", data: "name" },
+          {
+            title: "Actions",
+            data: null,
+            render: (data, type, row) => (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => handleDeleteClick(row.id)} // Trigger delete confirmation
+              >
+                Delete
+              </Button>
+            ),
+          },
+        ],
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        destroy: true, // Allow the DataTable to be reinitialized
+      });
+    }
+  }, [loading, data]);
 
   const handleDeleteClick = (id) => {
     setSelectedId(id); // Save the ID to delete
@@ -60,31 +98,6 @@ const Kendaraan = () => {
     }
   };
 
-  const columns = [
-    { field: 'no', headerName: 'No', flex: 0.5 },
-    { field: "id", headerName: "Problem ID", flex: 1 },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => handleDeleteClick(params.row.id)} // Trigger delete confirmation
-        >
-          Delete
-        </Button>
-      ),
-    },
-  ];
-
   return (
     <Box m="27px 20px 20px 20px">
       <Header title="Kendaraan" subtitle="Sub Category dari Kendaraan" />
@@ -99,36 +112,17 @@ const Kendaraan = () => {
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : (
-        <Box
-          m="9px 0 0 0px"
-          height="73vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .name-column--cell": {
-              color: colors.greenAccent[300],
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: colors.blueAccent[700],
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: colors.primary[400],
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              backgroundColor: colors.blueAccent[700],
-            },
-            "& .MuiCheckbox-root": {
-              color: `${colors.greenAccent[200]} !important`,
-            },
-          }}
-        >
-          <DataGrid rows={data} columns={columns} />
+        <Box m="9px 0 0 0" height="73vh">
+          <table id="Kendaraan" className="display" style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Problem ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+          </table>
         </Box>
       )}
 
