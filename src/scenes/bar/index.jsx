@@ -8,8 +8,16 @@ const BarChartOrder = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  // const [granularity, setGranularity] = useState("monthly");
+  // const [year, setYear] = useState("2024");
+  // const [startYear, setStartYear] = useState("");
+  // const [endYear, setEndYear] = useState("");
+  const [status, setStatus] = useState(null);
   const [granularity, setGranularity] = useState("yearly");
-  const [year, setYear] = useState("");
+  const [date, setDate] = useState('2024-10-07');
+  const [startDate, setStartDate] = useState('2024-09-07');
+  const [endDate, setEndDate] = useState('2024-11-07');
+  const [year, setYear] = useState("2024");
   const [startYear, setStartYear] = useState("2011");
   const [endYear, setEndYear] = useState("2024");
 
@@ -18,28 +26,42 @@ const BarChartOrder = ({ isDashboard = false }) => {
       let response = null;
 
       // Fetch data based on granularity
-      if (granularity === "monthly" && year) {
-        response = await orderStats(granularity = granularity, year);
+      if (granularity === 'hourly') {
+        response = await orderStats(status, granularity, date);
+      } else if (granularity === 'daily') {
+        response = await orderStats(status, granularity, null, startDate, endDate);
+      } else if (granularity === "monthly" && year) {
+        response = await orderStats(status, granularity, null, null, year);
       } else if (granularity === "yearly" && startYear && endYear) {
         response = await orderStats(
-          granularity = granularity,
-          startYear = startYear,
-          endYear = endYear,
+          status,
+          granularity,
+          null,
+          null,
+          null,
+          null,
+          startYear,
+          endYear
         );
       }
 
-      if (response && response.data) {
-        setData(response.data);
-        console.log(response);
+      if (response) {
+        console.log({'ORDER': response});
+        setData(response);
       }
     };
     loadData();
-  }, [granularity, year, startYear, endYear]);
+  }, [granularity, date, startDate, endDate, year, startYear, endYear]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Data fetching is handled by useEffect
   };
+
+  const formattedData = data.map((d) => ({
+    ...d,
+    period: String(d.period), // Konversi period ke string
+  }));
 
   return (
     <>
@@ -98,7 +120,7 @@ const BarChartOrder = ({ isDashboard = false }) => {
       </form>
 
       <ResponsiveBar
-        data={data}
+        data={formattedData}
         keys={["count"]} // 'count' sesuai dengan hasil API
         indexBy="period" // 'period' sesuai dengan hasil olahan data
         margin={{ top: 53, right: 130, bottom: 67.5, left: 100 }}

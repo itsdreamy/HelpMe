@@ -260,11 +260,11 @@ export const orderStats = async (status = null, stats, date = null, start_date =
     }
 
     // Menambahkan status jika ada
-    if (status) {
+    if (status !== null) {
       query += `&status=${status}`;
     }
 
-    const response = await axios.get(API_URL + "/orders" + query, {
+    const response = await axios.get(API_URL + "/users/orders" + query, {
       headers: {
         Authorization: "Bearer " + token,
       },

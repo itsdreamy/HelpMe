@@ -38,7 +38,6 @@ function App() {
         <div className="app">
           {showSidebarAndTopbar && <Sidebar />}
           <main className="content">
-            {showSidebarAndTopbar && <Topbar />}
             <Routes>
               <Route path="/" element={<LoginRedirect />} />
               <Route path="/login" element={<Login />} />
