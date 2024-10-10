@@ -27,7 +27,7 @@ const Kendaraan = () => {
         const numberedData = response.map((item, index) => ({
           ...item,
           no: index + 1,
-          problem_id: item.id, // Sesuaikan dengan struktur data yang ada
+          problem_id: item.id, // Adjust according to your data structure
         }));
         setData(numberedData);
       } else {
@@ -41,7 +41,6 @@ const Kendaraan = () => {
     }
   }, []);
   
-
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -62,15 +61,9 @@ const Kendaraan = () => {
           {
             title: "Actions",
             data: null,
-            render: (data, type, row) => (
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => handleDeleteClick(row.id)} // Trigger delete confirmation
-              >
-                Delete
-              </Button>
-            ),
+            render: (data, type, row) => {
+              return `<button class="delete-button" data-id="${row.id}">Delete</button>`;
+            },
           },
         ],
         paging: true,
@@ -79,13 +72,15 @@ const Kendaraan = () => {
         responsive: true,
         destroy: true, // Allow the DataTable to be reinitialized
       });
+
+      // Handle delete button clicks after DataTable has been initialized
+      $('#Kendaraan tbody').on('click', '.delete-button', function() {
+        const id = $(this).data('id'); // Get ID from data-id attribute
+        setSelectedId(id); // Save the ID to delete
+        setOpenDialog(true); // Show confirmation dialog
+      });
     }
   }, [loading, data]);
-
-  const handleDeleteClick = (id) => {
-    setSelectedId(id); // Save the ID to delete
-    setOpenDialog(true); // Show confirmation dialog
-  };
 
   const handleConfirmDelete = async () => {
     setOpenDialog(false); // Close the dialog immediately after clicking delete
@@ -114,9 +109,9 @@ const Kendaraan = () => {
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : (
-        <Box m="9px 0 0 0" height="73vh">
+        <Box m="40px 0 0 0" height="73vh">
           <table id="Kendaraan" className="display" style={{ width: '100%' }}>
-            <thead>
+            <thead style={{ backgroundColor: colors.primary[400]}}>
               <tr>
                 <th>No</th>
                 <th>Problem ID</th>

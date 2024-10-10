@@ -212,3 +212,18 @@ margin-right: 10px;
   width: 6rem;
   margin-left: 10px;
 }
+
+.delete-button{
+  background-color: red;
+  color: white;
+  height: 30px;
+  width: 65px;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.delete-button:hover{
+  background-color: rgba(255, 0, 0, 0.744);
+}
+
+
