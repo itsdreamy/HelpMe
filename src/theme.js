@@ -198,7 +198,7 @@ export const themeSettings = (mode) => {
     labels: {
       light: "#e0e0e0",
       dark: "#e0e0e0",
-    },
+    }
   };
 };
 

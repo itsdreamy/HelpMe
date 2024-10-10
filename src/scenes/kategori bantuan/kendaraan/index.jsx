@@ -109,7 +109,7 @@ const Kendaraan = () => {
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : (
-        <Box m="40px 0 0 0" height="73vh">
+        <Box m="35px 0 0 0" height="73vh">
           <table id="Kendaraan" className="display" style={{ width: '100%' }}>
             <thead style={{ backgroundColor: colors.primary[400]}}>
               <tr>
@@ -146,6 +146,9 @@ const Kendaraan = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Add Data */}
+      
     </Box>
   );
 };
