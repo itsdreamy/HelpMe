@@ -3,6 +3,7 @@ import {useMode} from "./theme";
 import {Route, Routes, useLocation} from "react-router-dom"; // Removed BrowserRouter here
 import Login from "./scenes/login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import KategoriBantuan from "./scenes/table";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -46,6 +47,11 @@ function App() {
               <Route path="/success" element={<Success />} />
 
               {/* Protect the routes that require authentication */}
+              // Tambahkan route dinamis di sini
+              <Route
+                path="/kategori/:category"
+                element={<PrivateRoute element={<KategoriBantuan />} />}
+              />
               <Route
                 path="/dashboard"
                 element={<PrivateRoute element={<Dashboard />} />}
