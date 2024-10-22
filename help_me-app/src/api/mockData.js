@@ -237,6 +237,30 @@ export const fetchUserStatsByGranularity = async (granularity, year = null, star
   }
 };
 
+// Categories
+export const mockDataCategory = async (categoryName) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    // console.error("No token found");
+    return [];
+  }
+  try {
+    const response = await axios.get(
+      API_URL + "/categories/problems?category=" + categoryName,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // console.log(response.data);
+    return response;
+  } catch (err) {
+    console.error("Error fetching data from API:", err);
+    return err;
+  }
+};
+
 export const orderStats = async (status = null, stats, date = null, start_date = null, end_date = null, year = null, start_year = null, end_year = null) => {
   const token = localStorage.getItem("token");
 
