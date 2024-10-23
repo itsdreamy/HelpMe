@@ -52,10 +52,10 @@ const OrderChart = ({ isDashboard = false }) => {
     e.preventDefault();
   };
 
-  const formattedData = data.map((d) => ({
+  const formattedData = Array.isArray(data) ? data.map((d) => ({
     ...d,
     period: String(d.period), // Convert period to string
-  }));
+  })) : [];
 
   return (
     <>
@@ -114,6 +114,10 @@ const OrderChart = ({ isDashboard = false }) => {
       {isLoading ? (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '120px' }}>
           <CircularProgress />
+        </div>
+      ) : !Array.isArray(data) || data.length === 0 ? (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '120px', color: '#333' }}>
+          No Data
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={210}>

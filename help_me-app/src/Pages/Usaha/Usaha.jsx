@@ -40,7 +40,7 @@ export default function Usaha() {
   }, [fetchData]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && data.length > 0) {
       // Destroy the previous DataTable instance if it exists
       if ($.fn.dataTable.isDataTable('#Usaha')) {
         $('#Usaha').DataTable().destroy();
@@ -61,7 +61,12 @@ export default function Usaha() {
             title: "Actions",
             data: null,
             render: (data, type, row) => {
-              return `<button class="delete-button" data-id="${row.id}">Delete</button>`;
+              return `
+                <button class="action-button" 
+                        style="background-color: ${row.is_active ? 'red' : 'green'}; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                  ${row.is_active ? 'Ban' : 'Unban'}
+                </button>
+              `;
             },
           },
         ],
@@ -81,7 +86,6 @@ export default function Usaha() {
     }
   }, [loading, data]);
 
-
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Kelola Usaha Mitra</h2>
@@ -90,6 +94,8 @@ export default function Usaha() {
         <Preloader loading={loading} />
       ) : error ? (
         <div>{error}</div>
+      ) : !Array.isArray(data) || data.length === 0 ? ( // Check for no data
+        <div className="text-gray-700">No Data</div>
       ) : (
         <div className="overflow-x-auto">
           <table id="Usaha" className="min-w-full table-auto display compact stripe hover">
@@ -110,7 +116,22 @@ export default function Usaha() {
       )}
 
       {/* Confirmation Dialog */}
-      
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Delete Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => {/* Handle Delete Action */}} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -3,13 +3,14 @@ import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt/css/dataTables.dataTables.css'; // Import DataTables styling
 import { mockDataUsers } from '../../api/mockData'; // API hook for delete action
+import { toggleStatusUser } from '../../api/adminApi'; // API call for toggle status
 import Preloader from "../../components/Preloader"; // Preloader component
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 export default function Mitra() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false); // State for action (ban/unban) loading
 
   // Fetch Data from API
   const fetchData = useCallback(async () => {
@@ -43,7 +44,7 @@ export default function Mitra() {
         $('#Mitra').DataTable().destroy();
       }
 
-      $('#Mitra').DataTable({
+      const table = $('#Mitra').DataTable({
         data: data,
         columns: [
           { title: "No", data: "no" },
@@ -64,21 +65,13 @@ export default function Mitra() {
             title: "Actions",
             data: null,
             render: (data, type, row) => {
-              return (
-                <button
-                  onClick={() => handleSubmit(row.id)} // Call handleSubmit with user id
-                  style={{
-                    backgroundColor: row.is_active ? "red" : "green",
-                    color: "white",
-                    border: "none",
-                    padding: "5px 10px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  {row.is_active ? "Ban" : "Unban"}
+              return `
+                <button class="action-button" 
+                        data-id="${row.id}" 
+                        style="background-color: ${row.is_active ? 'red' : 'green'}; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                  ${row.is_active ? 'Ban' : 'Unban'}
                 </button>
-              );
+              `;
             },
           },
         ],
@@ -88,20 +81,40 @@ export default function Mitra() {
         responsive: true,
         destroy: true, // Allow the DataTable to be reinitialized
       });
+
+      // Add click event listener to dynamically created buttons
+      $('#Mitra tbody').on('click', '.action-button', async function () {
+        const userId = $(this).data('id');
+        const isActive = $(this).text().trim() === 'Ban';
+        handleSubmit(userId, isActive); // Call handleSubmit with user ID and current status
+      });
     }
   }, [loading, data]);
 
-  const handleSubmit = async (id) => {
-    // Implement your ban/unban logic here
-    console.log("Toggle user status for ID:", id);
+  // Ban/Unban Function
+  const handleSubmit = async (id, isActive) => {
+    setActionLoading(true);
+    try {
+      const response = await toggleStatusUser(id);
+      if (response && response.status === 200) {
+        // Update the UI after successful API call
+        setData(data.map(user =>
+          user.id === id ? { ...user, is_active: !isActive } : user
+        ));
+      }
+    } catch (err) {
+      console.error("Failed to toggle user status:", err);
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Kelol Akun Mitra</h2>
+      <h2 className="text-2xl font-bold mb-4">Kelola Akun Mitra</h2>
 
-      {loading ? (
-        <Preloader loading={loading} />
+      {loading || actionLoading ? (
+        <Preloader loading={loading || actionLoading} />
       ) : error ? (
         <div>{error}</div>
       ) : (

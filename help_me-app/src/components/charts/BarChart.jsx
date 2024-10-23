@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend } from 'recharts';
-import { CircularProgress } from '@mui/material'; // Import from MUI
+import { CircularProgress } from '@mui/material';
 import { fetchUserStatsByGranularity } from '../../api/mockData'; // Update this path as necessary
 
 const BarChartUsers = () => {
@@ -92,9 +92,13 @@ const BarChartUsers = () => {
         <div className="flex justify-center mt-10">
           <CircularProgress />
         </div>
+      ) : !Array.isArray(data) || data.length === 0 ? (
+        <div className="flex justify-center mt-10 text-gray-700">
+          No Data
+        </div>
       ) : (
-        <ResponsiveContainer width="100%" height={230}> {/* Reduce height here */}
-          <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: -3 }}> {/* Adjust margins */}
+        <ResponsiveContainer width="100%" height={230}> {/* Reduce height here */} 
+          <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: -3 }}> {/* Adjust margins */} 
             <XAxis dataKey="period" />
             <YAxis />
             <Tooltip />

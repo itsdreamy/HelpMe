@@ -11,7 +11,7 @@ import SuccessPage from './Pages/SuccessPage/SuccessPage.tsx';
 import PrivateRoute from './components/auth/PrivateRoute.js';
 import KategoriBantuan from './Pages/Bantuan/KategoriBantuan.jsx'
 import KelolaBantuan from './Pages/Bantuan/KelolaBantuan.jsx'
-
+import LoginRedirect from './components/loginredirect.js'
 
 function App() {
   const isAuthenticated = !!localStorage.getItem('authToken'); // Adjust based on your authentication method
@@ -19,6 +19,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LoginRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPass />} />
         <Route path="/newpassword" element={<NewPass />} />

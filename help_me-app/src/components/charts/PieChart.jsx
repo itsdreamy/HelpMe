@@ -36,6 +36,8 @@ const PieChartDiff = () => {
         <div className="flex justify-center">
           <CircularProgress />
         </div>
+      ) : !Array.isArray(data) || data.length === 0 ? ( // Check for no data
+        <div className="text-gray-700">No Data</div>
       ) : (
         <PieChart width={400} height={400} margin={{ top: -65, right: 0, left: 0, bottom: 0 }}> {/* Ensure no margin on PieChart */}
           <Pie
