@@ -14,7 +14,7 @@ export const login = async (username, password) => {
     // Jika login berhasil, misal response ada token
     if (response.data.token) {
       localStorage.setItem("token", response.data.token); // Simpan token ke localStorage
-      // console.log(response);
+      console.log(response);
       return response.data;
     }
 

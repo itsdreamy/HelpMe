@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Preloader from '../../../components/Preloader';
-import { useStoreProblem } from '../../../api/problemApi'; // Import the custom hook
+import Preloader from '../../components/Preloader';
+import { useStoreProblem } from '../../api/problemApi'; // Import the custom hook
 import { Snackbar, Alert } from '@mui/material';
+import { useParams } from "react-router-dom";
 
-const NewKendaraan = () => {
+const NewProblem = () => {
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const navigate = useNavigate();
+    const { category } = useParams(); // Ambil kategori dari URL
 
     // Using the custom hook
         const { storeProblem, alert, handleCloseAlert } = useStoreProblem();
@@ -15,13 +17,13 @@ const NewKendaraan = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const data = await storeProblem(name, 'kendaraan');
+        const data = await storeProblem(name, category);
         setLoading(false);
 
         if (data) {
             // Show the alert and then navigate after 3 seconds
             setTimeout(() => {
-                navigate('/kendaraan');
+                navigate('/elektronik');
             }, 1500);
         }
     };
@@ -30,7 +32,7 @@ const NewKendaraan = () => {
         <div className="problems">
             {loading && <Preloader loading={loading} />} {/* Show preloader if loading */}
             <form onSubmit={handleSubmit}>
-                <h1 className='problem-title'>Add New Problem for Kendaraan</h1>
+                <h1 className='problem-title'>Add New Problem for Elektronik</h1>
                 <div className="input-box">
                     <input
                         type="text"
@@ -58,4 +60,4 @@ const NewKendaraan = () => {
     );
 };
 
-export default NewKendaraan;
+export default NewProblem;
